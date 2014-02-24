@@ -33,11 +33,11 @@ public class TextureHandler{
 		return tex;
 	}
 	//Draw a texture on the screen based on the x and y values it takes in.
-	public void drawTexture(float rotation, float x, float y){
+	public void drawTexture(float x, float y){
 		
 		GL11.glPushMatrix();
 		GL11.glTranslatef(x, y, 0);
-		GL11.glRotatef(rotation, 0f, 0f, 1f);
+		GL11.glRotatef(0f , 0f, 0f, 1f);
 		GL11.glTranslatef(-x, -y, 0);
 		 
 		GL11.glBegin(GL11.GL_QUADS);

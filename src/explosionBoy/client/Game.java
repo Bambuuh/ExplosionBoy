@@ -31,7 +31,6 @@ public class Game {
 	private int dHeight = 600;
 	
 	private long lastFrame;
-	private float rotation;
 	
 	private int x = 300;
 	private int y = 500;
@@ -40,7 +39,6 @@ public class Game {
 	public Game(){
 		th = new TextureHandler();
 		initGL();
-		rotation = 0;
 		start();
 	}
 	
@@ -87,7 +85,7 @@ public class Game {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			int delta = getDelta();
 			update(delta);
-			th.drawTexture(rotation, x, y);
+			th.drawTexture(x , y);
 			
 			Display.update();
 			Display.sync(60);
@@ -97,8 +95,6 @@ public class Game {
 	
 	public void update(int delta) {
 		// rotate quad
-		rotation += 0.15f * delta;
-		System.out.println(rotation +" "+ delta);
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.35f * delta;
 		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.35f * delta;
 		 
@@ -110,7 +106,5 @@ public class Game {
 		if (x > 800) x = 800;
 		if (y < 0) y = 0;
 		if (y > 600) y = 600;
-		if (rotation > 360) rotation = 0;
-		}
-	
+	}
 }
