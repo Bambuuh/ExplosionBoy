@@ -15,6 +15,7 @@ import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glViewport;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
@@ -23,7 +24,19 @@ public class Game {
 	private int dWidth = 800;
 	private int dHeight = 600;
 	
+	private long lastFrame;
 	
+	public int getDelta() {
+		long time = getTime();
+		int delta = (int) (time - lastFrame);
+		lastFrame = time;
+		 
+		return delta;
+		}
+	
+	public long getTime() {
+		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+		}
 	
 	public void initGL(){
 		try {
