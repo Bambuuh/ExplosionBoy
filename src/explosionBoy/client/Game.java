@@ -19,6 +19,7 @@ import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
 public class Game {
 
@@ -82,6 +83,7 @@ public class Game {
 	public void start(){
 		
 		while(!Display.isCloseRequested()){
+			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			int delta = getDelta();
 			update(delta);
 			th.drawTexture(rotation, x, y);
