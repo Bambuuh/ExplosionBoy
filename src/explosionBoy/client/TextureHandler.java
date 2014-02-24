@@ -32,23 +32,28 @@ public class TextureHandler{
 			e.printStackTrace();		}
 		return tex;
 	}
+	
 	//Draw a texture on the screen based on the x and y values it takes in.
-	public void drawTexture(float x, float y){
+	public void drawTexture(Texture tex, float x, float y){
+		tex.bind();
+		glBegin(GL_QUADS);
 		
-		GL11.glPushMatrix();
-		GL11.glTranslatef(x, y, 0);
-		GL11.glRotatef(0f , 0f, 0f, 1f);
-		GL11.glTranslatef(-x, -y, 0);
-		 
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glVertex2f(x - 50, y - 50);
-		GL11.glVertex2f(x + 50, y - 50);
-		GL11.glVertex2f(x + 50, y + 50);
-		GL11.glVertex2f(x - 50, y + 50);
-		GL11.glEnd();
-		GL11.glPopMatrix();
+			glTexCoord2f(0, 1);
+			glVertex2f(x, y);
+			
+			glTexCoord2f(1, 1);
+			glVertex2f(x+tex.getTextureWidth(), y);
+			
+			glTexCoord2f(1, 0);
+			glVertex2f(x+tex.getTextureWidth(), y+tex.getTextureHeight());
+			
+			glTexCoord2f(0, 0);
+			glVertex2f(x, y+tex.getTextureHeight());
+			
+			glEnd();
 			
 	}
+	
 	//rotates and then draws a texture to the screen.
 	public void drawRotatingTexture(Texture tex, float x, float y, float rotation){
 		float xCenter = tex.getTextureWidth()/2;
@@ -76,4 +81,9 @@ public class TextureHandler{
 			glPopMatrix();
 			
 	}
+	
+	public void loadSpriteSheet(){
+		
+	}
+	
 }

@@ -22,22 +22,13 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 public class Game {
-
-	private TextureHandler th;
-	
-	
 	
 	private int dWidth = 800;
 	private int dHeight = 600;
 	
 	private long lastFrame;
 	
-	private int x = 300;
-	private int y = 500;
-	
-	
 	public Game(){
-		th = new TextureHandler();
 		initGL();
 		start();
 	}
@@ -85,7 +76,6 @@ public class Game {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			int delta = getDelta();
 			update(delta);
-			th.drawTexture(x , y);
 			
 			Display.update();
 			Display.sync(60);
@@ -94,17 +84,8 @@ public class Game {
 	}
 	
 	public void update(int delta) {
-		// rotate quad
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.35f * delta;
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.35f * delta;
-		 
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) y -= 0.35f * delta;
-		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y += 0.35f * delta;
-		 
-		// keep quad on the screen
-		if (x < 0) x = 0;
-		if (x > 800) x = 800;
-		if (y < 0) y = 0;
-		if (y > 600) y = 600;
+		
+		
+		
 	}
 }
