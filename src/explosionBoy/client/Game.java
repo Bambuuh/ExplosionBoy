@@ -16,15 +16,31 @@ import static org.lwjgl.opengl.GL11.glViewport;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 public class Game {
 
+	private TextureHandler th;
+	
+	
+	
 	private int dWidth = 800;
 	private int dHeight = 600;
 	
 	private long lastFrame;
+	private float rotation = 0;
+	
+	private int x = 300;
+	private int y = 500;
+	
+	
+	public Game(){
+		th = new TextureHandler();
+		initGL();
+		start();
+	}
 	
 	public int getDelta() {
 		long time = getTime();
@@ -62,5 +78,37 @@ public class Game {
 		glMatrixMode(GL_MODELVIEW);
 
 	}
+	
+	public void start(){
+		
+		while(!Display.isCloseRequested()){
+			int delta = getDelta();
+			update(delta);
+			th.drawTexture(rotation, x, y);
+			
+			Display.update();
+			Display.sync(60);
+			
+		}
+		
+	}
+	
+	public void update(int delta) {
+		// rotate quad
+		rotation += 0.15f * delta;
+		 
+		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.35f * delta;
+		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.35f * delta;
+		 
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) y -= 0.35f * delta;
+		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y += 0.35f * delta;
+		 
+		// keep quad on the screen
+		if (x < 0) x = 0;
+		if (x > 800) x = 800;
+		if (y < 0) y = 0;
+		if (y > 600) y = 600;
+		 
+		}
 	
 }
