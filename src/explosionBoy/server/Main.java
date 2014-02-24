@@ -1,10 +1,14 @@
 package explosionBoy.server;
 
+import com.sun.xml.internal.ws.org.objectweb.asm.ByteVector;
+
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
+		String hej = "hejhejhej";
+		byte[] byt = new byte[hej.getBytes().length];
+		
 	}
 
 }
