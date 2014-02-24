@@ -1,4 +1,4 @@
-package explosionBoy.server;
+package explosionBoy.client;
 
 public class Json {
 
