@@ -91,7 +91,6 @@ public class Game {
 			
 			Display.update();
 			Display.sync(60);
-			
 		}
 		
 	}
