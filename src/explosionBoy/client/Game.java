@@ -111,7 +111,7 @@ public class Game {
 		if (x > 800) x = 800;
 		if (y < 0) y = 0;
 		if (y > 600) y = 600;
-		if (rotation > 350) rotation = 0;
+		if (rotation > 360) rotation = 0;
 		}
 	
 }
