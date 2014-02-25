@@ -13,8 +13,7 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.lwjgl.Sys;
-import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.opengl.Texture;
@@ -22,17 +21,26 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 public class TextureHandler{
 	
+	private Image superSheet;
 	private SpriteSheet snakeBoy;
 	
+		
 	public TextureHandler(){
 		
-		try {
-			snakeBoy =  new SpriteSheet("res/snakeboy/SnakeBoySprite.png", 144, 30);
-		} catch (SlickException e) {
-			System.err.println("Could not load spiresheet. " + e.getMessage());
-		}
-	
+		superSheet = loadImage("res/snakeboy/SnakeBoySprite.png");
+		snakeBoy =  new SpriteSheet(superSheet, 140, 30);
 	}
+	
+	private Image loadImage(String file){
+		Image image = null;
+			try {
+				image = new Image(file);
+			} catch (SlickException e) {
+				System.err.println("Could not load image. " + e.getMessage());
+			}
+		return image;
+	}
+	
 	//Loads a image based on the Path and puts it on a texture.
 	private Texture loadTexture(String file){
 		Texture tex = null;

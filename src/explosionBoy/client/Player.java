@@ -5,7 +5,6 @@ import org.newdawn.slick.opengl.Texture;
 
 public abstract class Player {
 
-	protected Controller con;
 	protected int x;
 	protected int y;
 	protected int speed;
@@ -16,6 +15,13 @@ public abstract class Player {
 		
 		this.x = x;
 		this.y = y;
+		
+	}
+	
+	public void move(int x, int y){
+		
+		this.y = y;
+		this.x = x;
 		
 	}
 	
