@@ -28,6 +28,7 @@ public class Game {
 	private int dHeight = 600;
 	private ServerConnection connection;
 	private Controller controller;
+	private InputReader input;
 	
 	private long lastFrame;
 	
@@ -35,6 +36,7 @@ public class Game {
 		player = new Player(200, 200);
 		controller = new Controller(player);
 		connection = new ServerConnection(controller);
+		input = new InputReader(connection);
 		initGL();
 		start();
 	}
@@ -83,6 +85,7 @@ public class Game {
 			int delta = getDelta();
 			update(delta);
 			
+			input.readInput();
 			player.drawPlayer();
 			
 			Display.update();
