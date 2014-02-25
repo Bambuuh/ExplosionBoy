@@ -20,8 +20,8 @@ public abstract class Player {
 	
 	public void move(int x, int y){
 		
-		this.y = y;
-		this.x = x;
+		this.y = this.y+y;
+		this.x = this.x+x;
 		
 	}
 	
