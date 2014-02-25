@@ -16,14 +16,13 @@ import static org.lwjgl.opengl.GL11.glViewport;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 public class Game {
 	
-	TextureHandler th = new TextureHandler();
+	private Player player;
 	
 	private int dWidth = 800;
 	private int dHeight = 600;
@@ -31,6 +30,7 @@ public class Game {
 	private long lastFrame;
 	
 	public Game(){
+		player = new Player(200, 200);
 		initGL();
 		start();
 	}
@@ -79,7 +79,7 @@ public class Game {
 			int delta = getDelta();
 			update(delta);
 			
-			th.getSnakeBoy().draw(0, 0, 16, 30);
+			player.drawPlayer();
 			
 			Display.update();
 			Display.sync(60);

@@ -27,10 +27,6 @@ public class TextureHandler{
 		
 	public TextureHandler(){
 		
-		superSheet = loadImage("res/snakeboy/SnakeBoySprite.png");
-		snakeBoy =  new SpriteSheet(superSheet, 140, 30);
-		
-		
 		
 		
 	}
