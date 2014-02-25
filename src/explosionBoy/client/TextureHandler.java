@@ -29,6 +29,10 @@ public class TextureHandler{
 		
 		superSheet = loadImage("res/snakeboy/SnakeBoySprite.png");
 		snakeBoy =  new SpriteSheet(superSheet, 140, 30);
+		
+		
+		
+		
 	}
 	
 	private Image loadImage(String file){
@@ -103,6 +107,14 @@ public class TextureHandler{
 	
 	public void loadSpriteSheet(){
 		
+	}
+
+	public SpriteSheet getSnakeBoy() {
+		return snakeBoy;
+	}
+
+	public void setSnakeBoy(SpriteSheet snakeBoy) {
+		this.snakeBoy = snakeBoy;
 	}
 	
 }

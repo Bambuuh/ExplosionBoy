@@ -23,6 +23,8 @@ import org.lwjgl.opengl.GL11;
 
 public class Game {
 	
+	TextureHandler th = new TextureHandler();
+	
 	private int dWidth = 800;
 	private int dHeight = 600;
 	
@@ -76,6 +78,8 @@ public class Game {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			int delta = getDelta();
 			update(delta);
+			
+			th.getSnakeBoy().draw(0, 0, 16, 30);
 			
 			Display.update();
 			Display.sync(60);
