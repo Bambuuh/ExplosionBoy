@@ -1,7 +1,8 @@
 package explosionBoy.server;
 
 public class Json {
-
+	
+	private int connectionID;
 	private float xPos, yPos, speed;
 	private Direction direction;
 	
@@ -29,6 +30,12 @@ public class Json {
 	}
 	public void setDirection(Direction direction) {
 		this.direction = direction;
+	}
+	public int getConnectionID() {
+		return connectionID;
+	}
+	public void setConnectionID(int accountID) {
+		this.connectionID = accountID;
 	}
 	
 

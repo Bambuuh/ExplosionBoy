@@ -5,8 +5,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		String hej = "hejhejhej";
-		byte[] byt = new byte[hej.getBytes().length];
+		Server s = new Server();
+		Thread t = new Thread(s);
+		t.start();
 		
 	}
 
