@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 
 import com.google.gson.Gson;
 
-import explosionBoy.server.Json;
+import explosionBoy.client.Json;
 
 public class ServerConnection implements Runnable {
 	private DatagramSocket datagramSocket;
@@ -75,7 +75,7 @@ public class ServerConnection implements Runnable {
 			e.printStackTrace();
 		}
 		jsonRecive = gson.fromJson(new String(recivePacket.getData()), Json.class);
-		
+		controller.controll(jsonRecive);
 		}
 	}
 }

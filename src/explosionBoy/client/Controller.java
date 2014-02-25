@@ -12,6 +12,11 @@ public class Controller {
 	}
 	
 	public void controll(Json json){
+		if (json.getDirection()==Direction.UP) player.move(0,1);
+		else if (json.getDirection()==Direction.DOWN) player.move(0,-1);
+		else if (json.getDirection()==Direction.RIGHT) player.move(1,0);
+		else if (json.getDirection()==Direction.LEFT) player.move(-1,0);
+		else player.move(0, 0);
 		
 	}
 }
