@@ -26,11 +26,15 @@ public class Game {
 	
 	private int dWidth = 800;
 	private int dHeight = 600;
+	private ServerConnection connection;
+	private Controller controller;
 	
 	private long lastFrame;
 	
 	public Game(){
 		player = new Player(200, 200);
+		controller = new Controller(player);
+		connection = new ServerConnection(controller);
 		initGL();
 		start();
 	}
