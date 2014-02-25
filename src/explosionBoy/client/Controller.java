@@ -4,19 +4,14 @@ import org.lwjgl.input.Keyboard;
 
 public class Controller {
 
-	public void input(){
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-			
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
-			
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-			
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
-			
-		}
+	int id;
+	Player player;
+	
+	public Controller(Player player) {
+		this.player = player;
 	}
 	
+	public void controll(Json json){
+		
+	}
 }

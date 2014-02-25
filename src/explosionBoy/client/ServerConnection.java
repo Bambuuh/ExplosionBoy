@@ -17,8 +17,10 @@ public class ServerConnection implements Runnable {
 	private Gson gson;
 	private Json jsonRecive, jsonToSend;
 	private InetAddress ip;
+	private Controller controller;
 	
-	public ServerConnection() {
+	public ServerConnection(Controller controller) {
+		this.controller = controller;
 		gson = new Gson();
 		jsonRecive = new Json();
 		jsonToSend = new Json();
