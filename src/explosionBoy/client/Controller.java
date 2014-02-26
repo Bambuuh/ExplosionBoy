@@ -17,5 +17,6 @@ public class Controller {
 		else if (json.getDirection().equals("RIGHT")) player.move(1,0,speed);
 		else if (json.getDirection().equals("LEFT")) player.move(-1,0,speed);
 		else player.move(0, 0,0);
+		player.json = json;
 	}
 }

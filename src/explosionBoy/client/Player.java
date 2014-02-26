@@ -22,11 +22,12 @@ public abstract class Player {
 	protected boolean DOWN = false;
 	protected boolean LEFT = false;
 	protected boolean RIGHT = false;
+	protected Json json;
 	
 	protected Animation playerAnimation;
 	
 	public Player(int x, int y) {
-		
+		this.json = new Json();
 		this.x = x;
 		this.y = y;
 		
@@ -46,15 +47,27 @@ public abstract class Player {
 	public void setFacing(Json json){
 		if (json.getDirection().equals("UP")) {
 			UP = true;
+			DOWN = false;
+			LEFT = false;
+			RIGHT = false;
 		}
-		if (json.getDirection().equals("DOWN")) {
+		else if (json.getDirection().equals("DOWN")) {
 			DOWN = true;
+			LEFT = false;
+			RIGHT = false;
+			UP = false;
 		}
-		if (json.getDirection().equals("RIGHT")) {
+		else if (json.getDirection().equals("RIGHT")) {
 			RIGHT = true;
+			DOWN = false;
+			LEFT = false;
+			UP = false;
 		}
-		if (json.getDirection().equals("LEFT")) {
+		else if (json.getDirection().equals("LEFT")) {
 			LEFT = true;
+			DOWN = false;
+			RIGHT = false;
+			UP = false;
 		}
 	}
 	
@@ -66,14 +79,14 @@ public abstract class Player {
 			setPlayerAnimation(animation, 0, 0, 48, false, false);
 		}
 		if (RIGHT) {
-			setPlayerAnimation(animation, 96, 0, 48, true, false);
+			setPlayerAnimation(animation, 96, 0, 48, false, false);
 		}
 		if (LEFT) {
 			setPlayerAnimation(animation, 96, 0, 48, true, false);
 		}
 	}
 	
-	public void update(AnimationHandler animation, int delta, Json json){
+	public void update(AnimationHandler animation, int delta){
 		setFacing(json);
 		currentAnimation(animation);
 		drawPlayer(delta);
