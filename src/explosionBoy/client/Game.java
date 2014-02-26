@@ -28,7 +28,7 @@ public class Game {
 	private LevelCreator level;
 	
 	private int dWidth = 800;
-	private int dHeight = 600;
+	private int dHeight = 608;
 	private ServerConnection connection;
 	private Controller controller;
 	private InputReader input;
