@@ -5,9 +5,9 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-import org.lwjgl.Sys;
-
 import com.google.gson.Gson;
+
+import explosionBoy.client.Json;
 
 
 public class Server implements Runnable {
@@ -42,19 +42,27 @@ public class Server implements Runnable {
 				System.err.println("Reciving packet failed: "+e.getMessage());
 				e.printStackTrace();
 			}
-			jsonRecive = gson.fromJson(new String(recivePacket.getData()), Json.class);
 			
+			String incomming = new String(recivePacket.getData());
+			System.out.println(incomming.length());
+			System.out.println(incomming);
+			incomming = incomming.trim();
+			System.out.println(incomming.length());
+			
+			jsonRecive = gson.fromJson(incomming, Json.class);
 			jsonToSend.setDirection(jsonRecive.getDirection());
-			jsonToSend.setSpeed(8);
-			
+			jsonToSend.setSpeed(12);
 			sendData = gson.toJson(jsonToSend, Json.class).getBytes();
 			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, recivePacket.getAddress(), recivePacket.getPort());
 			try {
 				datagramSocket.send(sendPacket);
+				System.out.println("SENDING!");
 			} catch (IOException e) {
 				System.err.println("Sending packet failed: "+e.getMessage());
 				e.printStackTrace();
 			}
+			sendData = new byte[1024];
+			recData = new byte[1024];
 	}
 
 

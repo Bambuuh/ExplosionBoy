@@ -40,27 +40,16 @@ public class ServerConnection implements Runnable {
 	}
 	
 	public void send(Json json){
-		DatagramPacket recivePacket = new DatagramPacket(recData, recData.length);
-		try {
-			datagramSocket.receive(recivePacket);
-			System.out.println("Packet recived!");
-		} catch (IOException e) {
-			System.err.println("Reciving packet failed: "+e.getMessage());
-			e.printStackTrace();
-		}
-		jsonRecive = gson.fromJson(new String(recivePacket.getData()), Json.class);
-		
-		jsonToSend.setDirection(jsonRecive.getDirection());
-		jsonToSend.setSpeed(8);
-		
-		sendData = gson.toJson(jsonToSend, Json.class).getBytes();
-		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, recivePacket.getPort());
+		sendData = gson.toJson(json, Json.class).getBytes();
+		System.out.println(gson.toJson(json,Json.class));
+		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, 9876);
 		try {
 			datagramSocket.send(sendPacket);
 		} catch (IOException e) {
 			System.err.println("Sending packet failed: "+e.getMessage());
 			e.printStackTrace();
 		}
+		sendData = new byte[1024];
 	}
 
 	@Override
@@ -74,8 +63,15 @@ public class ServerConnection implements Runnable {
 			System.err.println("Reciving packet failed: "+e.getMessage());
 			e.printStackTrace();
 		}
-		jsonRecive = gson.fromJson(new String(recivePacket.getData()), Json.class);
+		String incomming = new String(recivePacket.getData());
+		incomming = incomming.trim();
+		jsonRecive = gson.fromJson(incomming, Json.class);
 		controller.controll(jsonRecive);
+		recData = new byte[1024];
 		}
+	}
+	
+	public void close(){
+		datagramSocket.close();
 	}
 }

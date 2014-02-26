@@ -26,10 +26,10 @@ public class Player {
 		
 	}
 	
-	public void move(int x, int y){
+	public void move(int x, int y, float speed){
 		
-		this.y += y;
-		this.x += x;
+		this.y += (y*speed);
+		this.x += (x*speed);
 		
 	}
 	

@@ -1,6 +1,9 @@
 package explosionBoy.client;
 
+
 import org.lwjgl.input.Keyboard;
+
+import com.google.gson.Gson;
 
 public class InputReader {
 	
@@ -14,12 +17,13 @@ public class InputReader {
 	}
 	
 	public void readInput(){
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) json.setDirection(Direction.UP);
-		else if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)) json.setDirection(Direction.DOWN);
-		else if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)) json.setDirection(Direction.LEFT);
-		else if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) json.setDirection(Direction.RIGHT);
-		else json.setDirection(Direction.STILL);
-		
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) json.setDirection("UP");
+		else if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)) json.setDirection("DOWN");
+		else if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)) json.setDirection("LEFT");
+		else if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) json.setDirection("RIGHT");
+		else json.setDirection("STILL");
+		Gson g = new Gson();
+		g.toJson(json, Json.class);
 		connection.send(json);
 	}
 }

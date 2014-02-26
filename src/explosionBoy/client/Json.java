@@ -1,9 +1,9 @@
 package explosionBoy.client;
 
 public class Json {
-
+	
 	private float xPos, yPos, speed;
-	private Direction direction;
+	private String direction = "";
 	
 	
 	public float getxPos() {
@@ -24,13 +24,12 @@ public class Json {
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
-	public Direction getDirection() {
+	public String getDirection() {
 		return direction;
 	}
-	public void setDirection(Direction direction) {
+	public void setDirection(String direction) {
 		this.direction = direction;
 	}
-	
 
 	
 }

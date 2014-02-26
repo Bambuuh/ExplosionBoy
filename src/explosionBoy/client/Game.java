@@ -62,6 +62,9 @@ public class Game {
 			e.printStackTrace();
 			System.exit(0);
 		}
+		
+		new Thread(connection).start();
+		
 		glViewport(0, 0, dWidth, dHeight);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -91,7 +94,7 @@ public class Game {
 			Display.update();
 			Display.sync(60);
 		}
-		
+		connection.close();
 	}
 	
 	public void update(int delta) {

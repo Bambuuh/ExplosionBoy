@@ -1,6 +1,5 @@
 package explosionBoy.client;
 
-import org.lwjgl.input.Keyboard;
 
 public class Controller {
 
@@ -12,11 +11,12 @@ public class Controller {
 	}
 	
 	public void controll(Json json){
-		if (json.getDirection()==Direction.UP) player.move(0,1);
-		else if (json.getDirection()==Direction.DOWN) player.move(0,-1);
-		else if (json.getDirection()==Direction.RIGHT) player.move(1,0);
-		else if (json.getDirection()==Direction.LEFT) player.move(-1,0);
-		else player.move(0, 0);
+		float speed = json.getSpeed();
+		if (json.getDirection().equals("UP")) player.move(0,-1,speed);
+		else if (json.getDirection().equals("DOWN")) player.move(0,1,speed);
+		else if (json.getDirection().equals("RIGHT")) player.move(1,0,speed);
+		else if (json.getDirection().equals("LEFT")) player.move(-1,0,speed);
+		else player.move(0, 0,0);
 		
 	}
 }
