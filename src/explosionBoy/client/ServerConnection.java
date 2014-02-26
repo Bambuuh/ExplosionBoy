@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 import com.google.gson.Gson;
 
@@ -24,8 +25,8 @@ public class ServerConnection implements Runnable {
 		gson = new Gson();
 		jsonRecive = new Json();
 		jsonToSend = new Json();
-		recData = new byte[1024];
-		sendData = new byte[1024];
+		recData = new byte[512];
+		sendData = new byte[512];
 		try {
 			ip = InetAddress.getLocalHost();
 		} catch (UnknownHostException e1) {
@@ -49,7 +50,7 @@ public class ServerConnection implements Runnable {
 			System.err.println("Sending packet failed: "+e.getMessage());
 			e.printStackTrace();
 		}
-		sendData = new byte[1024];
+		Arrays.fill(sendData, (byte)0);
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class ServerConnection implements Runnable {
 		incomming = incomming.trim();
 		jsonRecive = gson.fromJson(incomming, Json.class);
 		controller.controll(jsonRecive);
-		recData = new byte[1024];
+		Arrays.fill(recData, (byte)0);
 		}
 	}
 	
