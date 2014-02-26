@@ -25,6 +25,7 @@ public class Game {
 	private SnakeBoy snakeBoy;
 	
 	private AnimationHandler animation;
+	private LevelCreator level;
 	
 	private int dWidth = 800;
 	private int dHeight = 600;
@@ -42,6 +43,7 @@ public class Game {
 		controller = new Controller(snakeBoy);
 		connection = new ServerConnection(controller);
 		input = new InputReader(connection);
+		level = new LevelCreator();
 		new Thread(connection).start();
 		start();
 	}
@@ -93,6 +95,8 @@ public class Game {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			int delta = getDelta();
 			update(delta);
+			
+			level.createLevel();
 			
 			input.readInput();
 			snakeBoy.update(delta);
