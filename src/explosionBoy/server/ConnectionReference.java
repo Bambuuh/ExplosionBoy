@@ -6,6 +6,7 @@ public class ConnectionReference {
 
 	private InetAddress ip;
 	private int conId, port, gID;
+	private float xPos, yPos, speed;
 	
 	public InetAddress getIp() {
 		return ip;
@@ -30,6 +31,24 @@ public class ConnectionReference {
 	}
 	public void setgID(int gID) {
 		this.gID = gID;
+	}
+	public float getSpeed() {
+		return speed;
+	}
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+	public float getyPos() {
+		return yPos;
+	}
+	public void setyPos(float yPos) {
+		this.yPos = yPos;
+	}
+	public float getxPos() {
+		return xPos;
+	}
+	public void setxPos(float xPos) {
+		this.xPos = xPos;
 	}
 	
 }
