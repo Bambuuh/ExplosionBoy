@@ -37,11 +37,11 @@ public class Game {
 	
 	public Game(){
 		initGL();
-		snakeBoy = new SnakeBoy(200, 200);
+		animation = new AnimationHandler();
+		snakeBoy = new SnakeBoy(200, 200, animation);
 		controller = new Controller(snakeBoy);
 		connection = new ServerConnection(controller);
 		input = new InputReader(connection);
-		animation = new AnimationHandler();
 		new Thread(connection).start();
 		start();
 	}
@@ -95,7 +95,7 @@ public class Game {
 			update(delta);
 			
 			input.readInput();
-			snakeBoy.update(animation, delta);
+			snakeBoy.update(delta);
 			
 			Display.update();
 			Display.sync(60);

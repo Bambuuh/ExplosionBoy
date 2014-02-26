@@ -7,10 +7,6 @@ import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
 
-
-
-
-
 import org.newdawn.slick.Animation;
 
 public abstract class Player {
@@ -23,16 +19,16 @@ public abstract class Player {
 	protected boolean LEFT = false;
 	protected boolean RIGHT = false;
 	protected Json json;
-	private Animation currentAnimation;
+	private AnimationHandler animationHandler;
 	
 	protected Animation playerAnimation;
 	
-	public Player(int x, int y) {
-		this.currentAnimation = new Animation();
+	public Player(int x, int y, AnimationHandler animation) {
+		this.animationHandler = animation;
 		this.json = new Json();
 		this.x = x;
 		this.y = y;
-		
+		setPlayerAnimation(animation, 0, 0, 48, false, false);
 	}
 	
 	public void setPlayerAnimation(AnimationHandler animation, int startPosX, int startPosY, int tileWidth, boolean horizontal, boolean vertical){
@@ -49,6 +45,7 @@ public abstract class Player {
 	public void setFacing(Json json,AnimationHandler animation){
 		if (json.getDirection().equals("UP") && !UP) {
 			setPlayerAnimation(animation, 48, 0, 48, false, false);
+			System.out.println(playerAnimation.getFrameCount());
 			UP = true;
 			DOWN = false;
 			LEFT = false;
@@ -56,6 +53,7 @@ public abstract class Player {
 		}
 		else if (json.getDirection().equals("DOWN") && !DOWN) {
 			setPlayerAnimation(animation, 0, 0, 48, false, false);
+			System.out.println(playerAnimation.getFrameCount());
 			DOWN = true;
 			LEFT = false;
 			RIGHT = false;
@@ -63,6 +61,7 @@ public abstract class Player {
 		}
 		else if (json.getDirection().equals("RIGHT") && !RIGHT) {
 			setPlayerAnimation(animation, 96, 0, 48, false, false);
+			System.out.println(playerAnimation.getFrameCount());
 			RIGHT = true;
 			DOWN = false;
 			LEFT = false;
@@ -70,10 +69,16 @@ public abstract class Player {
 		}
 		else if (json.getDirection().equals("LEFT") && !LEFT) {
 			setPlayerAnimation(animation, 96, 0, 48, true, false);
+			System.out.println(playerAnimation.getFrameCount());
 			LEFT = true;
 			DOWN = false;
 			RIGHT = false;
 			UP = false;
+		}
+		else if (json.getDirection().equals("STILL")){
+			if (playerAnimation.getFrameCount()>1) {
+				playerAnimation.setCurrentFrame(1);
+			}
 		}
 	}
 	
@@ -92,8 +97,8 @@ public abstract class Player {
 		}
 	}
 	
-	public void update(AnimationHandler animation, int delta){
-		setFacing(json, animation);
+	public void update(int delta){
+		setFacing(json, animationHandler);
 //		currentAnimation(animation);
 		drawPlayer(delta);
 	}

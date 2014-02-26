@@ -19,9 +19,11 @@ public class ServerConnection implements Runnable {
 	private Json jsonRecive, jsonToSend;
 	private InetAddress ip;
 	private Controller controller;
+	private boolean isReciving;
 	
 	public ServerConnection(Controller controller) {
 		this.controller = controller;
+		isReciving = true;
 		gson = new Gson();
 		jsonRecive = new Json();
 		jsonToSend = new Json();
@@ -58,7 +60,7 @@ public class ServerConnection implements Runnable {
 	@Override
 	public void run() {
 		System.out.println("recive thread started!");
-		while (true) {
+		while (isReciving) {
 		DatagramPacket recivePacket = new DatagramPacket(recData, recData.length);
 		try {
 			datagramSocket.receive(recivePacket);
@@ -77,5 +79,6 @@ public class ServerConnection implements Runnable {
 	
 	public void close(){
 		datagramSocket.close();
+		isReciving = false;
 	}
 }
