@@ -52,7 +52,7 @@ public class Server implements Runnable {
 			
 			jsonRecive = gson.fromJson(incomming, Json.class);
 			jsonToSend.setDirection(jsonRecive.getDirection());
-			jsonToSend.setSpeed(10);
+			jsonToSend.setSpeed(4);
 			sendData = gson.toJson(jsonToSend, Json.class).getBytes();
 			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, recivePacket.getAddress(), recivePacket.getPort());
 			try {
