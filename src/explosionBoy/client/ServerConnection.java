@@ -54,6 +54,7 @@ public class ServerConnection implements Runnable {
 
 	@Override
 	public void run() {
+		System.out.println("recive thread started!");
 		while (true) {
 		DatagramPacket recivePacket = new DatagramPacket(recData, recData.length);
 		try {

@@ -30,7 +30,7 @@ public class Game {
 	private Controller controller;
 	private InputReader input;
 	
-	private TextureHandler th;
+	private TextureHandler textureHandler;
 	
 	private long lastFrame;
 	
@@ -40,7 +40,8 @@ public class Game {
 		controller = new Controller(player);
 		connection = new ServerConnection(controller);
 		input = new InputReader(connection);
-		th = new TextureHandler();
+		textureHandler = new TextureHandler();
+		new Thread(connection).start();
 		start();
 	}
 	
@@ -66,7 +67,6 @@ public class Game {
 			System.exit(0);
 		}
 		
-		new Thread(connection).start();
 		
 		glViewport(0, 0, dWidth, dHeight);
 		glMatrixMode(GL_PROJECTION);
@@ -92,7 +92,7 @@ public class Game {
 			update(delta);
 			
 			input.readInput();
-			th.getSnakeBoy().draw(player.getX(), player.getY());
+			textureHandler.getSnakeBoy().draw(player.getX(), player.getY());
 			
 			Display.update();
 			Display.sync(60);
