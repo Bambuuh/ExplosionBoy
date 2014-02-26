@@ -95,6 +95,7 @@ public class Game {
 			update(delta);
 			
 			input.readInput();
+			snakeBoy.update(animation, delta);
 			
 			Display.update();
 			Display.sync(60);
