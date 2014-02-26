@@ -34,8 +34,8 @@ public abstract class Player {
 	}
 	
 	public void move(int x, int y, float speed){
-		this.oldx = x;
-		this.oldy = y;
+		this.oldx = this.x;
+		this.oldy = this.y;
 		this.y += (y*speed);
 		this.x += (x*speed);
 		
