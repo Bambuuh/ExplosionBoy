@@ -78,6 +78,11 @@ public abstract class Player {
 		else if (json.getDirection().equals("STILL")){
 			if (playerAnimation.getFrameCount()>1) {
 				playerAnimation.setCurrentFrame(1);
+				playerAnimation.stop();
+				LEFT = false;
+				DOWN = false;
+				RIGHT = false;
+				UP = false;
 			}
 		}
 	}
