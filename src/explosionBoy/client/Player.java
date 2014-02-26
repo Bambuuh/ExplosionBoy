@@ -58,7 +58,7 @@ public abstract class Player {
 		}
 	}
 	
-	public void update(AnimationHandler animation, int delta, Json json){
+	public void currentAnimation(AnimationHandler animation){
 		if (UP) {
 			setPlayerAnimation(animation, 48, 0, 48, false, false);
 		}
@@ -71,6 +71,11 @@ public abstract class Player {
 		if (LEFT) {
 			setPlayerAnimation(animation, 96, 0, 48, true, false);
 		}
+	}
+	
+	public void update(AnimationHandler animation, int delta, Json json){
+		setFacing(json);
+		currentAnimation(animation);
 		drawPlayer(delta);
 	}
 	
