@@ -3,13 +3,14 @@ package explosionBoy.server;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.google.gson.Gson;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
+import explosionBoy.client.Game;
 import explosionBoy.client.Json;
 
 public class Server implements Runnable {
@@ -18,10 +19,11 @@ public class Server implements Runnable {
 	private byte[] recData, sendData;
 	private Gson gson;
 	private Json jsonRecive, jsonToSend;
-	private ArrayList<ConnectionReference> conRef;
+	private ArrayList<GameHolder> holder;
 	
 	public Server() {
-		conRef = new ArrayList<>();
+		holder = new ArrayList<GameHolder>();
+		holder.add(new GameHolder());
 		gson = new Gson();
 		jsonRecive = new Json();
 		jsonToSend = new Json();
@@ -34,7 +36,7 @@ public class Server implements Runnable {
 		}
 	}
 
-	private void echo() {
+	private void recive() {
 			DatagramPacket recivePacket = new DatagramPacket(recData, recData.length);
 			try {
 				datagramSocket.receive(recivePacket);
@@ -51,25 +53,61 @@ public class Server implements Runnable {
 			System.out.println(incomming.length());
 			
 			jsonRecive = gson.fromJson(incomming, Json.class);
-			jsonToSend.setDirection(jsonRecive.getDirection());
-			jsonToSend.setSpeed(4);
-			sendData = gson.toJson(jsonToSend, Json.class).getBytes();
-			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, recivePacket.getAddress(), recivePacket.getPort());
-			try {
-				datagramSocket.send(sendPacket);
-				System.out.println("SENDING!");
-			} catch (IOException e) {
-				System.err.println("Sending packet failed: "+e.getMessage());
-				e.printStackTrace();
+			CheckIp:
+			for (GameHolder gh : holder) {
+				if (gh.getGameID()==jsonRecive.getgID()) {
+					System.out.println("Found game!");
+					for (ConnectionReference cr : gh.getReferences()) {
+						if (cr.getIp().equals(recivePacket.getAddress()) && cr.getPort()==recivePacket.getPort()) {
+							System.out.println("Breaking ipcheck because address exists allrdy");
+							break CheckIp;
+						}
+						else if (cr.getpID()==jsonRecive.getpID()) {
+							cr.setIp(recivePacket.getAddress());
+							cr.setPort(recivePacket.getPort());
+							System.out.println("Set new ip/port to: "+cr.getpID());
+						}
+					}
+				}
 			}
-			Arrays.fill(sendData,(byte) 0);
+			ConnectionReference conRef = new ConnectionReference();
+			for (GameHolder gh : holder) {
+				if (gh.getGameID()==jsonRecive.getgID()) {
+					for (ConnectionReference cr : gh.getReferences()) {
+						if (jsonRecive.getpID() == cr.getpID()) {
+							cr.setDir(jsonRecive.getDirection());
+							conRef.setpID(cr.getpID());
+							conRef.setDir(cr.getDir());
+							break;
+						}
+					}
+					for (ConnectionReference cr : gh.getReferences()) {
+						send(conRef, cr.getIp(), cr.getPort());
+					}
+				}
+			}
 			Arrays.fill(recData,(byte) 0);
+	}
+
+	public void send(ConnectionReference cr, InetAddress ip, int port) {
+		jsonToSend.setDirection(cr.getDir());
+		jsonToSend.setSpeed(4);
+		sendData = gson.toJson(jsonToSend, Json.class).getBytes();
+		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
+		try {
+			datagramSocket.send(sendPacket);
+			System.out.println("SENDING!");
+		} catch (IOException e) {
+			System.err.println("Sending packet failed: "+e.getMessage());
+			e.printStackTrace();
+		}
+		Arrays.fill(sendData,(byte) 0);
 	}
 
 	@Override
 	public void run() {
 		while (true) {
-			echo();
+			recive();
 		}
 	}
 }

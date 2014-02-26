@@ -2,7 +2,7 @@ package explosionBoy.client;
 
 public class Json {
 	
-	private int conID;
+	private int conID, gID, pID;
 	private float xPos, yPos, speed;
 	private String direction = "";
 	
@@ -36,6 +36,18 @@ public class Json {
 	}
 	public void setConID(int conID) {
 		this.conID = conID;
+	}
+	public int getgID() {
+		return gID;
+	}
+	public void setgID(int gID) {
+		this.gID = gID;
+	}
+	public int getpID() {
+		return pID;
+	}
+	public void setpID(int pID) {
+		this.pID = pID;
 	}
 
 	
