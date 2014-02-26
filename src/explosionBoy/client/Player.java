@@ -9,6 +9,8 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 
 
+
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.opengl.Texture;
@@ -19,12 +21,16 @@ public class Player {
 	protected int y;
 	protected int speed;
 	
-	private Texture texture;
+	protected Animation playerAnimation;
 	
 	public Player(int x, int y) {
 		
 		this.x = x;
 		this.y = y;
+		
+	}
+	
+	public void setPlayerAnimation(){
 		
 	}
 	
@@ -72,13 +78,4 @@ public class Player {
 	public void setY(int y) {
 		this.y = y;
 	}
-
-	public Texture getTexture() {
-		return texture;
-	}
-
-	public void setTexture(Texture texture) {
-		this.texture = texture;
-	}
-	
 }

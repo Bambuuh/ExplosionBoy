@@ -19,10 +19,11 @@ import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Animation;
 
 public class Game {
 	
-	private Player player;
+	private SnakeBoy snakeBoy;
 	
 	private int dWidth = 800;
 	private int dHeight = 600;
@@ -30,17 +31,15 @@ public class Game {
 	private Controller controller;
 	private InputReader input;
 	
-	private AnimationHandler animation;
 	
 	private long lastFrame;
 	
 	public Game(){
 		initGL();
-		player = new Player(200, 200);
-		controller = new Controller(player);
+		snakeBoy = new SnakeBoy(200, 200);
+		controller = new Controller(snakeBoy);
 		connection = new ServerConnection(controller);
 		input = new InputReader(connection);
-		animation = new AnimationHandler();
 		new Thread(connection).start();
 		start();
 	}
@@ -92,8 +91,6 @@ public class Game {
 			update(delta);
 			
 			input.readInput();
-			animation.getImage().update(delta);
-			animation.getImage().draw(player.getX(), player.getY());
 			
 			Display.update();
 			Display.sync(60);

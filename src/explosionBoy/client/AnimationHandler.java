@@ -9,40 +9,22 @@ public class AnimationHandler {
 	
 	private Image bigSheetImage;
 	
-	private SpriteSheet snakeDownSheet;
-	private SpriteSheet snakeUpSheet;
-	private SpriteSheet snakeLeftSheet;
-	private SpriteSheet snakeRightSheet;
-	
-	private Animation snakeMoveDown;
-	private Animation snakeMoveUp;
-	private Animation snakeMoveLeft;
-	private Animation snakeMoveRight;
-	
 	public AnimationHandler() {
 		
 			try {
-				
 				bigSheetImage = new Image("res/snakeboy/SnakeBoySprite.png");
-				
-				snakeDownSheet = new SpriteSheet(bigSheetImage.getSubImage(16, 0, 32, 30), 16, 30);
-				snakeMoveDown = new Animation(snakeDownSheet, 500);
-				
-				snakeUpSheet = new SpriteSheet(bigSheetImage.getSubImage(64, 0, 32, 30), 16, 30);
-				snakeMoveUp = new Animation(snakeUpSheet, 500);
-				
-				snakeRightSheet = new SpriteSheet(bigSheetImage.getSubImage(112, 0, 32, 30), 16, 30);
-				snakeMoveRight = new Animation(snakeRightSheet, 500);
-				
-				snakeLeftSheet = new SpriteSheet(bigSheetImage.getSubImage(112, 0, 32, 30).getFlippedCopy(true, false), 16, 30);
-				snakeMoveLeft = new Animation(snakeLeftSheet, 400);
-				
 			} catch (SlickException e) {
 				System.err.println("Could not load main sheet. " + e.getMessage());
 			}
 	}
 	
-	public Animation getImage(){
-		return snakeMoveLeft;
+	public Animation getSnakeAnimation(int startX, int startY,int picW){
+		
+		Animation superAnimation;
+		SpriteSheet superSheet;
+		
+		superSheet = new SpriteSheet(bigSheetImage.getSubImage(startX, startY, picW, 30), 16, 30);
+		superAnimation = new Animation(superSheet, 500);
+		return superAnimation;
 	}
 }
