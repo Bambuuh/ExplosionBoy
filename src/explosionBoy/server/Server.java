@@ -91,7 +91,7 @@ public class Server implements Runnable {
 
 	public void send(ConnectionReference cr, InetAddress ip, int port) {
 		jsonToSend.setDirection(cr.getDir());
-		jsonToSend.setSpeed(4);
+		jsonToSend.setSpeed(3);
 		sendData = gson.toJson(jsonToSend, Json.class).getBytes();
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
 		try {
