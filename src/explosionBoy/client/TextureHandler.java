@@ -13,6 +13,7 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -21,13 +22,19 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 public class TextureHandler{
 	
-	private Image snakeBoy;
-	private Image snakeBoyOne;
+	private SpriteSheet snakeBoyMoveSheet;
+	private Animation snakeMove;
 		
 	public TextureHandler(){
 		
-		snakeBoy = loadImage("res/snakeboy/SnakeBoySprite.png");
-		snakeBoyOne = snakeBoy.getSubImage(0, 0, 16, 30);
+		try {
+			snakeBoyMoveSheet = new SpriteSheet("res/snakeboy/SnakeBoySprite.png", 16, 30);
+		} catch (SlickException e) {
+			System.err.println("Could not load spritesheet. " + e.getMessage());
+		}
+		
+		snakeMove = new Animation(snakeBoyMoveSheet, 100);
+		
 	}
 	
 	private Image loadImage(String file){
@@ -104,7 +111,7 @@ public class TextureHandler{
 		
 	}
 
-	public Image getSnakeBoy() {
-		return snakeBoyOne;
+	public Animation getSnakeBoy() {
+		return snakeMove;
 	}
 }
