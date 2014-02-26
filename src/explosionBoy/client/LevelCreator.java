@@ -104,7 +104,7 @@ public class LevelCreator {
 				}
 				int x = 32*row;
 				int y = 32*col;
-				System.out.println(x+y);
+				System.out.println(x+" "+y);
 				lvlObjects[index] = new LevelObject(image, x, y);
 				index++;
 			}

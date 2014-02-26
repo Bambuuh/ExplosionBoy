@@ -11,6 +11,8 @@ public class LevelObject {
 	private float x,y;
 	
 	public LevelObject(Image image, float xPos, float yPos) {
+		this.x = xPos;
+		this.y = yPos;
 		this.setImage(image);
 		this.rectangle = new Rectangle(xPos, yPos, image.getTextureWidth(), image.getTextureHeight());
 	}
