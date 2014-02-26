@@ -99,29 +99,28 @@ public class Game {
 			update(delta);
 
 			level.printLevel();
-
-			input.readInput();
 			snakeBoy.update(delta);
 
 			for (LevelObject lvl : level.getLvlObjects()) {
 				if (lvl.isHaveRectangle()) {
 					boolean collision = UnitCollission.isColliding(snakeBoy.getRectangle(), lvl.getRectangle());
 					if (collision) {
-						if (lvl.getRectangle().getCenterX()>snakeBoy.getRectangle().getCenterX()) {
+						if (lvl.getRectangle().getMaxX()>snakeBoy.getRectangle().getMinX()) {
 							snakeBoy.setX(snakeBoy.oldx);
 						}
-						else if (lvl.getRectangle().getCenterX()<snakeBoy.getRectangle().getCenterX()) {
+						else if (lvl.getRectangle().getMinX()<snakeBoy.getRectangle().getMaxX()) {
 							snakeBoy.setX(snakeBoy.oldx);
 						}
-						if (lvl.getRectangle().getCenterY()>snakeBoy.getRectangle().getCenterY()) {
+						if (lvl.getRectangle().getMaxY()>snakeBoy.getRectangle().getMinY()) {
 							snakeBoy.setY(snakeBoy.oldy);
 						}
-						else if (lvl.getRectangle().getCenterY()<snakeBoy.getRectangle().getCenterY()) {
+						else if (lvl.getRectangle().getMinY()<snakeBoy.getRectangle().getMaxY()) {
 							snakeBoy.setY(snakeBoy.oldy);
 						}
 					}
 				}
 			}
+			input.readInput();
 
 			Display.update();
 			Display.sync(60);
