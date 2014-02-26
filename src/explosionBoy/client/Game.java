@@ -30,7 +30,7 @@ public class Game {
 	private Controller controller;
 	private InputReader input;
 	
-	private TextureHandler textureHandler;
+	private AnimationHandler animation;
 	
 	private long lastFrame;
 	
@@ -40,7 +40,7 @@ public class Game {
 		controller = new Controller(player);
 		connection = new ServerConnection(controller);
 		input = new InputReader(connection);
-		textureHandler = new TextureHandler();
+		animation = new AnimationHandler();
 		new Thread(connection).start();
 		start();
 	}
@@ -92,8 +92,8 @@ public class Game {
 			update(delta);
 			
 			input.readInput();
-			textureHandler.getSnakeBoy().update(delta);
-			textureHandler.getSnakeBoy().draw(player.getX(), player.getY());
+			animation.getImage().update(delta);
+			animation.getImage().draw(player.getX(), player.getY());
 			
 			Display.update();
 			Display.sync(60);

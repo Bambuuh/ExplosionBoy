@@ -13,29 +13,12 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 public class TextureHandler{
-	
-	private SpriteSheet snakeBoyMoveSheet;
-	private Animation snakeMove;
-		
-	public TextureHandler(){
-		
-		try {
-			snakeBoyMoveSheet = new SpriteSheet("res/snakeboy/SnakeBoySprite.png", 16, 30);
-		} catch (SlickException e) {
-			System.err.println("Could not load spritesheet. " + e.getMessage());
-		}
-		
-		snakeMove = new Animation(snakeBoyMoveSheet, 100);
-		
-	}
 	
 	private Image loadImage(String file){
 		Image image = null;
@@ -76,7 +59,6 @@ public class TextureHandler{
 			glVertex2f(x, y+tex.getTextureHeight());
 			
 			glEnd();
-			
 	}
 	
 	//rotates and then draws a texture to the screen.
@@ -104,14 +86,5 @@ public class TextureHandler{
 			
 			glEnd();
 			glPopMatrix();
-			
-	}
-	
-	public void loadSpriteSheet(){
-		
-	}
-
-	public Animation getSnakeBoy() {
-		return snakeMove;
 	}
 }
