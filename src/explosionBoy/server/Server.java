@@ -9,14 +9,12 @@ import com.google.gson.Gson;
 
 import explosionBoy.client.Json;
 
-
 public class Server implements Runnable {
 
 	private DatagramSocket datagramSocket;
 	private byte[] recData, sendData;
 	private Gson gson;
 	private Json jsonRecive, jsonToSend;
-	
 	
 	public Server() {
 		gson = new Gson();
@@ -29,9 +27,7 @@ public class Server implements Runnable {
 		} catch (SocketException e) {
 			System.err.println("Creating socket failed: "+e.getMessage());
 		}
-		
 	}
-
 
 	private void echo() {
 			DatagramPacket recivePacket = new DatagramPacket(recData, recData.length);
@@ -64,7 +60,6 @@ public class Server implements Runnable {
 			sendData = new byte[1024];
 			recData = new byte[1024];
 	}
-
 
 	@Override
 	public void run() {

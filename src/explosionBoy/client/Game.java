@@ -30,14 +30,17 @@ public class Game {
 	private Controller controller;
 	private InputReader input;
 	
+	private TextureHandler th;
+	
 	private long lastFrame;
 	
 	public Game(){
+		initGL();
 		player = new Player(200, 200);
 		controller = new Controller(player);
 		connection = new ServerConnection(controller);
 		input = new InputReader(connection);
-		initGL();
+		th = new TextureHandler();
 		start();
 	}
 	
@@ -89,7 +92,7 @@ public class Game {
 			update(delta);
 			
 			input.readInput();
-			player.drawPlayer();
+			th.getSnakeBoy().draw(player.getX(), player.getY());
 			
 			Display.update();
 			Display.sync(60);

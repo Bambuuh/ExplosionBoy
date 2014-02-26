@@ -8,7 +8,9 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 
 
+
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.opengl.Texture;
 
 public class Player {
@@ -33,23 +35,23 @@ public class Player {
 		
 	}
 	
-	public void drawPlayer(){
+	public void drawPlayer(Image image){
 		
-		Color.red.bind();
 		
+		image.bind();
 		glBegin(GL_QUADS);
 		
 			glTexCoord2f(0, 1);
 			glVertex2f(x, y);
 			
 			glTexCoord2f(1, 1);
-			glVertex2f(x+50, y);
+			glVertex2f(x+image.getWidth(), y);
 			
 			glTexCoord2f(1, 0);
-			glVertex2f(x+50, y+50);
+			glVertex2f(x+image.getWidth(), y+image.getHeight());
 			
 			glTexCoord2f(0, 0);
-			glVertex2f(x, y+50);
+			glVertex2f(x, y+image.getHeight());
 			
 			glEnd();
 			

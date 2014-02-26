@@ -21,14 +21,13 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 public class TextureHandler{
 	
-	private Image superSheet;
-	private SpriteSheet snakeBoy;
-	
+	private Image snakeBoy;
+	private Image snakeBoyOne;
 		
 	public TextureHandler(){
 		
-		
-		
+		snakeBoy = loadImage("res/snakeboy/SnakeBoySprite.png");
+		snakeBoyOne = snakeBoy.getSubImage(0, 0, 16, 30);
 	}
 	
 	private Image loadImage(String file){
@@ -105,12 +104,7 @@ public class TextureHandler{
 		
 	}
 
-	public SpriteSheet getSnakeBoy() {
-		return snakeBoy;
+	public Image getSnakeBoy() {
+		return snakeBoyOne;
 	}
-
-	public void setSnakeBoy(SpriteSheet snakeBoy) {
-		this.snakeBoy = snakeBoy;
-	}
-	
 }
