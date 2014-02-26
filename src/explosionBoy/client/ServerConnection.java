@@ -16,7 +16,7 @@ public class ServerConnection implements Runnable {
 	private DatagramSocket datagramSocket;
 	private byte[] recData, sendData;
 	private Gson gson;
-	private Json jsonRecive, jsonToSend;
+	private Json jsonRecive;
 	private InetAddress ip;
 	private Controller controller;
 	private boolean isReciving;
@@ -26,7 +26,6 @@ public class ServerConnection implements Runnable {
 		isReciving = true;
 		gson = new Gson();
 		jsonRecive = new Json();
-		jsonToSend = new Json();
 		recData = new byte[512];
 		sendData = new byte[512];
 		try {
