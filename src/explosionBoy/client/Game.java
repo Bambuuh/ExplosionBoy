@@ -23,21 +23,21 @@ import org.lwjgl.opengl.GL11;
 import explosionBoy.levelobjects.LevelObject;
 
 public class Game {
-	
+
 	private SnakeBoy snakeBoy;
-	
+
 	private AnimationHandler animation;
 	private LevelCreator level;
-	
+
 	private int dWidth = 800;
 	private int dHeight = 608;
 	private ServerConnection connection;
 	private Controller controller;
 	private InputReader input;
-	
-	
+
+
 	private long lastFrame;
-	
+
 	public Game(){
 		initGL();
 		animation = new AnimationHandler();
@@ -49,19 +49,19 @@ public class Game {
 		new Thread(connection).start();
 		start();
 	}
-	
+
 	public int getDelta() {
 		long time = getTime();
 		int delta = (int) (time - lastFrame);
 		lastFrame = time;
-		 
+
 		return delta;
-		}
-	
+	}
+
 	public long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
-		}
-	
+	}
+
 	public void initGL(){
 		try {
 			Display.setDisplayMode(new DisplayMode(dWidth, dHeight));
@@ -71,8 +71,8 @@ public class Game {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		
-		
+
+
 		glViewport(0, 0, dWidth, dHeight);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -88,40 +88,50 @@ public class Game {
 		glMatrixMode(GL_MODELVIEW);
 
 	}
-	
+
 	public void start(){
-		
+
 		snakeBoy.setPlayerAnimation(animation, 16, 0, 16, false, false);
-		
+
 		while(!Display.isCloseRequested()){
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			int delta = getDelta();
 			update(delta);
-			
+
 			level.printLevel();
-			
+
 			input.readInput();
 			snakeBoy.update(delta);
-			
+
 			for (LevelObject lvl : level.getLvlObjects()) {
 				if (lvl.isHaveRectangle()) {
 					boolean collision = UnitCollission.isColliding(snakeBoy.getRectangle(), lvl.getRectangle());
 					if (collision) {
-						snakeBoy.setX(snakeBoy.oldx);
-						snakeBoy.setY(snakeBoy.oldy);
+						if (lvl.getRectangle().getCenterX()>snakeBoy.getRectangle().getCenterX()) {
+							snakeBoy.setX(snakeBoy.oldx);
+						}
+						else if (lvl.getRectangle().getCenterX()<snakeBoy.getRectangle().getCenterX()) {
+							snakeBoy.setX(snakeBoy.oldx);
+						}
+						else if (lvl.getRectangle().getCenterY()>snakeBoy.getRectangle().getCenterY()) {
+							snakeBoy.setY(snakeBoy.oldy);
+						}
+						else if (lvl.getRectangle().getCenterY()<snakeBoy.getRectangle().getCenterY()) {
+							snakeBoy.setY(snakeBoy.oldy);
+						}
 					}
 				}
 			}
-			
+
 			Display.update();
 			Display.sync(60);
 		}
 		connection.close();
 	}
-	
+
 	public void update(int delta) {
-		
-		
-		
+
+
+
 	}
 }
