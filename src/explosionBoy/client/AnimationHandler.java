@@ -24,7 +24,7 @@ public class AnimationHandler {
 		SpriteSheet superSheet;
 		
 		superSheet = new SpriteSheet(bigSheetImage.getSubImage(startPosX, startPosY, pictureW, 30).getFlippedCopy(horizontal, vertical), 16, 30);
-		superAnimation = new Animation(superSheet, 150);
+		superAnimation = new Animation(superSheet, 250);
 		
 		superAnimation.setPingPong(true);
 		
