@@ -45,7 +45,6 @@ public class ServerConnection implements Runnable {
 		json.setgID(1);
 		json.setpID(1);
 		sendData = gson.toJson(json, Json.class).getBytes();
-		System.out.println(gson.toJson(json,Json.class));
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, 9876);
 		try {
 			datagramSocket.send(sendPacket);
@@ -63,7 +62,6 @@ public class ServerConnection implements Runnable {
 		DatagramPacket recivePacket = new DatagramPacket(recData, recData.length);
 		try {
 			datagramSocket.receive(recivePacket);
-			System.out.println("Packet recived!");
 		} catch (IOException e) {
 			System.err.println("Reciving packet failed: "+e.getMessage());
 			e.printStackTrace();
