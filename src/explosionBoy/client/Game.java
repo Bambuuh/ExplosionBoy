@@ -92,6 +92,7 @@ public class Game {
 			update(delta);
 			
 			input.readInput();
+			textureHandler.getSnakeBoy().update(delta);
 			textureHandler.getSnakeBoy().draw(player.getX(), player.getY());
 			
 			Display.update();
