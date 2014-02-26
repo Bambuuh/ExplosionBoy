@@ -96,7 +96,7 @@ public class Game {
 			int delta = getDelta();
 			update(delta);
 			
-			level.createLevel();
+			level.drawLevel();
 			
 			input.readInput();
 			snakeBoy.update(delta);

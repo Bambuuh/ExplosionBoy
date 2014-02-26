@@ -30,11 +30,11 @@ public class LevelCreator {
 		}
 	}
 	
-	public void createLevel(){
+	public void generateLevel(){
 		
-		int width = 24;
-		int height = 17;
-		Image spareTile;
+	}
+	
+	public void drawLevel(){
 		
 		int[][] level = new int[][]{
 				{1,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4},
@@ -68,15 +68,7 @@ public class LevelCreator {
 			for (int col = 0; col < 19; col++) {
 				switch (level[row][col]) {
 				case 0:
-					
-					int n = rand.nextInt(3);
-					if (n == 0) {
 						tiles.getSubImage(96, 0, 32, 32).draw(32*row,32*col);
-					}
-					else{
-						tiles.getSubImage(128, 0, 32, 32).draw(32*row,32*col);
-					}
-					
 					break;
 				case 1:
 					tiles.getSubImage(0, 0, 32, 32).draw(32*row,32*col);
@@ -111,7 +103,6 @@ public class LevelCreator {
 				}
 			}
 		}
-		
 	}
 	
 	private void createLevelObjects(){
