@@ -7,16 +7,7 @@ public class SnakeBoy extends Player {
 		super(x, y);
 	}
 
-	public void update(){
-		
+	public void setPlayerAnimation(AnimationHandler animation, int startPosX, int startPosY, int tileWidth, boolean horizontal, boolean vertical){
+		this.playerAnimation = animation.getSnakeAnimation(startPosX, startPosY, tileWidth, horizontal, vertical);
 	}
-	
-	public void setPlayerAnimation(AnimationHandler animation, int startPosX, int startPosY, int tileWidth){
-		this.playerAnimation = animation.getSnakeAnimation(startPosX, startPosY, tileWidth);
-	}
-	
-	public void update(AnimationHandler animation){
-		
-	}
-	
 }

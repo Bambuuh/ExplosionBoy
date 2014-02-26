@@ -18,13 +18,16 @@ public class AnimationHandler {
 			}
 	}
 	
-	public Animation getSnakeAnimation(int startPosX, int startPosY,int pictureW){
+	public Animation getSnakeAnimation(int startPosX, int startPosY,int pictureW, boolean horizontal, boolean vertical){
 		
 		Animation superAnimation;
 		SpriteSheet superSheet;
 		
-		superSheet = new SpriteSheet(bigSheetImage.getSubImage(startPosX, startPosY, pictureW, 30), 16, 30);
+		superSheet = new SpriteSheet(bigSheetImage.getSubImage(startPosX, startPosY, pictureW, 30).getFlippedCopy(horizontal, vertical), 16, 30);
 		superAnimation = new Animation(superSheet, 500);
+		
+		superAnimation.setPingPong(true);
+		
 		return superAnimation;
 	}
 }

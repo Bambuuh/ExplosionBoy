@@ -24,6 +24,8 @@ public class Game {
 	
 	private SnakeBoy snakeBoy;
 	
+	private AnimationHandler animation;
+	
 	private int dWidth = 800;
 	private int dHeight = 600;
 	private ServerConnection connection;
@@ -39,6 +41,7 @@ public class Game {
 		controller = new Controller(snakeBoy);
 		connection = new ServerConnection(controller);
 		input = new InputReader(connection);
+		animation = new AnimationHandler();
 		new Thread(connection).start();
 		start();
 	}
@@ -83,6 +86,8 @@ public class Game {
 	}
 	
 	public void start(){
+		
+		snakeBoy.setPlayerAnimation(animation, 16, 0, 16, false, false);
 		
 		while(!Display.isCloseRequested()){
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);

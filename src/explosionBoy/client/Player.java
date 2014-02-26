@@ -10,8 +10,8 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 
 
+
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 
 public abstract class Player {
 
@@ -28,8 +28,8 @@ public abstract class Player {
 		
 	}
 	
-	public void setPlayerAnimation(){
-		
+	public void setPlayerAnimation(AnimationHandler animation, int startPosX, int startPosY, int tileWidth, boolean horizontal, boolean vertical){
+		this.playerAnimation = animation.getSnakeAnimation(startPosX, startPosY, tileWidth, horizontal, vertical);
 	}
 	
 	public void move(int x, int y, float speed){
@@ -39,30 +39,26 @@ public abstract class Player {
 		
 	}
 	
-	public void update(Json json, AnimationHandler animation){
-		
+	public void update(AnimationHandler animation, int delta, Json json){
+		if (json.getDirection().equals("UP")) {
+			setPlayerAnimation(animation, 48, 0, 48, false, false);
+		}
+		if (json.getDirection().equals("DOWN")) {
+			setPlayerAnimation(animation, 0, 0, 48, false, false);
+		}
+		if (json.getDirection().equals("RIGHT")) {
+			setPlayerAnimation(animation, 96, 0, 48, true, false);
+		}
+		if (json.getDirection().equals("LEFT")) {
+			setPlayerAnimation(animation, 96, 0, 48, true, false);
+		}
+		drawPlayer(delta);
 	}
 	
-	public void drawPlayer(Image image){
+	public void drawPlayer(int delta){
+		playerAnimation.draw(this.x, this.y);
+		playerAnimation.update(delta);
 		
-		
-		image.bind();
-		glBegin(GL_QUADS);
-		
-			glTexCoord2f(0, 1);
-			glVertex2f(x, y);
-			
-			glTexCoord2f(1, 1);
-			glVertex2f(x+image.getWidth(), y);
-			
-			glTexCoord2f(1, 0);
-			glVertex2f(x+image.getWidth(), y+image.getHeight());
-			
-			glTexCoord2f(0, 0);
-			glVertex2f(x, y+image.getHeight());
-			
-			glEnd();
-			
 	}
 	
 	public int getX() {
