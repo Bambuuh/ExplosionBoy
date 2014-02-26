@@ -113,7 +113,7 @@ public class Game {
 						else if (lvl.getRectangle().getCenterX()<snakeBoy.getRectangle().getCenterX()) {
 							snakeBoy.setX(snakeBoy.oldx);
 						}
-						else if (lvl.getRectangle().getCenterY()>snakeBoy.getRectangle().getCenterY()) {
+						if (lvl.getRectangle().getCenterY()>snakeBoy.getRectangle().getCenterY()) {
 							snakeBoy.setY(snakeBoy.oldy);
 						}
 						else if (lvl.getRectangle().getCenterY()<snakeBoy.getRectangle().getCenterY()) {

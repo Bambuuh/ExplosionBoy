@@ -105,7 +105,7 @@ public abstract class Player {
 		setFacing(json, animationHandler);
 //		currentAnimation(animation);
 		drawPlayer(delta);
-		this.rectangle.setBounds(x, y, playerAnimation.getWidth(), playerAnimation.getHeight());
+		this.rectangle.setBounds(x+(playerAnimation.getWidth()/2), y+playerAnimation.getHeight()-5, playerAnimation.getWidth()/5, playerAnimation.getHeight()/5);
 	}
 	
 	public void drawPlayer(int delta){
