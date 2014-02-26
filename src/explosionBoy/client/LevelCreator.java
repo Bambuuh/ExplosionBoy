@@ -1,14 +1,18 @@
 package explosionBoy.client;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.tiled.TiledMap;
 
 import explosionBoy.levelobjects.LevelObject;
 
 public class LevelCreator {
+	
+	private Random rand = new Random();
 	
 	private ArrayList<LevelObject> objectList;
 	
@@ -64,7 +68,15 @@ public class LevelCreator {
 			for (int col = 0; col < 19; col++) {
 				switch (level[row][col]) {
 				case 0:
-					tiles.getSubImage(96, 0, 32, 32).draw(32*row,32*col);
+					
+					int n = rand.nextInt(3);
+					if (n == 0) {
+						tiles.getSubImage(96, 0, 32, 32).draw(32*row,32*col);
+					}
+					else{
+						tiles.getSubImage(128, 0, 32, 32).draw(32*row,32*col);
+					}
+					
 					break;
 				case 1:
 					tiles.getSubImage(0, 0, 32, 32).draw(32*row,32*col);
