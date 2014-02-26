@@ -20,6 +20,8 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
+import explosionBoy.levelobjects.LevelObject;
+
 public class Game {
 	
 	private SnakeBoy snakeBoy;
@@ -39,7 +41,7 @@ public class Game {
 	public Game(){
 		initGL();
 		animation = new AnimationHandler();
-		snakeBoy = new SnakeBoy(200, 200, animation);
+		snakeBoy = new SnakeBoy(100, 100, animation);
 		controller = new Controller(snakeBoy);
 		connection = new ServerConnection(controller);
 		input = new InputReader(connection);
@@ -100,6 +102,16 @@ public class Game {
 			
 			input.readInput();
 			snakeBoy.update(delta);
+			
+			for (LevelObject lvl : level.getLvlObjects()) {
+				if (lvl.isHaveRectangle()) {
+					boolean collision = UnitCollission.isColliding(snakeBoy.getRectangle(), lvl.getRectangle());
+					if (collision) {
+						snakeBoy.setX(snakeBoy.oldx);
+						snakeBoy.setY(snakeBoy.oldy);
+					}
+				}
+			}
 			
 			Display.update();
 			Display.sync(60);

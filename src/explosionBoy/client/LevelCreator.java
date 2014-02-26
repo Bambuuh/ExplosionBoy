@@ -1,12 +1,10 @@
 package explosionBoy.client;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.tiled.TiledMap;
 
 import explosionBoy.levelobjects.LevelObject;
 
@@ -16,6 +14,15 @@ public class LevelCreator {
 	
 	private LevelObject[] lvlObjects;
 	
+	public LevelObject[] getLvlObjects() {
+		return lvlObjects;
+	}
+
+
+	public void setLvlObjects(LevelObject[] lvlObjects) {
+		this.lvlObjects = lvlObjects;
+	}
+
 	private Image tileSet;
 	private SpriteSheet tiles;
 	
@@ -66,20 +73,21 @@ public class LevelCreator {
 		int index = 0;
 		for (int row = 0; row < 25; row++) {
 			for (int col = 0; col < 19; col++) {
-				
+				boolean haveRectangle = true;
 				
 				
 				Image image = null;
 				switch (level[row][col]) {
 				case 0:
-					int n = rand.nextInt(3);
+//					int n = rand.nextInt(3);
 					
-					if (n == 0) {
+//					if (n == 0) {
 						image = tiles.getSubImage(96, 0, 32, 32);
-					}
-					else {
-						image = tiles.getSubImage(128, 0, 32, 32);
-					}
+						haveRectangle = false;
+//					}
+//					else {
+//						image = tiles.getSubImage(128, 0, 32, 32);
+//					}
 					break;
 				case 1:
 					image = tiles.getSubImage(0, 0, 32, 32);
@@ -115,7 +123,7 @@ public class LevelCreator {
 				int x = 32*row;
 				int y = 32*col;
 				System.out.println(x+" "+y);
-				lvlObjects[index] = new LevelObject(image, x, y);
+				lvlObjects[index] = new LevelObject(image, x, y, haveRectangle);
 				index++;
 			}
 		}

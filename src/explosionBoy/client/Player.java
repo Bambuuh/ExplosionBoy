@@ -3,11 +3,12 @@ package explosionBoy.client;
 
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.geom.Rectangle;
 
 public abstract class Player {
 
-	protected int x;
-	protected int y;
+	protected int x, oldx;
+	protected int y, oldy;
 	protected int speed;
 	protected boolean UP = false;
 	protected boolean DOWN = false;
@@ -15,6 +16,7 @@ public abstract class Player {
 	protected boolean RIGHT = false;
 	protected Json json;
 	private AnimationHandler animationHandler;
+	private Rectangle rectangle;
 	
 	protected Animation playerAnimation;
 	
@@ -24,6 +26,7 @@ public abstract class Player {
 		this.x = x;
 		this.y = y;
 		setPlayerAnimation(animation, 0, 0, 48, false, false);
+		this.rectangle = new Rectangle(x, y, playerAnimation.getCurrentFrame().getTextureWidth(), playerAnimation.getCurrentFrame().getTextureHeight());
 	}
 	
 	public void setPlayerAnimation(AnimationHandler animation, int startPosX, int startPosY, int tileWidth, boolean horizontal, boolean vertical){
@@ -31,7 +34,8 @@ public abstract class Player {
 	}
 	
 	public void move(int x, int y, float speed){
-		
+		this.oldx = x;
+		this.oldy = y;
 		this.y += (y*speed);
 		this.x += (x*speed);
 		
@@ -101,6 +105,7 @@ public abstract class Player {
 		setFacing(json, animationHandler);
 //		currentAnimation(animation);
 		drawPlayer(delta);
+		this.rectangle.setBounds(x, y, playerAnimation.getWidth(), playerAnimation.getHeight());
 	}
 	
 	public void drawPlayer(int delta){
@@ -123,5 +128,29 @@ public abstract class Player {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public Rectangle getRectangle() {
+		return rectangle;
+	}
+
+	public void setRectangle(Rectangle rectangle) {
+		this.rectangle = rectangle;
+	}
+
+	public int getOldx() {
+		return oldx;
+	}
+
+	public void setOldx(int oldx) {
+		this.oldx = oldx;
+	}
+
+	public int getOldy() {
+		return oldy;
+	}
+
+	public void setOldy(int oldy) {
+		this.oldy = oldy;
 	}
 }
