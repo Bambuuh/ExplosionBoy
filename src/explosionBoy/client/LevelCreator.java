@@ -66,10 +66,20 @@ public class LevelCreator {
 		int index = 0;
 		for (int row = 0; row < 25; row++) {
 			for (int col = 0; col < 19; col++) {
+				
+				
+				
 				Image image = null;
 				switch (level[row][col]) {
 				case 0:
-					image = tiles.getSubImage(96, 0, 32, 32);
+					int n = rand.nextInt(3);
+					
+					if (n == 0) {
+						image = tiles.getSubImage(96, 0, 32, 32);
+					}
+					else {
+						image = tiles.getSubImage(128, 0, 32, 32);
+					}
 					break;
 				case 1:
 					image = tiles.getSubImage(0, 0, 32, 32);
