@@ -1,5 +1,6 @@
 package explosionBoy.client;
 
+
 public class SnakeBoy extends Player {
 
 	public SnakeBoy(int x, int y) {
@@ -10,8 +11,12 @@ public class SnakeBoy extends Player {
 		
 	}
 	
-	public void setPlayerAnimation(){
-		this.playerAnimation = 
+	public void setPlayerAnimation(AnimationHandler animation, int startPosX, int startPosY, int tileWidth){
+		this.playerAnimation = animation.getSnakeAnimation(startPosX, startPosY, tileWidth);
+	}
+	
+	public void update(AnimationHandler animation){
+		
 	}
 	
 }

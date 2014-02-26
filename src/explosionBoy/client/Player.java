@@ -11,11 +11,9 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.opengl.Texture;
 
-public class Player {
+public abstract class Player {
 
 	protected int x;
 	protected int y;
@@ -38,6 +36,10 @@ public class Player {
 		
 		this.y += (y*speed);
 		this.x += (x*speed);
+		
+	}
+	
+	public void update(Json json, AnimationHandler animation){
 		
 	}
 	

@@ -18,12 +18,12 @@ public class AnimationHandler {
 			}
 	}
 	
-	public Animation getSnakeAnimation(int startX, int startY,int picW){
+	public Animation getSnakeAnimation(int startPosX, int startPosY,int pictureW){
 		
 		Animation superAnimation;
 		SpriteSheet superSheet;
 		
-		superSheet = new SpriteSheet(bigSheetImage.getSubImage(startX, startY, picW, 30), 16, 30);
+		superSheet = new SpriteSheet(bigSheetImage.getSubImage(startPosX, startPosY, pictureW, 30), 16, 30);
 		superAnimation = new Animation(superSheet, 500);
 		return superAnimation;
 	}
