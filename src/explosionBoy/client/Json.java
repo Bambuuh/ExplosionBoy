@@ -2,6 +2,7 @@ package explosionBoy.client;
 
 public class Json {
 	
+	private int conID;
 	private float xPos, yPos, speed;
 	private String direction = "";
 	
@@ -29,6 +30,12 @@ public class Json {
 	}
 	public void setDirection(String direction) {
 		this.direction = direction;
+	}
+	public int getConID() {
+		return conID;
+	}
+	public void setConID(int conID) {
+		this.conID = conID;
 	}
 
 	
