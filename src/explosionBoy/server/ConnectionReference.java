@@ -11,6 +11,7 @@ public class ConnectionReference {
 	private String dir;
 	
 	public ConnectionReference() {
+		this.speed = 1;
 		try {
 			ip = InetAddress.getLocalHost();
 		} catch (UnknownHostException e) {
