@@ -1,6 +1,5 @@
 package explosionBoy.client;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import org.newdawn.slick.Image;
@@ -45,6 +44,8 @@ public class LevelCreator {
 		
 		int[][] level = new int[][]{
 				{1,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4},
+				{6,10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,8},
+				{6,10,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,10,8},
 				{6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
 				{6,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,8},
 				{6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
@@ -64,10 +65,8 @@ public class LevelCreator {
 				{6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
 				{6,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,8},
 				{6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-				{6,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,8},
-				{6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
-				{6,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,8},
-				{6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8},
+				{6,10,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,10,8},
+				{6,10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,8},
 				{2,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,3},
 		};
 		
@@ -80,8 +79,8 @@ public class LevelCreator {
 				Image image = null;
 				switch (level[row][col]) {
 				case 0:
-//					int n = rand.nextInt(3);
-//					
+//					int n = rand.nextInt(32);
+					
 //					if (n == 0) {
 						image = tiles.getSubImage(96, 0, 32, 32);
 						haveRectangle = false;
@@ -117,13 +116,16 @@ public class LevelCreator {
 				case 9:
 					image = tiles.getSubImage(160, 0, 32, 32);
 					break;
+				case 10:
+					image = tiles.getSubImage(96, 0, 32, 32);
+					haveRectangle = false;
+					break;
 
 				default:
 					break;
 				}
 				int x = 32*row;
 				int y = 32*col;
-				System.out.println(x+" "+y);
 				lvlObjects[index] = new LevelObject(image, x, y, haveRectangle);
 				index++;
 			}

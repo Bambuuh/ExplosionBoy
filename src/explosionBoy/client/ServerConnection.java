@@ -6,9 +6,11 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.google.gson.Gson;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import explosionBoy.client.Json;
 
@@ -18,11 +20,11 @@ public class ServerConnection implements Runnable {
 	private Gson gson;
 	private Json jsonRecive;
 	private InetAddress ip;
-	private Controller controller;
+	private ArrayList<Controller> controllant;
 	private boolean isReciving;
 	
-	public ServerConnection(Controller controller) {
-		this.controller = controller;
+	public ServerConnection(ArrayList<Controller> controller) {
+		this.controllant = controller;
 		isReciving = true;
 		gson = new Gson();
 		jsonRecive = new Json();
@@ -69,7 +71,11 @@ public class ServerConnection implements Runnable {
 		String incomming = new String(recivePacket.getData());
 		incomming = incomming.trim();
 		jsonRecive = gson.fromJson(incomming, Json.class);
-		controller.controll(jsonRecive);
+		for (Controller controller : controllant) {
+			if (controller.id == jsonRecive.getpID()) {
+				controller.controll(jsonRecive);
+			}
+		}
 		Arrays.fill(recData, (byte)0);
 		}
 	}

@@ -7,6 +7,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 public abstract class Player {
 
+	protected int ID;
 	protected int x, oldx;
 	protected int y, oldy;
 	protected int speed;
@@ -20,7 +21,8 @@ public abstract class Player {
 	
 	protected Animation playerAnimation;
 	
-	public Player(int x, int y, AnimationHandler animation) {
+	public Player(int x, int y, AnimationHandler animation, int ID) {
+		this.ID = ID;
 		this.animationHandler = animation;
 		this.json = new Json();
 		this.x = x;
@@ -105,7 +107,7 @@ public abstract class Player {
 		setFacing(json, animationHandler);
 //		currentAnimation(animation);
 		drawPlayer(delta);
-		this.rectangle.setBounds(x+(playerAnimation.getWidth()/2), y+playerAnimation.getHeight()-5, playerAnimation.getWidth()/5, playerAnimation.getHeight()/5);
+		this.rectangle.setBounds(x+1, y+playerAnimation.getHeight()-10, playerAnimation.getWidth()-2, 9);
 	}
 	
 	public void drawPlayer(int delta){
@@ -152,5 +154,9 @@ public abstract class Player {
 
 	public void setOldy(int oldy) {
 		this.oldy = oldy;
+	}
+	
+	public int getID(){
+		return ID;
 	}
 }

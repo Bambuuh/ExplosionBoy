@@ -14,6 +14,8 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glViewport;
 
+import java.util.ArrayList;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
@@ -24,7 +26,10 @@ import explosionBoy.levelobjects.LevelObject;
 
 public class Game {
 
+	private ArrayList<Controller> controllArray;
+	
 	private SnakeBoy snakeBoy;
+	private SnakeBoy snakeBoy2;
 
 	private AnimationHandler animation;
 	private LevelCreator level;
@@ -40,10 +45,13 @@ public class Game {
 
 	public Game(){
 		initGL();
+		controllArray = new ArrayList<Controller>();
 		animation = new AnimationHandler();
-		snakeBoy = new SnakeBoy(100, 100, animation);
-		controller = new Controller(snakeBoy);
-		connection = new ServerConnection(controller);
+		snakeBoy = new SnakeBoy(40,30 , animation, 1);
+		snakeBoy2 = new SnakeBoy(dWidth -50, 30, animation, 2);
+		controllArray.add(new Controller(snakeBoy));
+		controllArray.add(new Controller(snakeBoy2));
+		connection = new ServerConnection(controllArray);
 		input = new InputReader(connection);
 		level = new LevelCreator();
 		new Thread(connection).start();
@@ -92,6 +100,7 @@ public class Game {
 	public void start(){
 
 		snakeBoy.setPlayerAnimation(animation, 16, 0, 16, false, false);
+		snakeBoy2.setPlayerAnimation(animation, 16, 0, 16, false, false);
 
 		while(!Display.isCloseRequested()){
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
@@ -99,6 +108,7 @@ public class Game {
 			update(delta);
 
 			level.printLevel();
+			snakeBoy2.update(delta);
 			snakeBoy.update(delta);
 
 			for (LevelObject lvl : level.getLvlObjects()) {
