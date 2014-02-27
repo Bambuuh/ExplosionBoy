@@ -47,7 +47,7 @@ public class Game {
 		controllArray = new ArrayList<Controller>();
 		animation = new AnimationHandler();
 		snakeBoy = new SnakeBoy(40,30 , animation, 1);
-		snakeBoy2 = new SnakeBoy(dWidth -50, 30, animation, 2);
+		snakeBoy2 = new SnakeBoy(40, 30, animation, 2);
 		controllArray.add(new Controller(snakeBoy));
 		controllArray.add(new Controller(snakeBoy2));
 		connection = new ServerConnection(controllArray);

@@ -100,6 +100,7 @@ public class ConnectionReference {
 		case "UPLEFT":
 			this.yPos -= speed;
 			this.xPos -= speed;
+			break;
 		case "DOWN":
 			this.yPos += speed;
 			break;
