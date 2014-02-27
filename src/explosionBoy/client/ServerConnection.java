@@ -70,7 +70,6 @@ public class ServerConnection implements Runnable {
 		incomming = incomming.trim();
 		jsonRecive = gson.fromJson(incomming, Json.class);
 		for (Controller controller : controllant) {
-			System.out.println("P ID: "+jsonRecive.getpID());
 			if (controller.id == jsonRecive.getpID()) {
 				controller.controll(jsonRecive);
 			}

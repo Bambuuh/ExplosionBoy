@@ -69,19 +69,21 @@ public class Server implements Runnable {
 					}
 				}
 			}
-//			ConnectionReference conRef = new ConnectionReference();
+			ConnectionReference conRef = new ConnectionReference();
 			for (GameHolder gh : holder) {
 				if (gh.getGameID()==jsonRecive.getgID()) {
 					for (ConnectionReference cr : gh.getReferences()) {
 						if (jsonRecive.getpID() == cr.getpID()) {
 							cr.setDir(jsonRecive.getDirection());
-//							conRef.setpID(cr.getpID());
-//							conRef.setDir(cr.getDir());
+							conRef.setpID(cr.getpID());
+							conRef.setDir(cr.getDir());
+							conRef.setxPos(cr.getxPos());
+							conRef.setyPos(cr.getyPos());
 							break;
 						}
 					}
 					for (ConnectionReference cr : gh.getReferences()) {
-							send(cr, cr.getIp(), cr.getPort());
+							send(conRef, cr.getIp(), cr.getPort());
 					}
 				}
 			}
