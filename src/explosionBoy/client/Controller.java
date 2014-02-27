@@ -24,8 +24,35 @@ public class Controller {
 		else if (json.getDirection().equals("DOWNLEFT")) player.move(-1,1,speed);
 		else player.move(0, 0, 0);
 		player.json = json;
-		player.setY(json.getyPos());
-		player.setX(json.getxPos());
+		
+		switch (json.getDirection()) {
+		case "UP":
+			if (json.getyPos() < player.getY()) {
+				player.setY(json.getyPos());
+			}
+			break;
+			
+		case "DOWN":
+			if (json.getyPos() > player.getY()) {
+				player.setY(json.getyPos());
+			}
+			break;
+			
+		case "RIGHT":
+			if (json.getxPos() > player.getX()) {
+				player.setX(json.getxPos());
+			}
+			break;
+			
+		case "LEFT":
+			if (json.getxPos() < player.getX()) {
+				player.setX(json.getxPos());
+			}
+			break;
+
+		default:
+			break;
+		}
 	}
 	public Player getPlayer(){
 		return this.player;
