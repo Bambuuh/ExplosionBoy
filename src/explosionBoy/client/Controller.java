@@ -22,7 +22,7 @@ public class Controller {
 		else if (json.getDirection().equals("DOWNRIGHT")) player.move(1,1,speed);
 		else if (json.getDirection().equals("UPLEFT")) player.move(-1,-1,speed);
 		else if (json.getDirection().equals("DOWNLEFT")) player.move(-1,1,speed);
-		else player.move(0, 0,0);
+		else player.move(0, 0, 0);
 		player.json = json;
 		player.setY(json.getyPos());
 		player.setX(json.getxPos());

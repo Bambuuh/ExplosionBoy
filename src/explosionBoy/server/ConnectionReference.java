@@ -11,6 +11,8 @@ public class ConnectionReference {
 	private String dir;
 	
 	public ConnectionReference() {
+		this.xPos = 40;
+		this.yPos = 30;
 		this.speed = 1;
 		try {
 			ip = InetAddress.getLocalHost();
@@ -84,6 +86,37 @@ public class ConnectionReference {
 	}
 
 	public void setDir(String dir) {
+		switch (dir) {
+		case "UP":
+			this.yPos -= speed;
+			break;
+		case "UPRIGHT":
+			this.yPos -= speed;
+			this.xPos += speed;
+			break;
+		case "UPLEFT":
+			this.yPos -= speed;
+			this.xPos -= speed;
+		case "DOWN":
+			this.yPos += speed;
+			break;
+		case "DOWNRIGHT":
+			this.yPos += speed;
+			this.xPos += speed;
+			break;
+		case "DOWNLEFT":
+			this.yPos += speed;
+			this.xPos -= speed;
+			break;
+		case "RIGHT":
+			this.xPos += speed;
+			break;
+		case "LEFT":
+			this.xPos -= speed;
+			break;
+		default:
+			break;
+		}
 		this.dir = dir;
 	}
 	
