@@ -35,11 +35,11 @@ public abstract class Player {
 		this.playerAnimation = animation.getSnakeAnimation(startPosX, startPosY, tileWidth, horizontal, vertical);
 	}
 	
-	public void move(float x, float y, float speed){
+	public void move(float x, float y, float speed,int delta){
 		this.oldx = this.x;
 		this.oldy = this.y;
-		this.y += (y*speed);
-		this.x += (x*speed);
+		this.y += (y*speed*delta);
+		this.x += (x*speed*delta);
 		
 	}
 	
@@ -70,7 +70,6 @@ public abstract class Player {
 		}
 		else if (json.getDirection().equals("LEFT") && !LEFT) {
 			setPlayerAnimation(animation, 96, 0, 48, true, false);
-			System.out.println(playerAnimation.getFrameCount());
 			LEFT = true;
 			DOWN = false;
 			RIGHT = false;

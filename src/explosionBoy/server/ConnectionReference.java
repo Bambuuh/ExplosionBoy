@@ -19,7 +19,7 @@ public class ConnectionReference {
 		delta.getDelta();
 		this.xPos = 40;
 		this.yPos = 30;
-		this.speed = 0.5f;
+		this.speed = 0.05f;
 		this.ip = null;
 	}
 	
@@ -93,34 +93,36 @@ public class ConnectionReference {
 	}
 
 	public void setDir(String dir) {
+		int deltish = delta.getDelta();
+		System.out.println("DELTA: "+deltish);
 		switch (dir) {
 		case "UP":
-			this.yPos -= speed*delta.getDelta();
+			this.yPos -= speed*deltish;
 			break;
 		case "UPRIGHT":
-			this.yPos -= speed*delta.getDelta();
-			this.xPos += speed*delta.getDelta();
+			this.yPos -= speed*deltish;
+			this.xPos += speed*deltish;
 			break;
 		case "UPLEFT":
-			this.yPos -= speed*delta.getDelta();
-			this.xPos -= speed*delta.getDelta();
+			this.yPos -= speed*deltish;
+			this.xPos -= speed*deltish;
 			break;
 		case "DOWN":
-			this.yPos += speed*delta.getDelta();
+			this.yPos += speed*deltish;
 			break;
 		case "DOWNRIGHT":
-			this.yPos += speed*delta.getDelta();
-			this.xPos += speed*delta.getDelta();
+			this.yPos += speed*deltish;
+			this.xPos += speed*deltish;
 			break;
 		case "DOWNLEFT":
-			this.yPos += speed*delta.getDelta();
-			this.xPos -= speed*delta.getDelta();
+			this.yPos += speed*deltish;
+			this.xPos -= speed*deltish;
 			break;
 		case "RIGHT":
-			this.xPos += speed*delta.getDelta();
+			this.xPos += speed*deltish;
 			break;
 		case "LEFT":
-			this.xPos -= speed*delta.getDelta();
+			this.xPos -= speed*deltish;
 			break;
 		default:
 			break;

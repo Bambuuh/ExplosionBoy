@@ -112,6 +112,7 @@ public class Game {
 			snakeBoy2.update(delta);
 			snakeBoy.update(delta);
 			for (Controller player : controllArray) {
+				player.setDelta(delta);
 				Player p = player.getPlayer();
 			for (LevelObject lvl : level.getLvlObjects()) {
 				if (lvl.isHaveRectangle()) {
