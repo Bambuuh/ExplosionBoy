@@ -105,7 +105,9 @@ public class Game {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			int delta = getDelta();
 			update(delta);
-
+			
+			
+			
 			level.printLevel();
 			snakeBoy2.update(delta);
 			snakeBoy.update(delta);
@@ -140,8 +142,6 @@ public class Game {
 	}
 
 	public void update(int delta) {
-
-
 
 	}
 }

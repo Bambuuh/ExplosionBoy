@@ -3,6 +3,7 @@ package explosionBoy.server;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import explosionBoy.client.Delta;
 import explosionBoy.client.Game;
 
 public class ConnectionReference {
@@ -11,11 +12,12 @@ public class ConnectionReference {
 	private int conId, port, gID, pID;
 	private float xPos, yPos, speed;
 	private String dir;
+	private Delta delta;
 	
 	public ConnectionReference() {
 		this.xPos = 40;
 		this.yPos = 30;
-		this.speed = 1;
+		this.speed = 0.5f;
 		try {
 			ip = InetAddress.getLocalHost();
 		} catch (UnknownHostException e) {
@@ -25,6 +27,7 @@ public class ConnectionReference {
 	}
 	
 	public ConnectionReference(int pID) {
+		delta.getDelta();
 		if (pID == 2) {
 			this.xPos = Game.WIDTH-50;
 			this.yPos = 30;
@@ -99,32 +102,32 @@ public class ConnectionReference {
 	public void setDir(String dir) {
 		switch (dir) {
 		case "UP":
-			this.yPos -= speed;
+			this.yPos -= speed*delta.getDelta();
 			break;
 		case "UPRIGHT":
-			this.yPos -= speed;
-			this.xPos += speed;
+			this.yPos -= speed*delta.getDelta();
+			this.xPos += speed*delta.getDelta();
 			break;
 		case "UPLEFT":
-			this.yPos -= speed;
-			this.xPos -= speed;
+			this.yPos -= speed*delta.getDelta();
+			this.xPos -= speed*delta.getDelta();
 			break;
 		case "DOWN":
-			this.yPos += speed;
+			this.yPos += speed*delta.getDelta();
 			break;
 		case "DOWNRIGHT":
-			this.yPos += speed;
-			this.xPos += speed;
+			this.yPos += speed*delta.getDelta();
+			this.xPos += speed*delta.getDelta();
 			break;
 		case "DOWNLEFT":
-			this.yPos += speed;
-			this.xPos -= speed;
+			this.yPos += speed*delta.getDelta();
+			this.xPos -= speed*delta.getDelta();
 			break;
 		case "RIGHT":
-			this.xPos += speed;
+			this.xPos += speed*delta.getDelta();
 			break;
 		case "LEFT":
-			this.xPos -= speed;
+			this.xPos -= speed*delta.getDelta();
 			break;
 		default:
 			break;
