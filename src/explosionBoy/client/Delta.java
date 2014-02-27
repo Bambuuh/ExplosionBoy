@@ -1,7 +1,5 @@
 package explosionBoy.client;
 
-import org.lwjgl.Sys;
-
 public class Delta {
 
 	private long lastFrame;
@@ -15,7 +13,7 @@ public class Delta {
 	}
 
 	public long getTime() {
-		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+		return (System.currentTimeMillis() * 1000) / 1000;
 	}
 	
 	public long getLastFrame(){
