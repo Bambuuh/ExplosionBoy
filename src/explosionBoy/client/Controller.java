@@ -25,4 +25,7 @@ public class Controller {
 		else player.move(0, 0,0);
 		player.json = json;
 	}
+	public Player getPlayer(){
+		return this.player;
+	}
 }

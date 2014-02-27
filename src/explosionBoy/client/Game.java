@@ -110,25 +110,27 @@ public class Game {
 			level.printLevel();
 			snakeBoy2.update(delta);
 			snakeBoy.update(delta);
-
+			for (Controller player : controllArray) {
+				Player p = player.getPlayer();
 			for (LevelObject lvl : level.getLvlObjects()) {
 				if (lvl.isHaveRectangle()) {
-					boolean collision = UnitCollission.isColliding(snakeBoy.getRectangle(), lvl.getRectangle());
+					boolean collision = UnitCollission.isColliding(p.getRectangle(), lvl.getRectangle());
 					if (collision) {
-						if (lvl.getRectangle().getMaxX()>snakeBoy.getRectangle().getMinX()) {
-							snakeBoy.setX(snakeBoy.oldx);
+						if (lvl.getRectangle().getMaxX()>p.getRectangle().getMinX()) {
+							p.setX(p.oldx);
 						}
-						else if (lvl.getRectangle().getMinX()<snakeBoy.getRectangle().getMaxX()) {
-							snakeBoy.setX(snakeBoy.oldx);
+						else if (lvl.getRectangle().getMinX()<p.getRectangle().getMaxX()) {
+							p.setX(p.oldx);
 						}
-						if (lvl.getRectangle().getMaxY()>snakeBoy.getRectangle().getMinY()) {
-							snakeBoy.setY(snakeBoy.oldy);
+						if (lvl.getRectangle().getMaxY()>p.getRectangle().getMinY()) {
+							p.setY(p.oldy);
 						}
-						else if (lvl.getRectangle().getMinY()<snakeBoy.getRectangle().getMaxY()) {
-							snakeBoy.setY(snakeBoy.oldy);
+						else if (lvl.getRectangle().getMinY()<p.getRectangle().getMaxY()) {
+							p.setY(p.oldy);
 						}
 					}
 				}
+			}
 			}
 			input.readInput();
 
