@@ -20,12 +20,7 @@ public class ConnectionReference {
 		this.xPos = 40;
 		this.yPos = 30;
 		this.speed = 0.5f;
-		try {
-			ip = InetAddress.getLocalHost();
-		} catch (UnknownHostException e) {
-			System.out.println("Getting local host failed: "+e.getMessage());
-			e.printStackTrace();
-		}
+		this.ip = null;
 	}
 	
 	public ConnectionReference(int pID) {
@@ -40,13 +35,8 @@ public class ConnectionReference {
 			this.yPos = 30;
 		}
 		this.pID = pID;
-		this.speed = 1;
-		try {
-			ip = InetAddress.getLocalHost();
-		} catch (UnknownHostException e) {
-			System.out.println("Getting local host failed: "+e.getMessage());
-			e.printStackTrace();
-		}
+		this.speed = 0.05f;
+		this.ip = null;
 	}
 	
 	public InetAddress getIp() {

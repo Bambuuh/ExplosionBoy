@@ -57,7 +57,7 @@ public class Server implements Runnable {
 				if (gh.getGameID()==jsonRecive.getgID()) {
 					System.out.println("Found game!");
 					for (ConnectionReference cr : gh.getReferences()) {
-						if (cr.getIp().equals(recivePacket.getAddress()) && cr.getPort()==recivePacket.getPort()) {
+						if (cr.getIp() != null && cr.getIp().equals(recivePacket.getAddress()) && cr.getPort()==recivePacket.getPort()) {
 							System.out.println("Breaking ipcheck because address exists allrdy");
 							break CheckIp;
 						}
@@ -83,7 +83,9 @@ public class Server implements Runnable {
 						}
 					}
 					for (ConnectionReference cr : gh.getReferences()) {
+						if (cr.getIp() != null) {
 							send(conRef, cr.getIp(), cr.getPort());
+						}
 					}
 				}
 			}
