@@ -34,8 +34,8 @@ public class Game {
 	private AnimationHandler animation;
 	private LevelCreator level;
 
-	private int dWidth = 800;
-	private int dHeight = 608;
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 608;
 	private ServerConnection connection;
 	private InputReader input;
 
@@ -47,7 +47,7 @@ public class Game {
 		controllArray = new ArrayList<Controller>();
 		animation = new AnimationHandler();
 		snakeBoy = new SnakeBoy(40,30 , animation, 1);
-		snakeBoy2 = new SnakeBoy(40, 30, animation, 2);
+		snakeBoy2 = new SnakeBoy(WIDTH-50, 30, animation, 2);
 		controllArray.add(new Controller(snakeBoy));
 		controllArray.add(new Controller(snakeBoy2));
 		connection = new ServerConnection(controllArray);
@@ -71,7 +71,7 @@ public class Game {
 
 	public void initGL(){
 		try {
-			Display.setDisplayMode(new DisplayMode(dWidth, dHeight));
+			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.setVSyncEnabled(true);
 			Display.create();
 		} catch (LWJGLException e) {
@@ -80,7 +80,7 @@ public class Game {
 		}
 
 
-		glViewport(0, 0, dWidth, dHeight);
+		glViewport(0, 0, WIDTH, HEIGHT);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
@@ -91,7 +91,7 @@ public class Game {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		//Ortho is the dimentions of the game in x, y and z axis
-		glOrtho(0, dWidth, dHeight, 0, 1, -1);
+		glOrtho(0, WIDTH, HEIGHT, 0, 1, -1);
 		glMatrixMode(GL_MODELVIEW);
 
 	}

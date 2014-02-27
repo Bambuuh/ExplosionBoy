@@ -3,6 +3,8 @@ package explosionBoy.server;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import explosionBoy.client.Game;
+
 public class ConnectionReference {
 
 	private InetAddress ip = null;
@@ -23,8 +25,14 @@ public class ConnectionReference {
 	}
 	
 	public ConnectionReference(int pID) {
-		this.xPos = 40;
-		this.yPos = 30;
+		if (pID == 2) {
+			this.xPos = Game.WIDTH-50;
+			this.yPos = 30;
+		}
+		else {
+			this.xPos = 40;
+			this.yPos = 30;
+		}
 		this.pID = pID;
 		this.speed = 1;
 		try {
