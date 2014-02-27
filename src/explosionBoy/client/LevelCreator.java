@@ -1,5 +1,6 @@
 package explosionBoy.client;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import org.newdawn.slick.Image;
@@ -80,7 +81,7 @@ public class LevelCreator {
 				switch (level[row][col]) {
 				case 0:
 //					int n = rand.nextInt(3);
-					
+//					
 //					if (n == 0) {
 						image = tiles.getSubImage(96, 0, 32, 32);
 						haveRectangle = false;
