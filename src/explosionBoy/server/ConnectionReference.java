@@ -23,7 +23,10 @@ public class ConnectionReference {
 	}
 	
 	public ConnectionReference(int pID) {
+		this.xPos = 40;
+		this.yPos = 30;
 		this.pID = pID;
+		this.speed = 1;
 		try {
 			ip = InetAddress.getLocalHost();
 		} catch (UnknownHostException e) {
