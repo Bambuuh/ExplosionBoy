@@ -15,6 +15,8 @@ public class ConnectionReference {
 	private Delta delta;
 	
 	public ConnectionReference() {
+		delta = new Delta();
+		delta.getDelta();
 		this.xPos = 40;
 		this.yPos = 30;
 		this.speed = 0.5f;
@@ -27,6 +29,7 @@ public class ConnectionReference {
 	}
 	
 	public ConnectionReference(int pID) {
+		delta = new Delta();
 		delta.getDelta();
 		if (pID == 2) {
 			this.xPos = Game.WIDTH-50;
