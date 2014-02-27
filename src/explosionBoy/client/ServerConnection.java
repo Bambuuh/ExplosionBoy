@@ -45,7 +45,6 @@ public class ServerConnection implements Runnable {
 	
 	public void send(Json json){
 		json.setgID(1);
-		json.setpID(1);
 		sendData = gson.toJson(json, Json.class).getBytes();
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, 9876);
 		try {
