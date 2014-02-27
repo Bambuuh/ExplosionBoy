@@ -11,7 +11,7 @@ public class GameHolder {
 		this.gameID = 1;
 		references = new ArrayList<>();
 		references.add(new ConnectionReference(1));
-//		references.add(new ConnectionReference(2));
+		references.add(new ConnectionReference(2));
 	}
 	
 	public int getGameID() {

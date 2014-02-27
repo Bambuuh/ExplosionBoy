@@ -82,7 +82,7 @@ public class Server implements Runnable {
 						}
 					}
 					for (ConnectionReference cr : gh.getReferences()) {
-						send(conRef, cr.getIp(), cr.getPort());
+							send(conRef, cr.getIp(), cr.getPort());
 					}
 				}
 			}

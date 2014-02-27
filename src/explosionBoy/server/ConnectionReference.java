@@ -5,7 +5,7 @@ import java.net.UnknownHostException;
 
 public class ConnectionReference {
 
-	private InetAddress ip;
+	private InetAddress ip = null;
 	private int conId, port, gID, pID;
 	private float xPos, yPos, speed;
 	private String dir;
