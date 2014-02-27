@@ -8,8 +8,8 @@ import org.newdawn.slick.geom.Rectangle;
 public abstract class Player {
 
 	protected int ID;
-	protected int x, oldx;
-	protected int y, oldy;
+	protected float x, oldx;
+	protected float y, oldy;
 	protected int speed;
 	protected boolean UP = false;
 	protected boolean DOWN = false;
@@ -21,7 +21,7 @@ public abstract class Player {
 	
 	protected Animation playerAnimation;
 	
-	public Player(int x, int y, AnimationHandler animation, int ID) {
+	public Player(float x, float y, AnimationHandler animation, int ID) {
 		this.ID = ID;
 		this.animationHandler = animation;
 		this.json = new Json();
@@ -35,7 +35,7 @@ public abstract class Player {
 		this.playerAnimation = animation.getSnakeAnimation(startPosX, startPosY, tileWidth, horizontal, vertical);
 	}
 	
-	public void move(int x, int y, float speed){
+	public void move(float x, float y, float speed){
 		this.oldx = this.x;
 		this.oldy = this.y;
 		this.y += (y*speed);
@@ -116,19 +116,19 @@ public abstract class Player {
 		
 	}
 	
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public void setX(int x) {
-		this.x = x;
+	public void setX(float oldx2) {
+		this.x = oldx2;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 
-	public void setY(int y) {
+	public void setY(float y) {
 		this.y = y;
 	}
 
@@ -140,19 +140,19 @@ public abstract class Player {
 		this.rectangle = rectangle;
 	}
 
-	public int getOldx() {
+	public float getOldx() {
 		return oldx;
 	}
 
-	public void setOldx(int oldx) {
+	public void setOldx(float oldx) {
 		this.oldx = oldx;
 	}
 
-	public int getOldy() {
+	public float getOldy() {
 		return oldy;
 	}
 
-	public void setOldy(int oldy) {
+	public void setOldy(float oldy) {
 		this.oldy = oldy;
 	}
 	

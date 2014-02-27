@@ -24,6 +24,8 @@ public class Controller {
 		else if (json.getDirection().equals("DOWNLEFT")) player.move(-1,1,speed);
 		else player.move(0, 0,0);
 		player.json = json;
+		player.setY(json.getyPos());
+		player.setX(json.getxPos());
 	}
 	public Player getPlayer(){
 		return this.player;
