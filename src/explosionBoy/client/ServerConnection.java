@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.google.gson.Gson;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import explosionBoy.client.Json;
 
@@ -71,6 +70,7 @@ public class ServerConnection implements Runnable {
 		incomming = incomming.trim();
 		jsonRecive = gson.fromJson(incomming, Json.class);
 		for (Controller controller : controllant) {
+			System.out.println("P ID: "+jsonRecive.getpID());
 			if (controller.id == jsonRecive.getpID()) {
 				controller.controll(jsonRecive);
 			}

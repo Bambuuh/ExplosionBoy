@@ -8,6 +8,8 @@ public class Controller {
 	
 	public Controller(Player player) {
 		this.player = player;
+		this.id = player.ID;
+		System.out.println("PLayer ID: " + player.ID + " MY ID: " + id);
 	}
 	
 	public void controll(Json json){
