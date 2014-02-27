@@ -10,36 +10,9 @@ import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
 
 public class TextureHandler{
-	
-	private Image loadImage(String file){
-		Image image = null;
-			try {
-				image = new Image(file);
-			} catch (SlickException e) {
-				System.err.println("Could not load image. " + e.getMessage());
-			}
-		return image;
-	}
-	
-	//Loads a image based on the Path and puts it on a texture.
-	private Texture loadTexture(String file){
-		Texture tex = null;
-		try {
-			InputStream path = getClass().getClassLoader().getResourceAsStream("images/"+file);
-			tex = TextureLoader.getTexture("PNG", path);
-		} catch (IOException e) {
-			e.printStackTrace();		}
-		return tex;
-	}
 	
 	//Draw a texture on the screen based on the x and y values it takes in.
 	public void drawTexture(Texture tex, float x, float y){

@@ -10,7 +10,6 @@ import java.util.Arrays;
 
 import com.google.gson.Gson;
 
-import explosionBoy.client.Game;
 import explosionBoy.client.Json;
 
 public class Server implements Runnable {

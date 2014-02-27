@@ -26,8 +26,6 @@ public class LevelCreator {
 	private Image tileSet;
 	private SpriteSheet tiles;
 	
-	private LevelObject corner;
-	
 	public LevelCreator() {
 		lvlObjects = new LevelObject[475];
 		try {
