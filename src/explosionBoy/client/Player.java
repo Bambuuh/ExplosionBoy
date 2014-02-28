@@ -2,15 +2,22 @@ package explosionBoy.client;
 
 
 
+import java.util.ArrayList;
+
+import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.geom.Rectangle;
 
 public abstract class Player {
 
+	protected ArrayList<Bomb> bombArray;
+	
 	protected int ID;
 	protected float x, oldx;
 	protected float y, oldy;
 	protected int speed;
+	protected int maxBomb;
+	protected int currBomb;
 	protected boolean UP = false;
 	protected boolean DOWN = false;
 	protected boolean LEFT = false;
@@ -19,9 +26,12 @@ public abstract class Player {
 	private AnimationHandler animationHandler;
 	private Rectangle rectangle;
 	
+	private Bomb bomb;
+	
 	protected Animation playerAnimation;
 	
 	public Player(float x, float y, AnimationHandler animation, int ID) {
+		bombArray = new ArrayList<>();
 		this.ID = ID;
 		this.animationHandler = animation;
 		this.json = new Json();
@@ -103,6 +113,16 @@ public abstract class Player {
 	}
 	
 	public void update(int delta){
+		boolean bombDown = false;
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)&& !bombDown) {
+			bombArray.add(new Bomb(ID, x, y, animationHandler));
+			bombDown = true;
+		}
+		
+		for (Bomb bomb : bombArray) {
+			bomb.update(delta);
+		}
+		
 		setFacing(json, animationHandler);
 //		currentAnimation(animation);
 		drawPlayer(delta);
@@ -114,6 +134,7 @@ public abstract class Player {
 		playerAnimation.update(delta);
 		
 	}
+	
 	
 	public float getX() {
 		return x;
