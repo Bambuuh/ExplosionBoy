@@ -128,20 +128,19 @@ public abstract class Player {
 	
 	public void bombDropper(){
 		
-		for (int i = (int)x+5; i > 0; i--) {
-			if (i%32 == 1) {
-				bombX = i-1;
-				break;
-			}
-		}
-		for (int i = (int) ((int)y+25); i > 0; i--) {
-			if (i%32 == 1) {
-				bombY = i-1;
-				break;
-			}
-		}
-		
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && !bombDown) {
+			for (int i = (int)x+5; i > 0; i--) {
+				if (i%32 == 1) {
+					bombX = i-1;
+					break;
+				}
+			}
+			for (int i = (int) ((int)y+25); i > 0; i--) {
+				if (i%32 == 1) {
+					bombY = i-1;
+					break;
+				}
+			}
 			bombArray.add(new Bomb(ID, bombX, bombY, animationHandler));
 			bombDown = true;
 		}
