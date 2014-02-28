@@ -133,7 +133,7 @@ public class ConnectionReference {
 		default:
 			break;
 		}
-		playerRect.setBounds((int)xPos+1, (int)yPos+6, 14, 9);
+		playerRect.setBounds((int)xPos+1, (int)yPos+20, 14, 9);
 		gameHolder.checkCollissions();
 		this.dir = dir;
 	}

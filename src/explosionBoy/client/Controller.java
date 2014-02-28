@@ -28,7 +28,6 @@ public class Controller {
 		player.json = json;
 
 		if (!json.getDirection().equals(lastDirection) || lastDirection.equals("")) {
-			System.out.println("Setting new direction!");
 			lastDirection = json.getDirection();
 			switch (json.getDirection()) {
 			case "UP":

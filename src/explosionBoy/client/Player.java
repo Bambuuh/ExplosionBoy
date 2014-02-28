@@ -56,7 +56,6 @@ public abstract class Player {
 	public void setFacing(Json json,AnimationHandler animation){
 		if (json.getDirection().equals("UP") && !UP) {
 			setPlayerAnimation(animation, 48, 0, 48, false, false);
-			System.out.println(playerAnimation.getFrameCount());
 			UP = true;
 			DOWN = false;
 			LEFT = false;
@@ -64,7 +63,6 @@ public abstract class Player {
 		}
 		else if (json.getDirection().equals("DOWN") && !DOWN) {
 			setPlayerAnimation(animation, 0, 0, 48, false, false);
-			System.out.println(playerAnimation.getFrameCount());
 			DOWN = true;
 			LEFT = false;
 			RIGHT = false;
@@ -72,7 +70,6 @@ public abstract class Player {
 		}
 		else if (json.getDirection().equals("RIGHT") && !RIGHT) {
 			setPlayerAnimation(animation, 96, 0, 48, false, false);
-			System.out.println(playerAnimation.getFrameCount());
 			RIGHT = true;
 			DOWN = false;
 			LEFT = false;
