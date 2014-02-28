@@ -30,6 +30,7 @@ public class Server implements Runnable {
 		sendData = new byte[512];
 		try {
 			datagramSocket = new DatagramSocket(9876);
+			System.out.println("Server running!");
 		} catch (SocketException e) {
 			System.err.println("Creating socket failed: "+e.getMessage());
 		}
@@ -39,17 +40,13 @@ public class Server implements Runnable {
 			DatagramPacket recivePacket = new DatagramPacket(recData, recData.length);
 			try {
 				datagramSocket.receive(recivePacket);
-				System.out.println("Packet recived!");
 			} catch (IOException e) {
 				System.err.println("Reciving packet failed: "+e.getMessage());
 				e.printStackTrace();
 			}
 			
 			String incomming = new String(recivePacket.getData());
-			System.out.println(incomming.length());
-			System.out.println(incomming);
 			incomming = incomming.trim();
-			System.out.println(incomming.length());
 			
 			jsonRecive = gson.fromJson(incomming, Json.class);
 			CheckIp:
@@ -58,7 +55,6 @@ public class Server implements Runnable {
 					System.out.println("Found game!");
 					for (ConnectionReference cr : gh.getReferences()) {
 						if (cr.getIp() != null && cr.getIp().equals(recivePacket.getAddress()) && cr.getPort()==recivePacket.getPort()) {
-							System.out.println("Breaking ipcheck because address exists allrdy");
 							break CheckIp;
 						}
 						else if (cr.getpID()==jsonRecive.getpID()) {
@@ -69,22 +65,24 @@ public class Server implements Runnable {
 					}
 				}
 			}
-			ConnectionReference conRef = new ConnectionReference();
+			Json json = new Json();
 			for (GameHolder gh : holder) {
 				if (gh.getGameID()==jsonRecive.getgID()) {
 					for (ConnectionReference cr : gh.getReferences()) {
 						if (jsonRecive.getpID() == cr.getpID()) {
 							cr.setDir(jsonRecive.getDirection());
-							conRef.setpID(cr.getpID());
-							conRef.setDir(cr.getDir());
-							conRef.setxPos(cr.getxPos());
-							conRef.setyPos(cr.getyPos());
+							json.setpID(cr.getpID());
+							json.setDirection(cr.getDir());
+							json.setxPos(cr.getxPos());
+							json.setyPos(cr.getyPos());
+							System.out.println("X: "+cr.getxPos());
+							System.out.println("Y: "+cr.getyPos());
 							break;
 						}
 					}
 					for (ConnectionReference cr : gh.getReferences()) {
 						if (cr.getIp() != null) {
-							send(conRef, cr.getIp(), cr.getPort());
+							send(json, cr.getIp(), cr.getPort());
 						}
 					}
 				}
@@ -92,12 +90,8 @@ public class Server implements Runnable {
 			Arrays.fill(recData,(byte) 0);
 	}
 
-	public void send(ConnectionReference cr, InetAddress ip, int port) {
-		jsonToSend.setDirection(cr.getDir());
-		jsonToSend.setSpeed(cr.getSpeed());
-		jsonToSend.setxPos(cr.getxPos());
-		jsonToSend.setyPos(cr.getyPos());
-		jsonToSend.setpID(cr.getpID());
+	public void send(Json json, InetAddress ip, int port) {
+		jsonToSend = json;
 		sendData = gson.toJson(jsonToSend, Json.class).getBytes();
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
 		try {

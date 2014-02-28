@@ -1,7 +1,7 @@
 package explosionBoy.server;
 
+import java.awt.Rectangle;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import explosionBoy.client.Delta;
 import explosionBoy.client.Game;
@@ -10,11 +10,14 @@ public class ConnectionReference {
 
 	private InetAddress ip = null;
 	private int conId, port, gID, pID;
-	private float xPos, yPos, speed;
+	private float xPos, yPos, speed, oldY, oldX;
 	private String dir;
 	private Delta delta;
+	private Rectangle playerRect;
+	private GameHolder gameHolder;
 	
 	public ConnectionReference() {
+		this.playerRect = new Rectangle();
 		delta = new Delta();
 		delta.getDelta();
 		this.xPos = 40;
@@ -23,12 +26,14 @@ public class ConnectionReference {
 		this.ip = null;
 	}
 	
-	public ConnectionReference(int pID) {
+	public ConnectionReference(int pID, GameHolder gameHolder) {
+		this.gameHolder = gameHolder;
+		this.playerRect = new Rectangle();
 		delta = new Delta();
 		delta.getDelta();
 		if (pID == 2) {
-			this.xPos = Game.WIDTH-50;
-			this.yPos = 30;
+			this.xPos = Game.WIDTH-60;
+			this.yPos = 35;
 		}
 		else {
 			this.xPos = 40;
@@ -94,7 +99,8 @@ public class ConnectionReference {
 
 	public void setDir(String dir) {
 		int deltish = delta.getDelta();
-		System.out.println("DELTA: "+deltish);
+		this.oldX = xPos;
+		this.oldY = yPos;
 		switch (dir) {
 		case "UP":
 			this.yPos -= speed*deltish;
@@ -127,7 +133,33 @@ public class ConnectionReference {
 		default:
 			break;
 		}
+		playerRect.setBounds((int)xPos+1, (int)yPos+6, 14, 9);
+		gameHolder.checkCollissions();
 		this.dir = dir;
+	}
+	
+	public Rectangle getPlayerRect() {
+		return playerRect;
+	}
+
+	public void setPlayerRect(Rectangle playerRect) {
+		this.playerRect = playerRect;
+	}
+
+	public float getOldY() {
+		return oldY;
+	}
+
+	public void setOldY(float oldY) {
+		this.oldY = oldY;
+	}
+
+	public float getOldX() {
+		return oldX;
+	}
+
+	public void setOldX(float oldX) {
+		this.oldX = oldX;
 	}
 	
 }
