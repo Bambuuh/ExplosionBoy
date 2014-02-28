@@ -109,7 +109,7 @@ public class Game {
 			
 			
 			level.printLevel();
-			snakeBoy2.update(delta);
+//			snakeBoy2.update(delta);
 			snakeBoy.update(delta);
 			for (Controller player : controllArray) {
 				player.setDelta(delta);

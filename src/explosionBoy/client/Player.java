@@ -12,6 +12,10 @@ public abstract class Player {
 
 	protected ArrayList<Bomb> bombArray;
 	
+	
+	float bombX=0;
+	float bombY=0;
+	
 	protected int ID;
 	protected float x, oldx;
 	protected float y, oldy;
@@ -110,14 +114,8 @@ public abstract class Player {
 	}
 	
 	public void update(int delta){
-		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && !bombDown) {
-			bombArray.add(new Bomb(ID, x, y, animationHandler));
-			bombDown = true;
-		}
-		if (!Keyboard.isKeyDown(Keyboard.KEY_SPACE) && bombDown) {
-			bombDown = false;
-		}
 		
+		bombDropper();
 		for (Bomb bomb : bombArray) {
 			bomb.update(delta);
 		}
@@ -126,6 +124,30 @@ public abstract class Player {
 //		currentAnimation(animation);
 		drawPlayer(delta);
 		this.rectangle.setBounds(x+1, y+playerAnimation.getHeight()-10, playerAnimation.getWidth()-2, 9);
+	}
+	
+	public void bombDropper(){
+		
+		for (int i = (int)x+5; i > 0; i--) {
+			if (i%32 == 1) {
+				bombX = i-1;
+				break;
+			}
+		}
+		for (int i = (int) ((int)y+25); i > 0; i--) {
+			if (i%32 == 1) {
+				bombY = i-1;
+				break;
+			}
+		}
+		
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && !bombDown) {
+			bombArray.add(new Bomb(ID, bombX, bombY, animationHandler));
+			bombDown = true;
+		}
+		if (!Keyboard.isKeyDown(Keyboard.KEY_SPACE) && bombDown) {
+			bombDown = false;
+		}
 	}
 	
 	public void drawPlayer(int delta){
