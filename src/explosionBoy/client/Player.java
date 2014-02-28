@@ -26,7 +26,7 @@ public abstract class Player {
 	private AnimationHandler animationHandler;
 	private Rectangle rectangle;
 	
-	private Bomb bomb;
+	private boolean bombDown = false;
 	
 	protected Animation playerAnimation;
 	
@@ -110,10 +110,12 @@ public abstract class Player {
 	}
 	
 	public void update(int delta){
-		boolean bombDown = false;
-		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)&& !bombDown) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && !bombDown) {
 			bombArray.add(new Bomb(ID, x, y, animationHandler));
 			bombDown = true;
+		}
+		if (!Keyboard.isKeyDown(Keyboard.KEY_SPACE) && bombDown) {
+			bombDown = false;
 		}
 		
 		for (Bomb bomb : bombArray) {
