@@ -75,6 +75,7 @@ public class Server implements Runnable {
 							json.setDirection(cr.getDir());
 							json.setxPos(cr.getxPos());
 							json.setyPos(cr.getyPos());
+							json.setSpeed(cr.getSpeed());
 							System.out.println("X: "+cr.getxPos());
 							System.out.println("Y: "+cr.getyPos());
 							break;

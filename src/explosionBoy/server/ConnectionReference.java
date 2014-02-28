@@ -99,8 +99,8 @@ public class ConnectionReference {
 
 	public void setDir(String dir) {
 		int deltish = delta.getDelta();
-//		this.oldX = xPos;
-//		this.oldY = yPos;
+		this.oldX = xPos;
+		this.oldY = yPos;
 		switch (dir) {
 		case "UP":
 			this.yPos -= speed*deltish;
@@ -133,8 +133,8 @@ public class ConnectionReference {
 		default:
 			break;
 		}
-//		playerRect.setBounds((int)xPos+1, (int)yPos+6, 14, 9);
-//		gameHolder.checkCollissions();
+		playerRect.setBounds((int)xPos+1, (int)yPos+6, 14, 9);
+		gameHolder.checkCollissions();
 		this.dir = dir;
 	}
 	
