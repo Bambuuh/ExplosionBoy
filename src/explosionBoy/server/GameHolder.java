@@ -22,7 +22,6 @@ public class GameHolder {
 		for (ConnectionReference p : references) {
 		for (Rectangle lvl : rectArray) {
 				boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl);
-				System.out.println("COL: "+collision);
 				if (collision) {
 					System.out.println("Changing pos!");
 					if (lvl.getMaxX()>p.getPlayerRect().getMinX()) {
