@@ -22,7 +22,7 @@ public class ConnectionReference {
 		delta.getDelta();
 		this.xPos = 40;
 		this.yPos = 30;
-		this.speed = 0.05f;
+		this.speed = 0.1f;
 		this.ip = null;
 	}
 	
@@ -40,7 +40,7 @@ public class ConnectionReference {
 			this.yPos = 30;
 		}
 		this.pID = pID;
-		this.speed = 0.05f;
+		this.speed = 0.1f;
 		this.ip = null;
 	}
 	

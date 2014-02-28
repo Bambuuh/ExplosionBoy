@@ -52,7 +52,6 @@ public class Server implements Runnable {
 			CheckIp:
 			for (GameHolder gh : holder) {
 				if (gh.getGameID()==jsonRecive.getgID()) {
-					System.out.println("Found game!");
 					for (ConnectionReference cr : gh.getReferences()) {
 						if (cr.getIp() != null && cr.getIp().equals(recivePacket.getAddress()) && cr.getPort()==recivePacket.getPort()) {
 							break CheckIp;
@@ -76,8 +75,6 @@ public class Server implements Runnable {
 							json.setxPos(cr.getxPos());
 							json.setyPos(cr.getyPos());
 							json.setSpeed(cr.getSpeed());
-							System.out.println("X: "+cr.getxPos());
-							System.out.println("Y: "+cr.getyPos());
 							break;
 						}
 					}
@@ -97,7 +94,6 @@ public class Server implements Runnable {
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
 		try {
 			datagramSocket.send(sendPacket);
-			System.out.println("SENDING!");
 		} catch (IOException e) {
 			System.err.println("Sending packet failed: "+e.getMessage());
 			e.printStackTrace();
