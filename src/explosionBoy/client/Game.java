@@ -105,41 +105,42 @@ public class Game {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			int delta = getDelta();
 			update(delta);
-			
-			
-			
 			level.printLevel();
 //			snakeBoy2.update(delta);
 			snakeBoy.update(delta);
-			for (Controller player : controllArray) {
-				player.setDelta(delta);
-				Player p = player.getPlayer();
-			for (LevelObject lvl : level.getLvlObjects()) {
-				if (lvl.isHaveRectangle()) {
-					boolean collision = UnitCollission.isColliding(p.getRectangle(), lvl.getRectangle());
-					if (collision) {
-						if (lvl.getRectangle().getMaxX()>p.getRectangle().getMinX()) {
-							p.setX(p.oldx);
-						}
-						else if (lvl.getRectangle().getMinX()<p.getRectangle().getMaxX()) {
-							p.setX(p.oldx);
-						}
-						if (lvl.getRectangle().getMaxY()>p.getRectangle().getMinY()) {
-							p.setY(p.oldy);
-						}
-						else if (lvl.getRectangle().getMinY()<p.getRectangle().getMaxY()) {
-							p.setY(p.oldy);
-						}
-					}
-				}
-			}
-			}
+			checkCollisions(delta);
 			input.readInput();
 
 			Display.update();
 			Display.sync(60);
 		}
 		connection.close();
+	}
+	
+	public void checkCollisions(int delta){
+		for (Controller player : controllArray) {
+			player.setDelta(delta);
+			Player p = player.getPlayer();
+		for (LevelObject lvl : level.getLvlObjects()) {
+			if (lvl.isHaveRectangle()) {
+				boolean collision = UnitCollission.isColliding(p.getRectangle(), lvl.getRectangle());
+				if (collision) {
+					if (lvl.getRectangle().getMaxX()>p.getRectangle().getMinX()) {
+						p.setX(p.oldx);
+					}
+					else if (lvl.getRectangle().getMinX()<p.getRectangle().getMaxX()) {
+						p.setX(p.oldx);
+					}
+					if (lvl.getRectangle().getMaxY()>p.getRectangle().getMinY()) {
+						p.setY(p.oldy);
+					}
+					else if (lvl.getRectangle().getMinY()<p.getRectangle().getMaxY()) {
+						p.setY(p.oldy);
+					}
+				}
+			}
+		}
+		}
 	}
 
 	public void update(int delta) {

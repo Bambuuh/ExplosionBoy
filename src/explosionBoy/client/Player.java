@@ -114,16 +114,14 @@ public abstract class Player {
 	}
 	
 	public void update(int delta){
-		
+		setRectangle();
 		bombDropper();
 		for (Bomb bomb : bombArray) {
-			bomb.update(delta);
+			bomb.update(delta, animationHandler);
 		}
 		
 		setFacing(json, animationHandler);
-//		currentAnimation(animation);
 		drawPlayer(delta);
-		this.rectangle.setBounds(x+1, y+playerAnimation.getHeight()-10, playerAnimation.getWidth()-2, 9);
 	}
 	
 	public void bombDropper(){
@@ -152,7 +150,10 @@ public abstract class Player {
 	public void drawPlayer(int delta){
 		playerAnimation.draw(this.x, this.y);
 		playerAnimation.update(delta);
-		
+	}
+	
+	public void setRectangle(){
+		this.rectangle.setBounds(x+1, y+playerAnimation.getHeight()-10, playerAnimation.getWidth()-2, 9);
 	}
 	
 	
