@@ -41,7 +41,6 @@ public class Game {
 	private ServerConnection connection;
 	private InputReader input;
 
-
 	private long lastFrame;
 
 	public Game(){
@@ -125,7 +124,7 @@ public class Game {
 	
 	public void updateBombs(int delta){
 		for (Bomb bomb : bombArray) {
-			bomb.update(delta, animation);
+			bomb.update(delta);
 		}
 	}
 	
