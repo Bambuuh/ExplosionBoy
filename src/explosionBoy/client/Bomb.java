@@ -72,8 +72,10 @@ public class Bomb {
 	
 	public void animateBomb(int delta, int power){
 		
-		bombAnimation.draw(x, y);
-		bombAnimation.update(delta);
+		if (!exploding) {
+			bombAnimation.draw(x, y);
+			bombAnimation.update(delta);
+		}
 		if (exploding) {
 			for (int i = 1; i <= power; i++) {
 				int explosionPower = i * 32;
