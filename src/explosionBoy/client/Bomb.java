@@ -14,6 +14,10 @@ public class Bomb {
 	private float y;
 	
 	private Animation bombAnimation;
+	private Animation explosionLeft;
+	private Animation explosionRight;
+	private Animation explosionUp;
+	private Animation explosionDown;
 	
 	public Bomb(int ownerID, float x, float y, AnimationHandler animation) {
 		currentTime = System.currentTimeMillis();
@@ -24,8 +28,8 @@ public class Bomb {
 		bombAnimation = animation.getBombAnimation(0, 160, 96, false, false, true, true);
 	}
 	
-	public void setAnimation(AnimationHandler animation, int startX, int startY, int totalWidth, boolean horizontal, boolean vertical, boolean pingpong, boolean looping){
-			bombAnimation = animation.getBombAnimation(startX, startY, totalWidth, horizontal, vertical, pingpong, looping);
+	public void setAnimation(Animation animationToChange, AnimationHandler animation, int startX, int startY, int totalWidth, boolean horizontal, boolean vertical, boolean pingpong, boolean looping){
+			animationToChange = animation.getBombAnimation(startX, startY, totalWidth, horizontal, vertical, pingpong, looping);
 	}
 	
 	public void update(int delta, AnimationHandler animation){
@@ -37,7 +41,7 @@ public class Bomb {
 	
 	public void checkExplosion(AnimationHandler animation){
 		if (countDown() >= 3 && !exploding) {
-			setAnimation(animation, 0, 0, 160, false, false, false, false);
+			setAnimation(bombAnimation, animation, 32, 0, 160, false, false, false, false);
 			exploding = true;
 		}
 		if (bombAnimation.isStopped()) {
