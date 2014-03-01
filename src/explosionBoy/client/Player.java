@@ -45,7 +45,7 @@ public abstract class Player {
 		this.playerAnimation = animation.getSnakeAnimation(startPosX, startPosY, tileWidth, horizontal, vertical);
 	}
 	
-	public void move(float x, float y, float speed,int delta){
+	public void move(float x, float y, float speed, int delta){
 		this.oldx = this.x;
 		this.oldy = this.y;
 		this.y += (y*speed*delta);
