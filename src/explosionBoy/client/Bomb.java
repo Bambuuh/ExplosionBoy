@@ -29,7 +29,7 @@ public class Bomb {
 	public Bomb(int ownerID, float x, float y, AnimationHandler animation) {
 		animationHandler = animation;
 		currentTime = System.currentTimeMillis();
-		power =1;
+		power =3;
 		this.ownerID = ownerID;
 		this.x = x;
 		this.y = y;
@@ -72,31 +72,35 @@ public class Bomb {
 	
 	public void animateBomb(int delta, int power){
 		
-		//TODO: add for-loop to iterate extra animations if power is higher
-		
-		int explosionPower = power * 32;
 		bombAnimation.draw(x, y);
 		bombAnimation.update(delta);
 		if (exploding) {
-			explosionLeft.draw(x-explosionPower, y);
-			explosionLeft.update(delta);
-			explosionTopLeft.draw(x-explosionPower-32, y);
-			explosionTopLeft.update(delta);
-			
-			explosionRight.draw(x+explosionPower, y);
-			explosionRight.update(delta);
-			explosionTopRight.draw(x+explosionPower+32, y);
-			explosionTopRight.update(delta);
-			
-			explosionUp.draw(x, y-explosionPower);
-			explosionUp.update(delta);
-			explosionTopUp.draw(x, y-explosionPower-32);
-			explosionTopUp.update(delta);
-			
-			explosionDown.draw(x, y+explosionPower);
-			explosionDown.update(delta);
-			explosionTopDown.draw(x, y+explosionPower+32);
-			explosionTopDown.update(delta);
+			for (int i = 1; i <= power; i++) {
+				int explosionPower = i * 32;
+				
+				bombAnimation.draw(x, y);
+				bombAnimation.update(delta);
+				
+				explosionLeft.draw(x-explosionPower, y);
+				explosionLeft.update(delta);
+				explosionTopLeft.draw(x-explosionPower-32, y);
+				explosionTopLeft.update(delta);
+				
+				explosionRight.draw(x+explosionPower, y);
+				explosionRight.update(delta);
+				explosionTopRight.draw(x+explosionPower+32, y);
+				explosionTopRight.update(delta);
+				
+				explosionUp.draw(x, y-explosionPower);
+				explosionUp.update(delta);
+				explosionTopUp.draw(x, y-explosionPower-32);
+				explosionTopUp.update(delta);
+				
+				explosionDown.draw(x, y+explosionPower);
+				explosionDown.update(delta);
+				explosionTopDown.draw(x, y+explosionPower+32);
+				explosionTopDown.update(delta);
+			}
 		}
 	}
 	
