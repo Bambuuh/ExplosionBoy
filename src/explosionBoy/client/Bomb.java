@@ -1,9 +1,11 @@
 package explosionBoy.client;
 
-import org.lwjgl.Sys;
 import org.newdawn.slick.Animation;
 
 public class Bomb {
+	
+	private boolean exploding = false;
+	private boolean exploded = false;
 
 	private long currentTime;
 	private int range;
@@ -19,11 +21,11 @@ public class Bomb {
 		this.ownerID = ownerID;
 		this.x = x;
 		this.y = y;
-		bombAnimation = animation.getBombAnimation(0, 128, 96, false, false, true);
+		bombAnimation = animation.getBombAnimation(0, 160, 96, false, false, true, true);
 	}
 	
-	public void setAnimation(AnimationHandler animation){
-			bombAnimation = animation.getBombAnimation(128, 0, 32, false, false, false);
+	public void setAnimation(AnimationHandler animation, int startX, int startY, int totalWidth, boolean horizontal, boolean vertical, boolean pingpong, boolean looping){
+			bombAnimation = animation.getBombAnimation(startX, startY, totalWidth, horizontal, vertical, pingpong, looping);
 	}
 	
 	public void update(int delta, AnimationHandler animation){
@@ -34,8 +36,12 @@ public class Bomb {
 	}
 	
 	public void checkExplosion(AnimationHandler animation){
-		if (countDown() >= 3) {
-			setAnimation(animation);
+		if (countDown() >= 3 && !exploding) {
+			setAnimation(animation, 0, 0, 160, false, false, false, false);
+			exploding = true;
+		}
+		if (bombAnimation.isStopped()) {
+			exploded = true;
 		}
 	}
 	
@@ -47,6 +53,8 @@ public class Bomb {
 		
 	}
 	
-	
+	public boolean getExploded(){
+		return exploded;
+	}
 	
 }

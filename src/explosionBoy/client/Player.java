@@ -10,9 +10,6 @@ import org.newdawn.slick.geom.Rectangle;
 
 public abstract class Player {
 
-	protected ArrayList<Bomb> bombArray;
-	
-	
 	float bombX=0;
 	float bombY=0;
 	
@@ -35,7 +32,6 @@ public abstract class Player {
 	protected Animation playerAnimation;
 	
 	public Player(float x, float y, AnimationHandler animation, int ID) {
-		bombArray = new ArrayList<>();
 		this.ID = ID;
 		this.animationHandler = animation;
 		this.json = new Json();
@@ -54,7 +50,6 @@ public abstract class Player {
 		this.oldy = this.y;
 		this.y += (y*speed*delta);
 		this.x += (x*speed*delta);
-		
 	}
 	
 	public void setFacing(Json json,AnimationHandler animation){
@@ -113,18 +108,14 @@ public abstract class Player {
 		}
 	}
 	
-	public void update(int delta){
+	public void update(int delta, ArrayList<Bomb> bombArray){
 		setRectangle();
-		bombDropper();
-		for (Bomb bomb : bombArray) {
-			bomb.update(delta, animationHandler);
-		}
-		
+		bombDropper(bombArray);
 		setFacing(json, animationHandler);
 		drawPlayer(delta);
 	}
 	
-	public void bombDropper(){
+	public void bombDropper(ArrayList<Bomb> bombArray){
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && !bombDown) {
 			for (int i = (int)x+5; i > 0; i--) {

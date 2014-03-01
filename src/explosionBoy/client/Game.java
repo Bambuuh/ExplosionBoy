@@ -27,6 +27,8 @@ import explosionBoy.levelobjects.LevelObject;
 public class Game {
 
 	private ArrayList<Controller> controllArray;
+	private ArrayList<Bomb> bombArray;
+	private ArrayList<Bomb> removeBombArray;
 	
 	private SnakeBoy snakeBoy;
 	private SnakeBoy snakeBoy2;
@@ -44,8 +46,10 @@ public class Game {
 
 	public Game(){
 		initGL();
-		controllArray = new ArrayList<Controller>();
 		animation = new AnimationHandler();
+		controllArray = new ArrayList<Controller>();
+		bombArray = new ArrayList<>();
+		removeBombArray = new ArrayList<>();
 		snakeBoy = new SnakeBoy(40,30 , animation, 1);
 		snakeBoy2 = new SnakeBoy(WIDTH-50, 30, animation, 2);
 		controllArray.add(new Controller(snakeBoy));
@@ -107,14 +111,33 @@ public class Game {
 			update(delta);
 			level.printLevel();
 //			snakeBoy2.update(delta);
-			snakeBoy.update(delta);
+			snakeBoy.update(delta, bombArray);
+			updateBombs(delta);
 			checkCollisions(delta);
+			removeBombs();
 			input.readInput();
 
 			Display.update();
 			Display.sync(60);
 		}
 		connection.close();
+	}
+	
+	public void updateBombs(int delta){
+		for (Bomb bomb : bombArray) {
+			bomb.update(delta, animation);
+		}
+	}
+	
+	public void removeBombs(){
+		for (Bomb bomb : bombArray) {
+			if (bomb.getExploded()) {
+				removeBombArray.add(bomb);
+			}
+		}
+		for (Bomb bomb : removeBombArray) {
+			bombArray.remove(bomb);
+		}
 	}
 	
 	public void checkCollisions(int delta){

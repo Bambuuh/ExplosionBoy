@@ -33,7 +33,7 @@ public class AnimationHandler {
 		return superAnimation;
 	}
 	
-	public Animation getBombAnimation(int startPosX, int startPosY,int pictureW, boolean horizontal, boolean vertical, boolean PingPong){
+	public Animation getBombAnimation(int startPosX, int startPosY,int pictureW, boolean horizontal, boolean vertical, boolean PingPong, boolean looping){
 		
 		SpriteSheet explosionSprite;
 		Animation bombAnimation;
@@ -42,6 +42,7 @@ public class AnimationHandler {
 		bombAnimation = new Animation(explosionSprite, 250);
 		
 		bombAnimation.setPingPong(PingPong);
+		bombAnimation.setLooping(looping);
 		
 		return bombAnimation;
 	}
