@@ -6,6 +6,7 @@ public class Controller {
 	int id, delta;
 	Player player;
 	private String lastDirection;
+	private float speed;
 
 	public Controller(Player player) {
 		this.lastDirection = "";
@@ -15,16 +16,8 @@ public class Controller {
 	}
 
 	public void controll(Json json){
-		float speed = json.getSpeed();
-		if (json.getDirection().equals("UP")) player.move(0,-1,speed,delta);
-		else if (json.getDirection().equals("DOWN")) player.move(0,1,speed,delta);
-		else if (json.getDirection().equals("RIGHT")) player.move(1,0,speed,delta);
-		else if (json.getDirection().equals("LEFT")) player.move(-1,0,speed,delta);
-		else if (json.getDirection().equals("UPRIGHT")) player.move(1,-1,speed,delta);
-		else if (json.getDirection().equals("DOWNRIGHT")) player.move(1,1,speed,delta);
-		else if (json.getDirection().equals("UPLEFT")) player.move(-1,-1,speed,delta);
-		else if (json.getDirection().equals("DOWNLEFT")) player.move(-1,1,speed,delta);
-		else player.move(0, 0, 0,delta);
+		speed = json.getSpeed();
+		lastDirection = json.getDirection();
 		player.json = json;
 
 		if (!json.getDirection().equals(lastDirection) || lastDirection.equals("")) {
@@ -58,6 +51,18 @@ public class Controller {
 				break;
 			}
 		}
+	}
+	
+	public void autoMove(){
+		if (lastDirection.equals("UP")) player.move(0,-1,speed,delta);
+		else if (lastDirection.equals("DOWN")) player.move(0,1,speed,delta);
+		else if (lastDirection.equals("RIGHT")) player.move(1,0,speed,delta);
+		else if (lastDirection.equals("LEFT")) player.move(-1,0,speed,delta);
+		else if (lastDirection.equals("UPRIGHT")) player.move(1,-1,speed,delta);
+		else if (lastDirection.equals("DOWNRIGHT")) player.move(1,1,speed,delta);
+		else if (lastDirection.equals("UPLEFT")) player.move(-1,-1,speed,delta);
+		else if (lastDirection.equals("DOWNLEFT")) player.move(-1,1,speed,delta);
+		else player.move(0, 0, 0,delta);
 	}
 	public Player getPlayer(){
 		return this.player;

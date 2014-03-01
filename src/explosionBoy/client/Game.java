@@ -109,7 +109,7 @@ public class Game {
 			int delta = getDelta();
 			update(delta);
 			level.printLevel();
-//			snakeBoy2.update(delta);
+			snakeBoy2.update(delta, bombArray);
 			snakeBoy.update(delta, bombArray);
 			updateBombs(delta);
 			checkCollisions(delta);
@@ -162,6 +162,7 @@ public class Game {
 				}
 			}
 		}
+		player.autoMove();
 		}
 	}
 
