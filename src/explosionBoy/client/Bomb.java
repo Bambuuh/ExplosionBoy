@@ -8,10 +8,11 @@ public class Bomb {
 	private boolean exploded = false;
 
 	private long currentTime;
-	private int range;
+	private int power;
 	private int ownerID;
 	private float x;
 	private float y;
+	
 	
 	private AnimationHandler animationHandler;
 	
@@ -20,11 +21,15 @@ public class Bomb {
 	private Animation explosionRight;
 	private Animation explosionUp;
 	private Animation explosionDown;
+	private Animation explosionTopLeft;
+	private Animation explosionTopRight;
+	private Animation explosionTopUp;
+	private Animation explosionTopDown;
 	
 	public Bomb(int ownerID, float x, float y, AnimationHandler animation) {
 		animationHandler = animation;
 		currentTime = System.currentTimeMillis();
-		range =1;
+		power =1;
 		this.ownerID = ownerID;
 		this.x = x;
 		this.y = y;
@@ -38,23 +43,57 @@ public class Bomb {
 	}
 	
 	public void update(int delta){
-		bombAnimation.draw(x, y);
-		bombAnimation.update(delta);
+		animateBomb(delta, power);
 		checkExplosion();
 		
 	}
 	
 	public void checkExplosion(){
 		if (countDown() >= 3 && !exploding) {
-			bombAnimation = setAnimation(32, 0, 160, false, false, false, false);
-			explosionLeft = setAnimation(0, 0, 160, false, false, false, false);
-			explosionRight = setAnimation(0, 0, 160, false, false, false, false);
-			explosionDown = setAnimation(0, 0, 160, false, false, false, false);
-			explosionUp = setAnimation(0, 0, 160, false, false, false, false);
 			exploding = true;
+			bombAnimation = setAnimation(32, 0, 128, false, false, false, false);
+			
+			explosionLeft = setAnimation(0, 64, 128, false, false, false, false);
+			explosionTopLeft = setAnimation(0, 128, 128, false, false, false, false);
+			
+			explosionRight = setAnimation(0, 64, 128, false, false, false, false);
+			explosionTopRight = setAnimation(0, 128, 128, false, false, false, false);
+			
+			explosionDown = setAnimation(0, 32, 128, false, false, false, false);
+			explosionTopDown = setAnimation(0, 96, 128, false, true, false, false);
+			
+			explosionUp = setAnimation(0, 32, 128, false, false, false, false);
+			explosionTopUp = setAnimation(0, 96, 128, false, false, false, false);
 		}
 		if (bombAnimation.isStopped()) {
 			exploded = true;
+		}
+	}
+	
+	public void animateBomb(int delta, int power){
+		int explosionPower = power * 32;
+		bombAnimation.draw(x, y);
+		bombAnimation.update(delta);
+		if (exploding) {
+			explosionLeft.draw(x-explosionPower, y);
+			explosionLeft.update(delta);
+			explosionTopLeft.draw(x-explosionPower-32, y);
+			explosionTopLeft.update(delta);
+			
+			explosionRight.draw(x+explosionPower, y);
+			explosionRight.update(delta);
+			explosionTopRight.draw(x+explosionPower+32, y);
+			explosionTopRight.update(delta);
+			
+			explosionUp.draw(x, y-explosionPower);
+			explosionUp.update(delta);
+			explosionTopUp.draw(x, y-explosionPower-32);
+			explosionTopUp.update(delta);
+			
+			explosionDown.draw(x, y+explosionPower);
+			explosionDown.update(delta);
+			explosionTopDown.draw(x, y+explosionPower+32);
+			explosionTopDown.update(delta);
 		}
 	}
 	
