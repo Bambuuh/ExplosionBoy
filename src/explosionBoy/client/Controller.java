@@ -5,10 +5,11 @@ public class Controller {
 
 	int id, delta;
 	Player player;
-	private String lastDirection;
+	private String moveDirection, lastDirection;
 	private float speed;
 
 	public Controller(Player player) {
+		this.moveDirection = "";
 		this.lastDirection = "";
 		this.player = player;
 		this.id = player.ID;
@@ -17,34 +18,26 @@ public class Controller {
 
 	public void controll(Json json){
 		speed = json.getSpeed();
-		lastDirection = json.getDirection();
+		moveDirection = json.getDirection();
 		player.json = json;
 
 		if (!json.getDirection().equals(lastDirection) || lastDirection.equals("")) {
-			lastDirection = json.getDirection();
+			moveDirection = json.getDirection();
 			switch (json.getDirection()) {
 			case "UP":
-				if (json.getyPos() < player.getY()) {
 					player.setY(json.getyPos());
-				}
 				break;
 
 			case "DOWN":
-				if (json.getyPos() > player.getY()) {
 					player.setY(json.getyPos());
-				}
 				break;
 
 			case "RIGHT":
-				if (json.getxPos() > player.getX()) {
 					player.setX(json.getxPos());
-				}
 				break;
 
 			case "LEFT":
-				if (json.getxPos() < player.getX()) {
 					player.setX(json.getxPos());
-				}
 				break;
 
 			default:
@@ -54,14 +47,14 @@ public class Controller {
 	}
 	
 	public void autoMove(){
-		if (lastDirection.equals("UP")) player.move(0,-1,speed,delta);
-		else if (lastDirection.equals("DOWN")) player.move(0,1,speed,delta);
-		else if (lastDirection.equals("RIGHT")) player.move(1,0,speed,delta);
-		else if (lastDirection.equals("LEFT")) player.move(-1,0,speed,delta);
-		else if (lastDirection.equals("UPRIGHT")) player.move(1,-1,speed,delta);
-		else if (lastDirection.equals("DOWNRIGHT")) player.move(1,1,speed,delta);
-		else if (lastDirection.equals("UPLEFT")) player.move(-1,-1,speed,delta);
-		else if (lastDirection.equals("DOWNLEFT")) player.move(-1,1,speed,delta);
+		if (moveDirection.equals("UP")) player.move(0,-1,speed,delta);
+		else if (moveDirection.equals("DOWN")) player.move(0,1,speed,delta);
+		else if (moveDirection.equals("RIGHT")) player.move(1,0,speed,delta);
+		else if (moveDirection.equals("LEFT")) player.move(-1,0,speed,delta);
+		else if (moveDirection.equals("UPRIGHT")) player.move(1,-1,speed,delta);
+		else if (moveDirection.equals("DOWNRIGHT")) player.move(1,1,speed,delta);
+		else if (moveDirection.equals("UPLEFT")) player.move(-1,-1,speed,delta);
+		else if (moveDirection.equals("DOWNLEFT")) player.move(-1,1,speed,delta);
 		else player.move(0, 0, 0,delta);
 	}
 	public Player getPlayer(){

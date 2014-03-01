@@ -29,7 +29,7 @@ public class Bomb {
 	public Bomb(int ownerID, float x, float y, AnimationHandler animation) {
 		animationHandler = animation;
 		currentTime = System.currentTimeMillis();
-		power =2;
+		power =5;
 		this.ownerID = ownerID;
 		this.x = x;
 		this.y = y;
