@@ -52,30 +52,30 @@ public abstract class Player {
 		this.x += (x*speed*delta);
 	}
 	
-	public void setFacing(Json json,AnimationHandler animation){
+	public void setFacing(Json json){
 		if (json.getDirection().equals("UP") && !UP) {
-			setPlayerAnimation(animation, 48, 0, 48, false, false);
+			setPlayerAnimation(animationHandler, 48, 0, 48, false, false);
 			UP = true;
 			DOWN = false;
 			LEFT = false;
 			RIGHT = false;
 		}
 		else if (json.getDirection().equals("DOWN") && !DOWN) {
-			setPlayerAnimation(animation, 0, 0, 48, false, false);
+			setPlayerAnimation(animationHandler, 0, 0, 48, false, false);
 			DOWN = true;
 			LEFT = false;
 			RIGHT = false;
 			UP = false;
 		}
 		else if (json.getDirection().equals("RIGHT") && !RIGHT) {
-			setPlayerAnimation(animation, 96, 0, 48, false, false);
+			setPlayerAnimation(animationHandler, 96, 0, 48, false, false);
 			RIGHT = true;
 			DOWN = false;
 			LEFT = false;
 			UP = false;
 		}
 		else if (json.getDirection().equals("LEFT") && !LEFT) {
-			setPlayerAnimation(animation, 96, 0, 48, true, false);
+			setPlayerAnimation(animationHandler, 96, 0, 48, true, false);
 			LEFT = true;
 			DOWN = false;
 			RIGHT = false;
@@ -111,7 +111,7 @@ public abstract class Player {
 	public void update(int delta, ArrayList<Bomb> bombArray){
 		setRectangle();
 		bombDropper(bombArray);
-		setFacing(json, animationHandler);
+		setFacing(json);
 		drawPlayer(delta);
 	}
 	
