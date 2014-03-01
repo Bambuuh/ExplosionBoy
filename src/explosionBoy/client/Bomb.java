@@ -118,4 +118,12 @@ public class Bomb {
 		return exploded;
 	}
 	
+	public float getX(){
+		return x;
+	}
+	
+	public float getY(){
+		return y;
+	}
+	
 }
