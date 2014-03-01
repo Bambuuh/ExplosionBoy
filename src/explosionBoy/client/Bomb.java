@@ -13,6 +13,8 @@ public class Bomb {
 	private float x;
 	private float y;
 	
+	private AnimationHandler animationHandler;
+	
 	private Animation bombAnimation;
 	private Animation explosionLeft;
 	private Animation explosionRight;
@@ -20,6 +22,7 @@ public class Bomb {
 	private Animation explosionDown;
 	
 	public Bomb(int ownerID, float x, float y, AnimationHandler animation) {
+		animationHandler = animation;
 		currentTime = System.currentTimeMillis();
 		range =1;
 		this.ownerID = ownerID;
@@ -28,20 +31,26 @@ public class Bomb {
 		bombAnimation = animation.getBombAnimation(0, 160, 96, false, false, true, true);
 	}
 	
-	public void setAnimation(Animation animationToChange, AnimationHandler animation, int startX, int startY, int totalWidth, boolean horizontal, boolean vertical, boolean pingpong, boolean looping){
-			animationToChange = animation.getBombAnimation(startX, startY, totalWidth, horizontal, vertical, pingpong, looping);
+	public Animation setAnimation(int startX, int startY, int totalWidth, boolean horizontal, boolean vertical, boolean pingpong, boolean looping){
+			Animation animation;
+			animation = animationHandler.getBombAnimation(startX, startY, totalWidth, horizontal, vertical, pingpong, looping);
+			return animation;
 	}
 	
-	public void update(int delta, AnimationHandler animation){
+	public void update(int delta){
 		bombAnimation.draw(x, y);
 		bombAnimation.update(delta);
-		checkExplosion(animation);
+		checkExplosion();
 		
 	}
 	
-	public void checkExplosion(AnimationHandler animation){
+	public void checkExplosion(){
 		if (countDown() >= 3 && !exploding) {
-			setAnimation(bombAnimation, animation, 32, 0, 160, false, false, false, false);
+			bombAnimation = setAnimation(32, 0, 160, false, false, false, false);
+			explosionLeft = setAnimation(0, 0, 160, false, false, false, false);
+			explosionRight = setAnimation(0, 0, 160, false, false, false, false);
+			explosionDown = setAnimation(0, 0, 160, false, false, false, false);
+			explosionUp = setAnimation(0, 0, 160, false, false, false, false);
 			exploding = true;
 		}
 		if (bombAnimation.isStopped()) {
