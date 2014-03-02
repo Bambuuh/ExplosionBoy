@@ -23,6 +23,7 @@ public abstract class Player {
 	protected boolean DOWN = false;
 	protected boolean LEFT = false;
 	protected boolean RIGHT = false;
+	protected boolean bombAvailable = true;
 	protected Json json;
 	private AnimationHandler animationHandler;
 	private Rectangle rectangle;
@@ -130,8 +131,17 @@ public abstract class Player {
 					break;
 				}
 			}
-			bombArray.add(new Bomb(animationHandler, bombX, bombY, ID));
-			bombDown = true;
+			for (Bomb bomb : bombArray) {
+				if (bomb.getX() == bombX && bomb.getY() == bombY) {
+					bombAvailable = false;
+					break;
+				}
+			}
+			if (bombAvailable) {
+				bombArray.add(new Bomb(animationHandler, bombX, bombY, ID));
+				bombDown = true;
+			}
+			bombAvailable = true;
 		}
 		if (!Keyboard.isKeyDown(Keyboard.KEY_SPACE) && bombDown) {
 			bombDown = false;

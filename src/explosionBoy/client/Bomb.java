@@ -106,4 +106,12 @@ public class Bomb {
 		return elapsedSeconds;
 	}
 	
+	public float getX(){
+		return x;
+	}
+	
+	public float getY(){
+		return y;
+	}
+	
 }
