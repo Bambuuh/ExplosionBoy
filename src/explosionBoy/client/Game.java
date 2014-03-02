@@ -109,9 +109,9 @@ public class Game {
 			int delta = getDelta();
 			update(delta);
 			level.printLevel();
+			updateBombs(delta);
 //			snakeBoy2.update(delta, bombArray);
 			snakeBoy.update(delta, bombArray);
-			updateBombs(delta);
 			checkCollisions(delta);
 			removeBombs();
 			input.readInput();

@@ -10,13 +10,14 @@ public class AnimationHandler {
 	private Image bigSheetImage;
 	private Image explosionSheet;
 	private Image explosionSheet2;
+	private Image bearSheet;
 	
 	public AnimationHandler() {
-		
 			try {
 				bigSheetImage = new Image("res/snakeboy/SnakeBoySprite.png");
 				explosionSheet = new Image("res/explosion/explosionSheet.png");
 				explosionSheet2 = new Image("res/explosion/newExplosionSheet.png");
+				bearSheet = new Image("res/bearboy/BearBoySprite.png");
 				
 			} catch (SlickException e) {
 				System.err.println("Could not load main sheet. " + e.getMessage());
@@ -62,7 +63,6 @@ public class AnimationHandler {
 		animation.setLooping(false);
 		
 		return animation;
-		
 	}
 	
 	public Animation getAnimation(Image image, int startPosX, int startPosY, int totalWidth, int totalHeight, boolean flipHorizontal, boolean flipVertical, int tileWidth, int tileHeight, boolean pingpong, boolean looping){

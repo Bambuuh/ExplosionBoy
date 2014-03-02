@@ -7,24 +7,24 @@ import org.newdawn.slick.Animation;
 public class Bomb {
 	
 	
-	private ArrayList<Explosion> explosionArray;
-	private ArrayList<Explosion> explosionToRemove;
+	protected ArrayList<Explosion> explosionArray;
+	protected ArrayList<Explosion> explosionToRemove;
 	
-	private Animation bombAnimation;
-	private AnimationHandler animationHandler;
+	protected Animation bombAnimation;
+	protected AnimationHandler animationHandler;
 	
-	private boolean exploding;
-	private boolean  exploded;
+	protected boolean exploding;
+	protected boolean  exploded;
 	
-	private long currentTime;
-	private long currentTime2;
+	protected long currentTime;
+	protected long currentTime2;
 	
-	private float x;
-	private float y;
+	protected float x;
+	protected float y;
 	
-	private int ID;
-	private int power;
-	private int powerCounter;
+	protected int ID;
+	protected int power;
+	protected int powerCounter;
 	
 	public Bomb(AnimationHandler animHandler, float x, float y, int ID){
 		explosionArray = new ArrayList<Explosion>();
