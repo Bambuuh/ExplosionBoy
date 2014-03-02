@@ -1,109 +1,95 @@
 package explosionBoy.client;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Animation;
 
 public class Bomb {
 	
-	private boolean exploding = false;
-	private boolean exploded = false;
-
+	
+	private ArrayList<Explosion> explosionArray;
+	private ArrayList<Explosion> explosionToRemove;
+	
+	private Animation bombAnimation;
+	private AnimationHandler animationHandler;
+	
+	private boolean exploding;
+	private boolean  exploded;
+	
 	private long currentTime;
-	private int power;
-	private int ownerID;
+	private long currentTime2;
+	
 	private float x;
 	private float y;
 	
+	private int ID;
+	private int power;
+	private int powerCounter;
 	
-	private AnimationHandler animationHandler;
-	
-	private Animation bombAnimation;
-	private Animation explosionLeft;
-	private Animation explosionRight;
-	private Animation explosionUp;
-	private Animation explosionDown;
-	private Animation explosionTopLeft;
-	private Animation explosionTopRight;
-	private Animation explosionTopUp;
-	private Animation explosionTopDown;
-	
-	public Bomb(int ownerID, float x, float y, AnimationHandler animation) {
-		animationHandler = animation;
+	public Bomb(AnimationHandler animHandler, float x, float y, int ID){
+		explosionArray = new ArrayList<Explosion>();
+		explosionToRemove = new ArrayList<Explosion>();
+		animationHandler = animHandler;
+		bombAnimation = animationHandler.getBombAnimation(0, 160, 96, false, false, true, true);
 		currentTime = System.currentTimeMillis();
-		power =5;
-		this.ownerID = ownerID;
+		currentTime2 = System.currentTimeMillis();
+		powerCounter = 1;
+		exploding = false;
+		exploded = false;
+		
 		this.x = x;
 		this.y = y;
-		bombAnimation = animation.getBombAnimation(0, 160, 96, false, false, true, true);
-	}
-	
-	public Animation setAnimation(int startX, int startY, int totalWidth, boolean horizontal, boolean vertical, boolean pingpong, boolean looping){
-			Animation animation;
-			animation = animationHandler.getBombAnimation(startX, startY, totalWidth, horizontal, vertical, pingpong, looping);
-			return animation;
+		
+		power = 3;
 	}
 	
 	public void update(int delta){
-		animateBomb(delta, power);
-		checkExplosion();
-		
+		animateBomb();
+		cleanExplosion();
 	}
 	
-	public void checkExplosion(){
-		if (countDown() >= 3 && !exploding) {
+	public void animateBomb(){
+		if (countDown() >=3 && !exploding) {
 			exploding = true;
-			bombAnimation = setAnimation(32, 0, 128, false, false, false, false);
-			
-			explosionLeft = setAnimation(0, 64, 128, false, false, false, false);
-			explosionTopLeft = setAnimation(0, 128, 128, false, false, false, false);
-			
-			explosionRight = setAnimation(0, 64, 128, false, false, false, false);
-			explosionTopRight = setAnimation(0, 128, 128, false, false, false, false);
-			
-			explosionDown = setAnimation(0, 32, 128, false, false, false, false);
-			explosionTopDown = setAnimation(0, 96, 128, false, true, false, false);
-			
-			explosionUp = setAnimation(0, 32, 128, false, false, false, false);
-			explosionTopUp = setAnimation(0, 96, 128, false, false, false, false);
+			explosionArray.add(new Explosion(animationHandler, 1, x, y));
 		}
-		if (bombAnimation.isStopped()) {
+		
+		if (exploding) {
+			
+			if (countDown2() >= 0.15 && powerCounter <= power) {
+				currentTime2 = System.currentTimeMillis();
+				explosionArray.add(new Explosion(animationHandler, 1, x + powerCounter * 32, y));
+				explosionArray.add(new Explosion(animationHandler, 1, x - powerCounter * 32, y));
+				explosionArray.add(new Explosion(animationHandler, 1, x, y + powerCounter * 32));
+				explosionArray.add(new Explosion(animationHandler, 1, x, y - powerCounter * 32));
+				powerCounter++;
+			}
+		}
+		
+		for (Explosion explosion : explosionArray) {
+			explosion.draw();
+		}
+		if (!exploding) {
+			bombAnimation.draw(x, y);
+		}
+		if (exploding && explosionArray.size() == 0) {
 			exploded = true;
 		}
 	}
 	
-	public void animateBomb(int delta, int power){
-		
-		if (!exploding) {
-			bombAnimation.draw(x, y);
-			bombAnimation.update(delta);
-		}
-		if (exploding) {
-			for (int i = 1; i <= power; i++) {
-				int explosionPower = i * 32;
-				
-				bombAnimation.draw(x, y);
-				bombAnimation.update(delta);
-				
-				explosionLeft.draw(x-explosionPower, y);
-				explosionLeft.update(delta);
-				explosionTopLeft.draw(x-explosionPower-32, y);
-				explosionTopLeft.update(delta);
-				
-				explosionRight.draw(x+explosionPower, y);
-				explosionRight.update(delta);
-				explosionTopRight.draw(x+explosionPower+32, y);
-				explosionTopRight.update(delta);
-				
-				explosionUp.draw(x, y-explosionPower);
-				explosionUp.update(delta);
-				explosionTopUp.draw(x, y-explosionPower-32);
-				explosionTopUp.update(delta);
-				
-				explosionDown.draw(x, y+explosionPower);
-				explosionDown.update(delta);
-				explosionTopDown.draw(x, y+explosionPower+32);
-				explosionTopDown.update(delta);
+	public void cleanExplosion(){
+		for (Explosion explosion : explosionArray) {
+			if (explosion.getExploded()) {
+				explosionToRemove.add(explosion);
 			}
 		}
+		for (Explosion explosion : explosionToRemove) {
+			explosionArray.remove(explosion);
+		}
+	}
+	
+	public boolean getExploded(){
+		return exploded;
 	}
 	
 	public double countDown(){
@@ -111,19 +97,13 @@ public class Bomb {
 		long tDelta = tEnd - currentTime;
 		double elapsedSeconds = tDelta / 1000.0;
 		return elapsedSeconds;
-		
 	}
 	
-	public boolean getExploded(){
-		return exploded;
-	}
-	
-	public float getX(){
-		return x;
-	}
-	
-	public float getY(){
-		return y;
+	public double countDown2(){
+		long tEnd = System.currentTimeMillis();
+		long tDelta = tEnd - currentTime2;
+		double elapsedSeconds = tDelta / 1000.0;
+		return elapsedSeconds;
 	}
 	
 }

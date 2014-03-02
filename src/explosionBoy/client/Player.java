@@ -130,7 +130,7 @@ public abstract class Player {
 					break;
 				}
 			}
-			bombArray.add(new Bomb(ID, bombX, bombY, animationHandler));
+			bombArray.add(new Bomb(animationHandler, bombX, bombY, ID));
 			bombDown = true;
 		}
 		if (!Keyboard.isKeyDown(Keyboard.KEY_SPACE) && bombDown) {

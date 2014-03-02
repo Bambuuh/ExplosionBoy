@@ -9,12 +9,15 @@ public class AnimationHandler {
 	
 	private Image bigSheetImage;
 	private Image explosionSheet;
+	private Image explosionSheet2;
 	
 	public AnimationHandler() {
 		
 			try {
 				bigSheetImage = new Image("res/snakeboy/SnakeBoySprite.png");
 				explosionSheet = new Image("res/explosion/explosionSheet.png");
+				explosionSheet2 = new Image("res/explosion/newExplosionSheet.png");
+				
 			} catch (SlickException e) {
 				System.err.println("Could not load main sheet. " + e.getMessage());
 			}
@@ -45,5 +48,35 @@ public class AnimationHandler {
 		bombAnimation.setLooping(looping);
 		
 		return bombAnimation;
+	}
+	
+	public Animation getExplosionAnimation(){
+		
+		SpriteSheet spriteSheet;
+		Animation animation;
+		
+		spriteSheet = new SpriteSheet(explosionSheet2, 32, 32);
+		animation = new Animation(spriteSheet, 80);
+		
+		animation.setPingPong(false);
+		animation.setLooping(false);
+		
+		return animation;
+		
+	}
+	
+	public Animation getAnimation(Image image, int startPosX, int startPosY, int totalWidth, int totalHeight, boolean flipHorizontal, boolean flipVertical, int tileWidth, int tileHeight, boolean pingpong, boolean looping){
+		
+		SpriteSheet spriteSheet;
+		Animation animation;
+		
+		spriteSheet = new SpriteSheet(image.getSubImage(startPosX, startPosY, totalWidth, totalHeight).getFlippedCopy(flipHorizontal, flipVertical), tileWidth, tileHeight);
+		animation = new Animation(spriteSheet, 250);
+		
+		animation.setPingPong(pingpong);
+		animation.setLooping(looping);
+		
+		return animation;
+		
 	}
 }
