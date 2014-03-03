@@ -110,7 +110,7 @@ public class Game {
 			update(delta);
 			level.printLevel();
 			updateBombs(delta);
-//			snakeBoy2.update(delta);
+			snakeBoy2.update(delta);
 			snakeBoy.update(delta);
 			checkCollisions(delta);
 			removeBombs();

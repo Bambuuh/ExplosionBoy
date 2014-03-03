@@ -70,7 +70,7 @@ public class Server implements Runnable {
 			for (GameHolder gh : holder) {
 				if (gh.getGameID()==jsonRecive.getgID()) {
 					for (ConnectionReference cr : gh.getReferences()) {
-						if (jsonRecive.getDirection().equals("BOMB")) {
+						if (jsonRecive.getDirection().equals("BOMB") && jsonRecive.getpID() == cr.getpID()) {
 							json.setDirection("BOMB");
 							json.setxPos(cr.getxPos());
 							json.setyPos(cr.getyPos());
