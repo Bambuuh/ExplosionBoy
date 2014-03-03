@@ -67,9 +67,9 @@ public class AnimationHandler {
 		Animation animation4;
 		
 		spriteSheet1 = new SpriteSheet(testExplosion.getSubImage(0, 0, 256, 32 ), 32, 32);
-		spriteSheet2 = new SpriteSheet(testExplosion.getSubImage(0, 0, 256, 32 ).getFlippedCopy(true, false), 128, 128);
+		spriteSheet2 = new SpriteSheet(testExplosion.getSubImage(0, 0, 256, 32 ).getFlippedCopy(true, false), 32, 32);
 		spriteSheet3 = new SpriteSheet(testExplosion.getSubImage(0, 32, 256, 32 ), 32, 32);
-		spriteSheet4 = new SpriteSheet(testExplosion.getSubImage(0, 32, 256, 32 ).getFlippedCopy(false, true), 128, 128);
+		spriteSheet4 = new SpriteSheet(testExplosion.getSubImage(0, 32, 256, 32 ).getFlippedCopy(false, true), 32, 32);
 
 		animation1 = new Animation(spriteSheet1, 50);
 		animation2 = new Animation(spriteSheet2, 50);
