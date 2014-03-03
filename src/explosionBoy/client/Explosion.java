@@ -23,10 +23,10 @@ public class Explosion {
 		randomAnim = rand.nextInt(4)+1;
 		System.out.println(randomAnim);
 		
-		animation1 = handler.getExplosionAnimation(randomAnim);
-		animation2 = handler.getExplosionAnimation(2);
-		animation3 = handler.getExplosionAnimation(3);
-		animation4 = handler.getExplosionAnimation(4);
+		animation1 = handler.getExplosionAnimation(1);
+//		animation2 = handler.getExplosionAnimation(2);
+//		animation3 = handler.getExplosionAnimation(3);
+//		animation4 = handler.getExplosionAnimation(4);
 		this.x = x;
 		this.y = y;
 	}

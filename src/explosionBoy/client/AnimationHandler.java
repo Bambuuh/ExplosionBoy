@@ -19,8 +19,7 @@ public class AnimationHandler {
 				explosionSheet = new Image("res/explosion/explosionSheet.png");
 				explosionSheet2 = new Image("res/explosion/newExplosionSheet.png");
 				bearSheet = new Image("res/bearboy/BearBoySprite.png");
-				testExplosion = new Image("res/explosion/extremeTest.png")
-				;
+				testExplosion = new Image("res/explosion/extremeTest.png").getScaledCopy(0.5f);
 				
 				
 			} catch (SlickException e) {
@@ -67,7 +66,7 @@ public class AnimationHandler {
 		Animation animation3;
 		Animation animation4;
 		
-		spriteSheet1 = new SpriteSheet(testExplosion.getSubImage(0, 0, 1024, 128 ), 128, 128);
+		spriteSheet1 = new SpriteSheet(testExplosion.getSubImage(0, 0, 512, 64 ), 64, 64);
 		spriteSheet2 = new SpriteSheet(testExplosion.getSubImage(0, 0, 1024, 128).getFlippedCopy(true, false), 128, 128);
 		spriteSheet3 = new SpriteSheet(testExplosion.getSubImage(0, 0, 1024, 128), 128, 128);
 		spriteSheet4 = new SpriteSheet(testExplosion.getSubImage(0, 0, 1024, 128).getFlippedCopy(false, true), 128, 128);
