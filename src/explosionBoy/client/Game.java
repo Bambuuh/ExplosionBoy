@@ -49,6 +49,7 @@ public class Game {
 		animation = new AnimationHandler();
 		controllArray = new ArrayList<Controller>();
 		bombArray = new ArrayList<>();
+		addBombArray = new ArrayList<Bomb>();
 		removeBombArray = new ArrayList<>();
 		snakeBoy = new SnakeBoy(40,30 , animation, 1);
 		snakeBoy2 = new SnakeBoy(WIDTH-50, 30, animation, 2);
