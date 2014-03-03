@@ -115,7 +115,7 @@ public abstract class Player {
 		drawPlayer(delta);
 	}
 
-	public void bombDropper(ArrayList<Bomb> bombArray){
+	public void bombDropper(ArrayList<Bomb> bombArray, ArrayList<Bomb> addBombArray){
 
 
 		for (int i = (int)x+5; i > 0; i--) {
@@ -137,7 +137,7 @@ public abstract class Player {
 			}
 		}
 		if (bombAvailable) {
-			bombArray.add(new Bomb(animationHandler, bombX, bombY, ID));
+			addBombArray.add(new Bomb(animationHandler, bombX, bombY, ID));
 			bombDown = true;
 		}
 		bombAvailable = true;

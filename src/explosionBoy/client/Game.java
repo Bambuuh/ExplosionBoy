@@ -53,8 +53,8 @@ public class Game {
 		removeBombArray = new ArrayList<>();
 		snakeBoy = new SnakeBoy(40,30 , animation, 1);
 		snakeBoy2 = new SnakeBoy(WIDTH-50, 30, animation, 2);
-		controllArray.add(new Controller(snakeBoy, addBombArray));
-		controllArray.add(new Controller(snakeBoy2, addBombArray));
+		controllArray.add(new Controller(snakeBoy, bombArray, addBombArray));
+		controllArray.add(new Controller(snakeBoy2, bombArray, addBombArray));
 		connection = new ServerConnection(controllArray);
 		input = new InputReader(connection);
 		level = new LevelCreator();

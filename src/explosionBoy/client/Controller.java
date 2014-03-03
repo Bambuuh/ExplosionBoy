@@ -9,9 +9,10 @@ public class Controller {
 	Player player;
 	private String moveDirection, lastDirection;
 	private float speed;
-	private  ArrayList<Bomb> bombArray;
+	private  ArrayList<Bomb> bombArray, addBombArray;
 
-	public Controller(Player player,  ArrayList<Bomb> bombArray) {
+	public Controller(Player player,  ArrayList<Bomb> bombArray, ArrayList<Bomb> addBombArray) {
+		this.addBombArray = addBombArray;
 		this.bombArray = bombArray;
 		this.moveDirection = "";
 		this.lastDirection = "";
@@ -44,7 +45,7 @@ public class Controller {
 					player.setX(json.getxPos());
 				break;
 			case "BOMB":
-					player.bombDropper(bombArray);
+					player.bombDropper(bombArray, addBombArray);
 					break;
 			default:
 				break;
