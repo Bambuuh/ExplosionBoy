@@ -128,6 +128,7 @@ public class Game {
 			bomb.update(delta);
 		}
 		bombArray.addAll(addBombArray);
+		addBombArray.clear();
 	}
 	
 	public void removeBombs(){
