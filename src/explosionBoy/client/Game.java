@@ -28,6 +28,7 @@ public class Game {
 
 	private ArrayList<Controller> controllArray;
 	private ArrayList<Bomb> bombArray;
+	private ArrayList<Bomb> addBombArray;
 	private ArrayList<Bomb> removeBombArray;
 	
 	private SnakeBoy snakeBoy;
@@ -51,8 +52,8 @@ public class Game {
 		removeBombArray = new ArrayList<>();
 		snakeBoy = new SnakeBoy(40,30 , animation, 1);
 		snakeBoy2 = new SnakeBoy(WIDTH-50, 30, animation, 2);
-		controllArray.add(new Controller(snakeBoy, bombArray));
-		controllArray.add(new Controller(snakeBoy2, bombArray));
+		controllArray.add(new Controller(snakeBoy, addBombArray));
+		controllArray.add(new Controller(snakeBoy2, addBombArray));
 		connection = new ServerConnection(controllArray);
 		input = new InputReader(connection);
 		level = new LevelCreator();
@@ -125,6 +126,7 @@ public class Game {
 		for (Bomb bomb : bombArray) {
 			bomb.update(delta);
 		}
+		bombArray.addAll(addBombArray);
 	}
 	
 	public void removeBombs(){
