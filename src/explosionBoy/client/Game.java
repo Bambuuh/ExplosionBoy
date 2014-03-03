@@ -51,8 +51,8 @@ public class Game {
 		removeBombArray = new ArrayList<>();
 		snakeBoy = new SnakeBoy(40,30 , animation, 1);
 		snakeBoy2 = new SnakeBoy(WIDTH-50, 30, animation, 2);
-		controllArray.add(new Controller(snakeBoy));
-		controllArray.add(new Controller(snakeBoy2));
+		controllArray.add(new Controller(snakeBoy, bombArray));
+		controllArray.add(new Controller(snakeBoy2, bombArray));
 		connection = new ServerConnection(controllArray);
 		input = new InputReader(connection);
 		level = new LevelCreator();
@@ -110,8 +110,8 @@ public class Game {
 			update(delta);
 			level.printLevel();
 			updateBombs(delta);
-//			snakeBoy2.update(delta, bombArray);
-			snakeBoy.update(delta, bombArray);
+//			snakeBoy2.update(delta);
+			snakeBoy.update(delta);
 			checkCollisions(delta);
 			removeBombs();
 			input.readInput();

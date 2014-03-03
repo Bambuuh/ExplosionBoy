@@ -9,6 +9,7 @@ public class InputReader {
 	
 	private Json json;
 	private ServerConnection connection;
+	private boolean bombDown;
 	
 	public InputReader(ServerConnection connection) {
 		this.connection = connection;
@@ -31,5 +32,14 @@ public class InputReader {
 		Gson g = new Gson();
 		g.toJson(json, Json.class);
 		connection.send(json);
+		//TODO: Solve this in a better way later!
+		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && !bombDown){
+			json.setDirection("BOMB");
+			connection.send(json);
+			bombDown = true;
+		}
+		else if (!Keyboard.isKeyDown(Keyboard.KEY_SPACE) && bombDown) {
+			bombDown = false;
+		}
 	}
 }

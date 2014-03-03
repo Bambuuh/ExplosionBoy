@@ -1,5 +1,7 @@
 package explosionBoy.client;
 
+import java.util.ArrayList;
+
 
 public class Controller {
 
@@ -7,8 +9,10 @@ public class Controller {
 	Player player;
 	private String moveDirection, lastDirection;
 	private float speed;
+	private  ArrayList<Bomb> bombArray;
 
-	public Controller(Player player) {
+	public Controller(Player player,  ArrayList<Bomb> bombArray) {
+		this.bombArray = bombArray;
 		this.moveDirection = "";
 		this.lastDirection = "";
 		this.player = player;
@@ -39,7 +43,9 @@ public class Controller {
 			case "LEFT":
 					player.setX(json.getxPos());
 				break;
-
+			case "BOMB":
+					player.bombDropper(bombArray);
+					break;
 			default:
 				break;
 			}

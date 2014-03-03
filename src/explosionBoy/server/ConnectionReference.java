@@ -9,7 +9,7 @@ import explosionBoy.client.Game;
 public class ConnectionReference {
 
 	private InetAddress ip = null;
-	private int conId, port, gID, pID;
+	private int conId, port, gID, pID, maxBombs, currentBombs;
 	private float xPos, yPos, speed, oldY, oldX;
 	private String dir;
 	private Delta delta;
@@ -134,7 +134,7 @@ public class ConnectionReference {
 			break;
 		}
 		playerRect.setBounds((int)xPos+1, (int)yPos+20, 14, 9);
-		gameHolder.checkCollissions();
+		gameHolder.checkCollissions(this);
 		this.dir = dir;
 	}
 	
@@ -160,6 +160,22 @@ public class ConnectionReference {
 
 	public void setOldX(float oldX) {
 		this.oldX = oldX;
+	}
+
+	public int getMaxBombs() {
+		return maxBombs;
+	}
+
+	public void setMaxBombs(int maxBombs) {
+		this.maxBombs = maxBombs;
+	}
+
+	public int getCurrentBombs() {
+		return currentBombs;
+	}
+
+	public void setCurrentBombs(int currentBombs) {
+		this.currentBombs = currentBombs;
 	}
 	
 }

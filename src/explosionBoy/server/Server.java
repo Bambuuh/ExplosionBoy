@@ -60,15 +60,24 @@ public class Server implements Runnable {
 							cr.setIp(recivePacket.getAddress());
 							cr.setPort(recivePacket.getPort());
 							System.out.println("Set new ip/port to: "+cr.getpID());
+							break CheckIp;
 						}
 					}
 				}
 			}
 			Json json = new Json();
+			gameloop:
 			for (GameHolder gh : holder) {
 				if (gh.getGameID()==jsonRecive.getgID()) {
 					for (ConnectionReference cr : gh.getReferences()) {
-						if (jsonRecive.getpID() == cr.getpID()) {
+						if (jsonRecive.getDirection().equals("BOMB")) {
+							json.setDirection("BOMB");
+							json.setxPos(cr.getxPos());
+							json.setyPos(cr.getyPos());
+							json.setpID(cr.getpID());
+							break;
+						}
+						else if (jsonRecive.getpID() == cr.getpID()) {
 							cr.setDir(jsonRecive.getDirection());
 							json.setpID(cr.getpID());
 							json.setDirection(cr.getDir());
@@ -83,6 +92,7 @@ public class Server implements Runnable {
 							send(json, cr.getIp(), cr.getPort());
 						}
 					}
+					break gameloop;
 				}
 			}
 			Arrays.fill(recData,(byte) 0);
