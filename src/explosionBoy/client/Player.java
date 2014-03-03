@@ -131,8 +131,8 @@ public abstract class Player {
 					break;
 				}
 			}
-			for (Bomb bomb : bombArray) {
-				if (bomb.getX() == bombX && bomb.getY() == bombY) {
+			for (int i = bombArray.size()-1; i >= 0; i--) {
+				if (bombArray.get(i).getX() == bombX && bombArray.get(i).getY() == bombY) {
 					bombAvailable = false;
 					break;
 				}
