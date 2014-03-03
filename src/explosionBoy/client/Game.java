@@ -121,7 +121,7 @@ public class Game {
 		connection.close();
 	}
 	
-	public void updateBombs(int delta){
+	public synchronized void updateBombs(int delta){
 		for (Bomb bomb : bombArray) {
 			bomb.update(delta);
 		}

@@ -28,7 +28,7 @@ public class InputReader {
 		else if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)) json.setDirection("LEFT");
 		else if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) json.setDirection("RIGHT");
 		else json.setDirection("STILL");
-		json.setpID(2);
+		json.setpID(1);
 		Gson g = new Gson();
 		g.toJson(json, Json.class);
 		connection.send(json);
