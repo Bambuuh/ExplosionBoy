@@ -54,15 +54,15 @@ public class AnimationHandler {
 	public Animation getExplosionAnimation(){
 		
 		SpriteSheet spriteSheet;
-		Animation animation;
+		Animation animation1;
 		
 		spriteSheet = new SpriteSheet(explosionSheet2, 32, 32);
-		animation = new Animation(spriteSheet, 80);
+		animation1 = new Animation(spriteSheet, 80);
 		
-		animation.setPingPong(false);
-		animation.setLooping(false);
+		animation1.setPingPong(false);
+		animation1.setLooping(false);
 		
-		return animation;
+		return animation1;
 	}
 	
 	public Animation getAnimation(Image image, int startPosX, int startPosY, int totalWidth, int totalHeight, boolean flipHorizontal, boolean flipVertical, int tileWidth, int tileHeight, boolean pingpong, boolean looping){
