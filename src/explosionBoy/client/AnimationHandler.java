@@ -11,6 +11,7 @@ public class AnimationHandler {
 	private Image explosionSheet;
 	private Image explosionSheet2;
 	private Image bearSheet;
+	private Image testExplosion;
 	
 	public AnimationHandler() {
 			try {
@@ -18,6 +19,8 @@ public class AnimationHandler {
 				explosionSheet = new Image("res/explosion/explosionSheet.png");
 				explosionSheet2 = new Image("res/explosion/newExplosionSheet.png");
 				bearSheet = new Image("res/bearboy/BearBoySprite.png");
+				testExplosion = new Image("res/explosion/explosionSheetTest.png");
+				
 				
 			} catch (SlickException e) {
 				System.err.println("Could not load main sheet. " + e.getMessage());
@@ -51,18 +54,54 @@ public class AnimationHandler {
 		return bombAnimation;
 	}
 	
-	public Animation getExplosionAnimation(){
+	public Animation getExplosionAnimation(int choice){
 		
-		SpriteSheet spriteSheet;
+		SpriteSheet spriteSheet1;
+		SpriteSheet spriteSheet2;
+		SpriteSheet spriteSheet3;
+		SpriteSheet spriteSheet4;
+		
 		Animation animation1;
+		Animation animation2;
+		Animation animation3;
+		Animation animation4;
 		
-		spriteSheet = new SpriteSheet(explosionSheet2, 32, 32);
-		animation1 = new Animation(spriteSheet, 80);
+		spriteSheet1 = new SpriteSheet(testExplosion.getSubImage(0, 0, 256, 32), 32, 32);
+		spriteSheet2 = new SpriteSheet(testExplosion.getSubImage(0, 0, 256, 32).getFlippedCopy(true, false), 32, 32);
+		spriteSheet3 = new SpriteSheet(testExplosion.getSubImage(0, 32, 256, 32), 32, 32);
+		spriteSheet4 = new SpriteSheet(testExplosion.getSubImage(0, 32, 256, 32).getFlippedCopy(false, true), 32, 32);
+		
+		animation1 = new Animation(spriteSheet1, 50);
+		animation2 = new Animation(spriteSheet2, 50);
+		animation3 = new Animation(spriteSheet3, 50);
+		animation4 = new Animation(spriteSheet4, 50);
 		
 		animation1.setPingPong(false);
 		animation1.setLooping(false);
 		
-		return animation1;
+		animation2.setPingPong(false);
+		animation2.setLooping(false);
+
+		animation3.setPingPong(false);
+		animation3.setLooping(false);
+		
+		animation4.setPingPong(false);
+		animation4.setLooping(false);
+
+		switch (choice) {
+		case 1:
+			return animation1;
+		case 2:
+			return animation2;
+		case 3:
+			return animation3;
+		case 4:
+			return animation4;
+		default:
+			break;
+		}
+		
+		return null;
 	}
 	
 	public Animation getAnimation(Image image, int startPosX, int startPosY, int totalWidth, int totalHeight, boolean flipHorizontal, boolean flipVertical, int tileWidth, int tileHeight, boolean pingpong, boolean looping){
