@@ -45,7 +45,7 @@ public class Controller {
 					player.setX(json.getxPos());
 				break;
 			case "BOMB":
-					player.bombDropper(bombArray, addBombArray);
+					player.bombDropper(bombArray, addBombArray, json.getSpeed(), json.getbCountDown(), json.getPower());
 					break;
 			default:
 				break;

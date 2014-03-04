@@ -2,8 +2,8 @@ package explosionBoy.client;
 
 public class Json {
 	
-	private int conID, gID, pID;
-	private float xPos, yPos, speed;
+	private int power, gID, pID;
+	private float xPos, yPos, speed, bCountDown;
 	private String direction = "";
 	
 	
@@ -31,11 +31,11 @@ public class Json {
 	public void setDirection(String direction) {
 		this.direction = direction;
 	}
-	public int getConID() {
-		return conID;
+	public int getPower() {
+		return power;
 	}
-	public void setConID(int conID) {
-		this.conID = conID;
+	public void setPower(int power) {
+		this.power = power;
 	}
 	public int getgID() {
 		return gID;
@@ -48,6 +48,12 @@ public class Json {
 	}
 	public void setpID(int pID) {
 		this.pID = pID;
+	}
+	public float getbCountDown() {
+		return bCountDown;
+	}
+	public void setbCountDown(float bCountDown) {
+		this.bCountDown = bCountDown;
 	}
 
 	

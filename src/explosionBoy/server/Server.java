@@ -74,6 +74,9 @@ public class Server implements Runnable {
 							json.setDirection("BOMB");
 							json.setxPos(cr.getxPos());
 							json.setyPos(cr.getyPos());
+							json.setSpeed(cr.getExplosionSpeed());
+							json.setbCountDown(cr.getBombCountdown());
+							json.setPower(cr.getBombPower());
 							json.setpID(cr.getpID());
 							break;
 						}

@@ -6,8 +6,8 @@ import explosionBoy.client.Explosion;
 
 public class SnakeBomb extends Bomb{
 
-	public SnakeBomb(AnimationHandler animHandler, float x, float y, int ID) {
-		super(animHandler, x, y, ID);
+	public SnakeBomb(AnimationHandler animHandler, float x, float y, float explosionSpeed, float bombCountdown, int power) {
+		super(animHandler, x, y, explosionSpeed, bombCountdown, power);
 	}
 
 	@Override

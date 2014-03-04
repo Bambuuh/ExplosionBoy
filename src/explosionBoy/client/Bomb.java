@@ -21,15 +21,18 @@ public class Bomb {
 	
 	protected float x;
 	protected float y;
+	private float explosionSpeed, bombCountdown;
 	
 	protected int ID;
 	protected int power;
 	protected int powerCounter;
 	
-	public Bomb(AnimationHandler animHandler, float x, float y, int ID){
+	public Bomb(AnimationHandler animHandler, float x, float y, float explosionSpeed, float bombCountdown, int power){
 		explosionArray = new ArrayList<Explosion>();
 		explosionToRemove = new ArrayList<Explosion>();
 		animationHandler = animHandler;
+		this.explosionSpeed = explosionSpeed;
+		this.bombCountdown = bombCountdown;
 		bombAnimation = animationHandler.getBombAnimation(0, 160, 96, false, false, true, true);
 		currentTime = System.currentTimeMillis();
 		currentTime2 = System.currentTimeMillis();
@@ -40,7 +43,7 @@ public class Bomb {
 		this.x = x;
 		this.y = y;
 		
-		power = 3;
+		this.power = power;
 	}
 	
 	public void update(int delta){
@@ -49,14 +52,14 @@ public class Bomb {
 	}
 	
 	public void animateBomb(){
-		if (countDown() >=3 && !exploding) {
+		if (countDown() >= bombCountdown && !exploding) {
 			exploding = true;
 			explosionArray.add(new Explosion(animationHandler, 1, x, y));
 		}
 		
 		if (exploding) {
 			
-			if (countDown2() >= 0.15 && powerCounter <= power) {
+			if (countDown2() >= explosionSpeed && powerCounter <= power) {
 				currentTime2 = System.currentTimeMillis();
 				explosionArray.add(new Explosion(animationHandler, 1, x + powerCounter * 32, y));
 				explosionArray.add(new Explosion(animationHandler, 1, x - powerCounter * 32, y));
