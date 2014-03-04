@@ -9,23 +9,25 @@ public class GameHolder {
 	private int gameID;
 	private ArrayList<ConnectionReference> references;
 	private ArrayList<Rectangle> lvlrectArray;
-	private ArrayList<Rectangle> bombExplArray;
+	private ArrayList<Rectangle> bombExplArra;
+	private ArrayList<ServerBomb> serverBombArray;
 
 	public GameHolder() {
+		this.serverBombArray = new ArrayList<ServerBomb>();
 		this.gameID = 1;
 		references = new ArrayList<>();
 		references.add(new ConnectionReference(1,this));
 		references.add(new ConnectionReference(2,this));
 		lvlrectArray = genereRectangles();
-		bombExplArray = new ArrayList<Rectangle>();
+		bombExplArra = new ArrayList<Rectangle>();
 	}
 
 	public void checkCollissions(ConnectionReference ref){
-		int expIndex = bombExplArray.size()-1;
+		int expIndex = serverBombArray.size()-1;
 		ConnectionReference p = ref;
 		for (Rectangle lvl : lvlrectArray) {
 			if (expIndex>0) {
-				boolean explisionCol = explosionBoy.server.UnitCollission.isColliding(bombExplArray.get(expIndex), p.getPlayerRect());
+				boolean explisionCol = explosionBoy.server.UnitCollission.isColliding(serverBombArray.get(expIndex).getRect(), p.getPlayerRect());
 				if (explisionCol) {
 					System.out.println("BOOM!");
 				}

@@ -78,6 +78,7 @@ public class Server implements Runnable {
 							json.setbCountDown(cr.getBombCountdown());
 							json.setPower(cr.getBombPower());
 							json.setpID(cr.getpID());
+							//add bomb to array here!
 							break;
 						}
 						else if (jsonRecive.getpID() == cr.getpID()) {
