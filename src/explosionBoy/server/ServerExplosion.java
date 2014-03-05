@@ -9,15 +9,20 @@ public class ServerExplosion {
 	private boolean remove;
 	private float explosionTime;
 	private long startTime, lastTime;
+	private String direction;
 	
-	public ServerExplosion(int x, int y) {
+	public ServerExplosion(int x, int y, String direction) {
 		startTime = System.currentTimeMillis();
 		explosionTime = 400;
 		rect = new  Rectangle(x+1, y+1, 30, 30);
+		this.direction = direction;
+//		System.out.println("DIR: "+direction);
+//		System.out.println("X: "+x);
+//		System.out.println("Y: "+y);
 	}
 	
 	public void update(){
-		if (System.currentTimeMillis()>startTime+explosionTime) {
+		if (countDown()<explosionTime) {
 			remove = true;
 		}
 	}
@@ -64,5 +69,27 @@ public class ServerExplosion {
 	public void setLastTime(long lastTime) {
 		this.lastTime = lastTime;
 	}
+
+	public long getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(long startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
 	
+	public double countDown(){
+		long tEnd = System.currentTimeMillis();
+		long tDelta = tEnd - startTime;
+		double elapsedSeconds = tDelta;
+		return elapsedSeconds;
+	}
 }

@@ -4,22 +4,30 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class ServerBomb {
-	
+
 	private Rectangle rect;
-	private int x, y, playerID, countDown, explosionPower;
-	private long dropTime;
-	private boolean remove, isColliding;
+	private int x, y, playerID, countDown, explosionPower, powerCounter;
+	private long dropTime, currentExplosionTime;
+	private boolean remove, isColliding, exploding, eLeft, eRight, eUp, eDown;
 	private float explosionSpeed;
 	private ArrayList<ServerExplosion> explArray;
-	
+	private ArrayList<ServerExplosion> removeExplosionArray;
+
 	public ServerBomb(int playerX, int playerY, int playerID, int countDown, float explosionSpeed, int explosionPower) {
 		this.explArray = new ArrayList<>();
+		removeExplosionArray = new ArrayList<ServerExplosion>();
 		x = calcPosX(playerX);
 		y = calcPosY(playerY);
+		this.eLeft = true;
+		this.eRight = true;
+		this.eUp = true;
+		this.eDown = true;
 		this.playerID = playerID;
 		this.countDown = countDown;
+		this.exploding = false;
 		this.setRemove(false);
 		this.isColliding = true;
+		this.powerCounter = 1;
 		this.setExplosionSpeed(explosionSpeed);
 		this.explosionPower = explosionPower;
 		rect = new Rectangle(x, y, 32, 32);
@@ -43,15 +51,68 @@ public class ServerBomb {
 		}
 		return 0;
 	}
-	
+
 	public boolean checkIfRemove(){
-		if (System.currentTimeMillis()>=dropTime+(countDown*1000)) {
-			setRemove(true);
+		for (ServerExplosion explosion : explArray) {
+			explosion.update();
+			if (explosion.isRemove()) {
+				removeExplosionArray.add(explosion);
+			}
+		}
+		for (ServerExplosion explosion : removeExplosionArray) {
+			explArray.remove(explosion);
+		}
+		removeExplosionArray.clear();
+		if (System.currentTimeMillis()>=dropTime+(countDown*1000) && !exploding) {
+			exploding = true;
+			currentExplosionTime = System.currentTimeMillis();
+		}
+		if (exploding && powerCounter <= explosionPower && System.currentTimeMillis()>=currentExplosionTime+(explosionSpeed*1000)){
+			if (eRight) {
+				//RIGHT
+				explArray.add(new ServerExplosion(x+(powerCounter*32), y, "RIGHT"));
+			}
+			if (eLeft) {
+				//LEFT
+				explArray.add(new ServerExplosion(x-(powerCounter*32), y,"LEFT"));
+			}
+			if (eUp) {
+				//UP
+				explArray.add(new ServerExplosion(x, y-(powerCounter*32),"UP"));
+			}
+			if (eDown) {
+				//DOWN
+				explArray.add(new ServerExplosion(x,  y+(powerCounter*32),"DOWN"));
+			}
+			powerCounter++;
+			currentExplosionTime = System.currentTimeMillis();
+
+		}
+		else if(exploding && explArray.isEmpty()){
 			return true;
 		}
 		return false;
 	}
-	
+
+	public void cancelDirection(String direction){
+		switch (direction) {
+		case "UP":
+			eUp = false;
+			break;
+		case "DOWN":
+			eDown = false;
+			break;
+		case "LEFT":
+			eLeft = false;
+			break;
+		case "RIGHT":
+			eRight = false;
+			break;
+		default:
+			break;
+		}
+	}
+
 	public Rectangle getRect() {
 		return rect;
 	}
@@ -132,5 +193,5 @@ public class ServerBomb {
 	public void setExplArray(ArrayList<ServerExplosion> explArray) {
 		this.explArray = explArray;
 	}
-	
+
 }
