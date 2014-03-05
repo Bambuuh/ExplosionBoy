@@ -87,18 +87,15 @@ public class ServerBomb {
 			powerCounter++;
 			int speed = (int) (explosionSpeed*1000);
 			explosionTime =  (long) (System.currentTimeMillis()+speed);
-			System.out.println(explosionTime - System.currentTimeMillis());
 
 		}
 		else if (powerCounter >= explosionPower && explArray.isEmpty()) {
 			return true;
 		}
-		System.out.println(explArray.size());
 		for (ServerExplosion explosion : removeExplosionArray) {
 			explArray.remove(explosion);
 		}
 		removeExplosionArray.clear();
-		System.out.println("Hej!");
 		return false;
 	}
 

@@ -33,8 +33,9 @@ public class GameHolder {
 			for (ServerExplosion ex : bombToCheck.getExplArray()) {
 				for (ServerBomb bomb : serverBombArray) {
 					if (!bomb.equals(bombToCheck)) {
-						UnitCollission.isColliding(bomb.getRect(), ex.getRect());
-						bomb.setCountDown(0);
+						if (UnitCollission.isColliding(bomb.getRect(), ex.getRect())) {
+							bomb.setCountDown(0);
+						}
 					}
 				}
 				for (Rectangle lvl : lvlrectArray) {

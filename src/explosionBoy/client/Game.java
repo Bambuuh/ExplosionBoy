@@ -146,16 +146,21 @@ public class Game {
 	}
 	
 	public void checkCollisions(int delta){
-		for (Controller player : controllArray) {
-			player.setDelta(delta);
-			Player p = player.getPlayer();
-			for (Bomb bomb : bombArray) {
-				for (Explosion explosion : bomb.getExplosionArray()) {
-					if (UnitCollission.isColliding(explosion.getRectangle(), bomb.getRectangle())) {
-						bomb.setBombCountDown(0);
+		for (Bomb bombToCheck : bombArray) {
+			for (Explosion explosion : bombToCheck.getExplosionArray()) {
+				for (Bomb bomb : bombArray) {
+					if (!bomb.equals(bombToCheck)) {
+						if (UnitCollission.isColliding(bomb.getRectangle(), explosion.getRectangle())) {
+							System.out.println("PANG");
+							bomb.setBombCountDown(0);
+						}
 					}
 				}
 			}
+		}
+		for (Controller player : controllArray) {
+			player.setDelta(delta);
+			Player p = player.getPlayer();
 		for (LevelObject lvl : level.getLvlObjects()) {
 			if (lvl.isHaveRectangle()) {
 				boolean collision = UnitCollission.isColliding(p.getRectangle(), lvl.getRectangle());

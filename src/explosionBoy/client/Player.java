@@ -13,17 +13,20 @@ public abstract class Player {
 	float bombX=0;
 	float bombY=0;
 
-	protected int ID;
 	protected float x, oldx;
 	protected float y, oldy;
+	
+	protected int ID;
 	protected int speed;
 	protected int maxBomb;
 	protected int currBomb;
+	
 	protected boolean UP = false;
 	protected boolean DOWN = false;
 	protected boolean LEFT = false;
 	protected boolean RIGHT = false;
 	protected boolean bombAvailable = true;
+	
 	protected Json json;
 	private AnimationHandler animationHandler;
 	private Rectangle rectangle;
@@ -121,7 +124,6 @@ public abstract class Player {
 	}
 
 	public void bombDropper(ArrayList<Bomb> bombArray, ArrayList<Bomb> addBombArray, float explosionSpeed, float countdown, int power){
-
 
 		for (int i = (int)x+5; i > 0; i--) {
 			if (i%32 == 1) {
