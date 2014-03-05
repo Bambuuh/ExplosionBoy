@@ -1,6 +1,7 @@
 package explosionBoy.server;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 public class ServerBomb {
 	
@@ -9,8 +10,10 @@ public class ServerBomb {
 	private long dropTime;
 	private boolean remove, isColliding;
 	private float explosionSpeed;
+	private ArrayList<ServerExplosion> explArray;
 	
 	public ServerBomb(int playerX, int playerY, int playerID, int countDown, float explosionSpeed, int explosionPower) {
+		this.explArray = new ArrayList<>();
 		x = calcPosX(playerX);
 		y = calcPosY(playerY);
 		this.playerID = playerID;
@@ -120,6 +123,14 @@ public class ServerBomb {
 
 	public void setExplosionPower(int explosionPower) {
 		this.explosionPower = explosionPower;
+	}
+
+	public ArrayList<ServerExplosion> getExplArray() {
+		return explArray;
+	}
+
+	public void setExplArray(ArrayList<ServerExplosion> explArray) {
+		this.explArray = explArray;
 	}
 	
 }

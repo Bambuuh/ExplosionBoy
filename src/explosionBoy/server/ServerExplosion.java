@@ -8,10 +8,18 @@ public class ServerExplosion {
 	private int x, y;
 	private boolean remove;
 	private float explosionTime;
-	private long currentTime, lastTime;
+	private long startTime, lastTime;
 	
-	public ServerExplosion() {
-		
+	public ServerExplosion(int x, int y) {
+		startTime = System.currentTimeMillis();
+		explosionTime = 400;
+		rect = new  Rectangle(x+1, y+1, 30, 30);
+	}
+	
+	public void update(){
+		if (System.currentTimeMillis()>startTime+explosionTime) {
+			remove = true;
+		}
 	}
 	
 	public Rectangle getRect() {
@@ -45,10 +53,10 @@ public class ServerExplosion {
 		this.explosionTime = explosionTime;
 	}
 	public long getCurrentTime() {
-		return currentTime;
+		return startTime;
 	}
 	public void setCurrentTime(long currentTime) {
-		this.currentTime = currentTime;
+		this.startTime = currentTime;
 	}
 	public long getLastTime() {
 		return lastTime;
