@@ -92,7 +92,9 @@ public class GameHolder {
 				return false;
 			}
 			if (bomb.getPlayerID()==cr.getpID()) {
-				numberOfBombs++;
+				if (!bomb.isExploding()) {
+					numberOfBombs++;
+				}
 				if (numberOfBombs>=cr.getMaxBombs()) {
 					System.out.println("NO bomb: "+numberOfBombs);
 					return false;
