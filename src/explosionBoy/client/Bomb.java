@@ -93,24 +93,30 @@ public class Bomb {
 	}
 	
 	public void createExplosion(LevelCreator levelCreator){
-		
-		Rectangle rectangle = new Rectangle(x, y, 32, 32);
+		Rectangle rectangle = new Rectangle(x, y, 15, 15);
 		if (explodeRight){
-			rectangle.setBounds(x + powerCounter, y, 32, 32);
+			rectangle.setBounds(x + (powerCounter * 32), y, 25, 25);
 			for (LevelObject object : levelCreator.getLvlObjects()) {
 				if (object.isHaveRectangle()) {
 					if (UnitCollission.isColliding(rectangle, object.getRectangle())) {
 						System.out.println("Tile X: " + object.getRectangle().getX());
-						System.out.println("Tile Y: " + object.getRectangle().getY());
+						System.out.println("Tile Y min: " + object.getRectangle().getMinY());
+						System.out.println("Tile Y max: " + object.getRectangle().getMaxY());
+						System.out.println("Tile height: " + object.getRectangle().getHeight());
+						System.out.println("BombX: " + x);
+						System.out.println("BombY: " + y);
+						System.out.println("BombHeight: " + rectangle.getHeight());
 						explodeRight = false;
 						break;
 					}
 				}
 			}
-			if (explodeRight) {
-				explosionArray.add(new Explosion(animationHandler, 1, x + powerCounter * 32, y));
-			}
+//			if (explodeRight) {
+//				System.out.println(explodeRight);
+//				explosionArray.add(new Explosion(animationHandler, 1, x + powerCounter * 32, y));
+//			}
 		}
+		System.out.println(explodeRight);
 		if (explodeLeft){
 			explosionArray.add(new Explosion(animationHandler, 1, x - powerCounter * 32, y));
 		}
