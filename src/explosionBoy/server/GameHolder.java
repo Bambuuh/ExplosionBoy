@@ -37,7 +37,7 @@ public class GameHolder {
 				if (bombCol) {
 					System.out.println("BOOM!");
 				}
-				else if (!bombCol && serverBombArray.get(expIndex).isColliding()) serverBombArray.get(expIndex).setColliding(false);;
+				else if (!bombCol && bombToCheck.isColliding() && bombToCheck.getPlayerID()==ref.getpID()) serverBombArray.get(expIndex).setColliding(false);;
 			}
 			boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl);
 			if (collision || (bombCol && !bombToCheck.isColliding())) {
@@ -66,12 +66,8 @@ public class GameHolder {
 
 	public boolean addBomb(ConnectionReference cr){
 		int numberOfBombs=0;
-		ServerBomb bombToAdd = new ServerBomb((int)cr.getxPos(),(int) cr.getyPos(), cr.getpID(), cr.getBombCountdown());
+		ServerBomb bombToAdd = new ServerBomb((int)cr.getxPos(),(int) cr.getyPos(), cr.getpID(), cr.getBombCountdown(), cr.getExplosionSpeed(), cr.getBombPower());
 		for (ServerBomb bomb : serverBombArray) {
-			System.out.println("Bomb plID: "+bomb.getPlayerID());
-			System.out.println("Bomb drop: "+bomb.getDropTime());
-			System.out.println("Bomb time: "+bomb.getCountDown());
-			System.out.println("Bomb remo: "+bomb.isRemove());
 			if (bombToAdd.getX()==bomb.getX() && bombToAdd.getY()==bomb.getY()){
 				return false;
 			}

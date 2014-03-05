@@ -5,17 +5,20 @@ import java.awt.Rectangle;
 public class ServerBomb {
 	
 	private Rectangle rect;
-	private int x, y, playerID, countDown;
+	private int x, y, playerID, countDown, explosionPower;
 	private long dropTime;
 	private boolean remove, isColliding;
+	private float explosionSpeed;
 	
-	public ServerBomb(int playerX, int playerY, int playerID, int countDown) {
+	public ServerBomb(int playerX, int playerY, int playerID, int countDown, float explosionSpeed, int explosionPower) {
 		x = calcPosX(playerX);
 		y = calcPosY(playerY);
 		this.playerID = playerID;
 		this.countDown = countDown;
 		this.setRemove(false);
 		this.isColliding = true;
+		this.setExplosionSpeed(explosionSpeed);
+		this.explosionPower = explosionPower;
 		rect = new Rectangle(x, y, 32, 32);
 		dropTime = System.currentTimeMillis();
 	}
@@ -40,7 +43,6 @@ public class ServerBomb {
 	
 	public boolean checkIfRemove(){
 		if (System.currentTimeMillis()>=dropTime+(countDown*1000)) {
-			System.out.println("REMOVING BOMB!");
 			setRemove(true);
 			return true;
 		}
@@ -102,6 +104,22 @@ public class ServerBomb {
 
 	public void setColliding(boolean isColliding) {
 		this.isColliding = isColliding;
+	}
+
+	public float getExplosionSpeed() {
+		return explosionSpeed;
+	}
+
+	public void setExplosionSpeed(float explosionSpeed) {
+		this.explosionSpeed = explosionSpeed;
+	}
+
+	public int getExplosionPower() {
+		return explosionPower;
+	}
+
+	public void setExplosionPower(int explosionPower) {
+		this.explosionPower = explosionPower;
 	}
 	
 }
