@@ -9,12 +9,13 @@ import explosionBoy.client.Game;
 public class ConnectionReference {
 
 	private InetAddress ip = null;
-	private int conId, port, gID, pID, maxBombs, currentBombs, bombPower;
-	private float xPos, yPos, speed, oldY, oldX, explosionSpeed, bombCountdown;
+	private int conId, port, gID, pID, maxBombs, currentBombs, bombPower, bombCountdown;
+	private float xPos, yPos, speed, oldY, oldX, explosionSpeed;
 	private String dir;
 	private Delta delta;
 	private Rectangle playerRect;
 	private GameHolder gameHolder;
+	private boolean isAwayFromBomb;
 	
 	public ConnectionReference() {
 		this.playerRect = new Rectangle();
@@ -32,6 +33,7 @@ public class ConnectionReference {
 		this.explosionSpeed = 0.15f;
 		this.bombCountdown = 3;
 		this.bombPower = 3;
+		this.maxBombs = 3;
 		delta = new Delta();
 		delta.getDelta();
 		if (pID == 2) {
@@ -189,11 +191,11 @@ public class ConnectionReference {
 		this.explosionSpeed = explosionSpeed;
 	}
 
-	public float getBombCountdown() {
+	public int getBombCountdown() {
 		return bombCountdown;
 	}
 
-	public void setBombCountdown(float bombCountdown) {
+	public void setBombCountdown(int bombCountdown) {
 		this.bombCountdown = bombCountdown;
 	}
 
@@ -203,6 +205,14 @@ public class ConnectionReference {
 
 	public void setBombPower(int bombPower) {
 		this.bombPower = bombPower;
+	}
+
+	public boolean isAwayFromBomb() {
+		return isAwayFromBomb;
+	}
+
+	public void setAwayFromBomb(boolean isAwayFromBomb) {
+		this.isAwayFromBomb = isAwayFromBomb;
 	}
 	
 }

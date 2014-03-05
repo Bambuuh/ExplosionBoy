@@ -5,13 +5,18 @@ import java.awt.Rectangle;
 public class ServerBomb {
 	
 	private Rectangle rect;
-	private int x, y, playerID;
+	private int x, y, playerID, countDown;
+	private long dropTime;
+	private boolean remove;
 	
-	public ServerBomb(int playerX, int playerY, int playerID) {
+	public ServerBomb(int playerX, int playerY, int playerID, int countDown) {
 		x = calcPosX(playerX);
 		y = calcPosY(playerY);
 		this.playerID = playerID;
+		this.countDown = countDown;
+		this.setRemove(false);
 		rect = new Rectangle(x, y, 32, 32);
+		dropTime = System.currentTimeMillis();
 	}
 
 	private int calcPosY(int playerY) {
@@ -30,6 +35,15 @@ public class ServerBomb {
 			}
 		}
 		return 0;
+	}
+	
+	public boolean checkIfRemove(){
+		if (System.currentTimeMillis()>=dropTime+(countDown*1000)) {
+			System.out.println("REMOVING BOMB!");
+			setRemove(true);
+			return true;
+		}
+		return false;
 	}
 	
 	public Rectangle getRect() {
@@ -55,6 +69,30 @@ public class ServerBomb {
 	}
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
+	}
+
+	public int getCountDown() {
+		return countDown;
+	}
+
+	public void setCountDown(int countDown) {
+		this.countDown = countDown;
+	}
+
+	public long getDropTime() {
+		return dropTime;
+	}
+
+	public void setDropTime(long dropTime) {
+		this.dropTime = dropTime;
+	}
+
+	public boolean isRemove() {
+		return remove;
+	}
+
+	public void setRemove(boolean remove) {
+		this.remove = remove;
 	}
 	
 }

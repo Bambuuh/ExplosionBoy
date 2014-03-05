@@ -11,9 +11,11 @@ public class GameHolder {
 	private ArrayList<Rectangle> lvlrectArray;
 	private ArrayList<Rectangle> bombExplArra;
 	private ArrayList<ServerBomb> serverBombArray;
+	private ArrayList<ServerBomb> serverBombRemove;
 
 	public GameHolder() {
 		this.serverBombArray = new ArrayList<ServerBomb>();
+		this.serverBombRemove = new ArrayList<ServerBomb>();
 		this.gameID = 1;
 		references = new ArrayList<>();
 		references.add(new ConnectionReference(1,this));
@@ -25,15 +27,19 @@ public class GameHolder {
 	public void checkCollissions(ConnectionReference ref){
 		int expIndex = serverBombArray.size()-1;
 		ConnectionReference p = ref;
+		boolean explisionCol = false;
 		for (Rectangle lvl : lvlrectArray) {
-			if (expIndex>0) {
-				boolean explisionCol = explosionBoy.server.UnitCollission.isColliding(serverBombArray.get(expIndex).getRect(), p.getPlayerRect());
+			if (expIndex>=0) {
+				if (serverBombArray.get(expIndex).checkIfRemove()) serverBombRemove.add(serverBombArray.get(expIndex));
+				explisionCol = explosionBoy.server.UnitCollission.isColliding(serverBombArray.get(expIndex).getRect(), p.getPlayerRect());
 				if (explisionCol) {
 					System.out.println("BOOM!");
 				}
+				else if (!explisionCol && !ref.isAwayFromBomb()) ref.setAwayFromBomb(true);
+				expIndex--;
 			}
 			boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl);
-			if (collision) {
+			if (collision || (explisionCol && ref.isAwayFromBomb())) {
 				System.out.println("COLLISION!");
 				if (lvl.getMaxX()>p.getPlayerRect().getMinX()) {
 					p.setxPos(p.getOldX());
@@ -49,8 +55,39 @@ public class GameHolder {
 				}
 			}
 		}
+		for (ServerBomb bomRem : serverBombRemove) {
+			serverBombArray.remove(bomRem);
+		}
+		serverBombRemove.clear();
 	}
 
+
+	public boolean addBomb(ConnectionReference cr){
+		int numberOfBombs=0;
+		ServerBomb bombToAdd = new ServerBomb((int)cr.getxPos(),(int) cr.getyPos(), cr.getpID(), cr.getBombCountdown());
+		for (ServerBomb bomb : serverBombArray) {
+			System.out.println("Bomb plID: "+bomb.getPlayerID());
+			System.out.println("Bomb drop: "+bomb.getDropTime());
+			System.out.println("Bomb time: "+bomb.getCountDown());
+			System.out.println("Bomb remo: "+bomb.isRemove());
+			if (bombToAdd.getX()==bomb.getX() && bombToAdd.getY()==bomb.getY()){
+				return false;
+			}
+			if (bomb.getPlayerID()==cr.getpID()) {
+				numberOfBombs++;
+				if (numberOfBombs>=cr.getMaxBombs()) {
+					System.out.println("NO bomb: "+numberOfBombs);
+					return false;
+				}
+			}
+		}
+		for (ServerBomb bomRem : serverBombRemove) {
+			serverBombArray.remove(bomRem);
+		}
+		serverBombRemove.clear();
+		serverBombArray.add(bombToAdd);
+		return true;
+	}
 
 	public int getGameID() {
 		return gameID;
@@ -132,5 +169,8 @@ public class GameHolder {
 
 		return rectArr;
 	}
+
+
+
 
 }

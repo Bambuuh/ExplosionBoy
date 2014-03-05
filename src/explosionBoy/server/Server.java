@@ -19,7 +19,7 @@ public class Server implements Runnable {
 	private Gson gson;
 	private Json jsonRecive, jsonToSend;
 	private ArrayList<GameHolder> holder;
-	
+
 	public Server() {
 		holder = new ArrayList<GameHolder>();
 		holder.add(new GameHolder());
@@ -37,19 +37,19 @@ public class Server implements Runnable {
 	}
 
 	private void recive() {
-			DatagramPacket recivePacket = new DatagramPacket(recData, recData.length);
-			try {
-				datagramSocket.receive(recivePacket);
-			} catch (IOException e) {
-				System.err.println("Reciving packet failed: "+e.getMessage());
-				e.printStackTrace();
-			}
-			
-			String incomming = new String(recivePacket.getData());
-			incomming = incomming.trim();
-			
-			jsonRecive = gson.fromJson(incomming, Json.class);
-			CheckIp:
+		DatagramPacket recivePacket = new DatagramPacket(recData, recData.length);
+		try {
+			datagramSocket.receive(recivePacket);
+		} catch (IOException e) {
+			System.err.println("Reciving packet failed: "+e.getMessage());
+			e.printStackTrace();
+		}
+
+		String incomming = new String(recivePacket.getData());
+		incomming = incomming.trim();
+
+		jsonRecive = gson.fromJson(incomming, Json.class);
+		CheckIp:
 			for (GameHolder gh : holder) {
 				if (gh.getGameID()==jsonRecive.getgID()) {
 					for (ConnectionReference cr : gh.getReferences()) {
@@ -65,20 +65,22 @@ public class Server implements Runnable {
 					}
 				}
 			}
-			Json json = new Json();
-			gameloop:
+		Json json = new Json();
+		gameloop:
 			for (GameHolder gh : holder) {
 				if (gh.getGameID()==jsonRecive.getgID()) {
 					for (ConnectionReference cr : gh.getReferences()) {
 						if (jsonRecive.getDirection().equals("BOMB") && jsonRecive.getpID() == cr.getpID()) {
-							json.setDirection("BOMB");
-							json.setxPos(cr.getxPos());
-							json.setyPos(cr.getyPos());
-							json.setSpeed(cr.getExplosionSpeed());
-							json.setbCountDown(cr.getBombCountdown());
-							json.setPower(cr.getBombPower());
-							json.setpID(cr.getpID());
-							//add bomb to array here!
+							if (gh.addBomb(cr)) {
+								cr.setAwayFromBomb(false);
+								json.setDirection("BOMB");
+								json.setxPos(cr.getxPos());
+								json.setyPos(cr.getyPos());
+								json.setSpeed(cr.getExplosionSpeed());
+								json.setbCountDown(cr.getBombCountdown());
+								json.setPower(cr.getBombPower());
+								json.setpID(cr.getpID());
+							}
 							break;
 						}
 						else if (jsonRecive.getpID() == cr.getpID()) {
@@ -99,7 +101,7 @@ public class Server implements Runnable {
 					break gameloop;
 				}
 			}
-			Arrays.fill(recData,(byte) 0);
+		Arrays.fill(recData,(byte) 0);
 	}
 
 	public void send(Json json, InetAddress ip, int port) {
