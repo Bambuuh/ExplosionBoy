@@ -142,6 +142,7 @@ public class Game {
 		for (Bomb bomb : removeBombArray) {
 			bombArray.remove(bomb);
 		}
+		removeBombArray.clear();
 	}
 	
 	public void checkCollisions(int delta){

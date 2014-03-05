@@ -164,6 +164,7 @@ public class Bomb {
 		for (Explosion explosion : explosionToRemove) {
 			explosionArray.remove(explosion);
 		}
+		explosionToRemove.clear();
 	}
 	
 	public boolean getExploded(){
