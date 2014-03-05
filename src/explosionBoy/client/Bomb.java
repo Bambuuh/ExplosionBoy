@@ -64,7 +64,7 @@ public class Bomb {
 		this.x = x;
 		this.y = y;
 		
-		bombTangle = new Rectangle(x, y, 32, 32);
+		bombTangle = new Rectangle(x + 1, y + 1, 30, 30);
 		
 		this.power = power;
 	}
@@ -78,7 +78,7 @@ public class Bomb {
 		Rectangle rectangle = new Rectangle(x, y, explosionSize, explosionSize);
 		if (countDown() >= bombCountdown && !exploding) {
 			exploding = true;
-			explosionArray.add(new Explosion(animationHandler, 1, x, y));
+			explosionArray.add(new Explosion(animationHandler, x, y));
 		}
 		
 		if (exploding && countDown2() >= explosionSpeed && powerCounter <= power) {
@@ -111,7 +111,8 @@ public class Bomb {
 				}
 			}
 			if (explodeRight) {
-				explosionArray.add(new Explosion(animationHandler, 1, x + powerCounter * tileSize, y));
+				explosionArray.add(new Explosion(animationHandler, x + powerCounter * tileSize, y));
+				
 			}
 		}
 		
@@ -126,7 +127,7 @@ public class Bomb {
 				}
 			}
 			if (explodeLeft) {
-				explosionArray.add(new Explosion(animationHandler, 1, x - powerCounter * tileSize, y));
+				explosionArray.add(new Explosion(animationHandler, x - powerCounter * tileSize, y));
 			}
 		}
 		if (explodeDown){
@@ -140,7 +141,7 @@ public class Bomb {
 				}
 			}
 			if (explodeDown) {
-				explosionArray.add(new Explosion(animationHandler, 1, x, y + powerCounter * tileSize));
+				explosionArray.add(new Explosion(animationHandler, x, y + powerCounter * tileSize));
 			}
 		}
 		if (explodeUp){
@@ -154,7 +155,7 @@ public class Bomb {
 				}
 			}
 			if (explodeUp) {
-				explosionArray.add(new Explosion(animationHandler, 1, x, y - powerCounter * tileSize));
+				explosionArray.add(new Explosion(animationHandler, x, y - powerCounter * tileSize));
 			}
 		}
 	}

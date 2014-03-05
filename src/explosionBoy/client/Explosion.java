@@ -19,7 +19,7 @@ public class Explosion {
 	
 	private boolean exploded = false;
 	
-	public Explosion(AnimationHandler handler, int direction, float x, float y){
+	public Explosion(AnimationHandler handler, float x, float y){
 		this.rectangle = new Rectangle(x, y, 30, 30);
 		this.x = x-4;
 		this.y = y-4;

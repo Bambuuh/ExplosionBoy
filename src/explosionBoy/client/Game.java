@@ -151,7 +151,6 @@ public class Game {
 				for (Bomb bomb : bombArray) {
 					if (!bomb.equals(bombToCheck)) {
 						if (UnitCollission.isColliding(bomb.getRectangle(), explosion.getRectangle())) {
-							System.out.println("PANG");
 							bomb.setBombCountDown(0);
 						}
 					}
