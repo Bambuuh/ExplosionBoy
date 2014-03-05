@@ -27,12 +27,17 @@ public abstract class Player {
 	protected Json json;
 	private AnimationHandler animationHandler;
 	private Rectangle rectangle;
+	private UnitCollission collision;
+	private LevelCreator level;
+	
 
 	private boolean bombDown = false;
 
 	protected Animation playerAnimation;
 
-	public Player(float x, float y, AnimationHandler animation, int ID) {
+	public Player(float x, float y, AnimationHandler animation, int ID, UnitCollission collision, LevelCreator level) {
+		this.collision = collision;
+		this.level = level;
 		this.ID = ID;
 		this.animationHandler = animation;
 		this.json = new Json();
@@ -94,18 +99,18 @@ public abstract class Player {
 		}
 	}
 
-	public void currentAnimation(AnimationHandler animation){
+	public void currentAnimation(){
 		if (UP) {
-			setPlayerAnimation(animation, 48, 0, 48, false, false);
+			setPlayerAnimation(animationHandler, 48, 0, 48, false, false);
 		}
 		if (DOWN) {
-			setPlayerAnimation(animation, 0, 0, 48, false, false);
+			setPlayerAnimation(animationHandler, 0, 0, 48, false, false);
 		}
 		if (RIGHT) {
-			setPlayerAnimation(animation, 96, 0, 48, false, false);
+			setPlayerAnimation(animationHandler, 96, 0, 48, false, false);
 		}
 		if (LEFT) {
-			setPlayerAnimation(animation, 96, 0, 48, true, false);
+			setPlayerAnimation(animationHandler, 96, 0, 48, true, false);
 		}
 	}
 
@@ -137,7 +142,7 @@ public abstract class Player {
 			}
 		}
 		if (bombAvailable) {
-			addBombArray.add(new Bomb(animationHandler, bombX, bombY, explosionSpeed, countdown, power));
+			addBombArray.add(new Bomb(collision, level, animationHandler, bombX, bombY, explosionSpeed, countdown, power));
 			bombDown = true;
 		}
 		bombAvailable = true;

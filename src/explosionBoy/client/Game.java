@@ -36,6 +36,7 @@ public class Game {
 
 	private AnimationHandler animation;
 	private LevelCreator level;
+	private UnitCollission collision;
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 608;
@@ -46,13 +47,14 @@ public class Game {
 
 	public Game(){
 		initGL();
+		collision = new UnitCollission();
 		animation = new AnimationHandler();
 		controllArray = new ArrayList<Controller>();
 		bombArray = new ArrayList<>();
 		addBombArray = new ArrayList<Bomb>();
 		removeBombArray = new ArrayList<>();
-		snakeBoy = new SnakeBoy(40,30 , animation, 1);
-		snakeBoy2 = new SnakeBoy(WIDTH-50, 30, animation, 2);
+		snakeBoy = new SnakeBoy(40,30 , animation, 1, collision, level);
+		snakeBoy2 = new SnakeBoy(WIDTH-50, 30, animation, 2, collision, level);
 		controllArray.add(new Controller(snakeBoy, bombArray, addBombArray));
 		controllArray.add(new Controller(snakeBoy2, bombArray, addBombArray));
 		connection = new ServerConnection(controllArray);
@@ -125,7 +127,7 @@ public class Game {
 	
 	public synchronized void updateBombs(int delta){
 		for (Bomb bomb : bombArray) {
-			bomb.update(delta);
+			bomb.update(delta, level);
 		}
 		bombArray.addAll(addBombArray);
 		addBombArray.clear();

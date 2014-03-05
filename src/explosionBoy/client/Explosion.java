@@ -13,9 +13,6 @@ public class Explosion {
 	private Random rand = new Random();
 	
 	private Animation animation1;
-	private Animation animation2;
-	private Animation animation3;
-	private Animation animation4;
 	
 	private boolean exploded = false;
 	
@@ -23,8 +20,8 @@ public class Explosion {
 		randomAnim = rand.nextInt(4)+1;
 		
 		animation1 = handler.getExplosionAnimation(randomAnim);
-		this.x = x;
-		this.y = y;
+		this.x = x-4;
+		this.y = y-4;
 	}
 	
 	public void explode(){

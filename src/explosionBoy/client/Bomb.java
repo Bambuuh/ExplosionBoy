@@ -3,6 +3,9 @@ package explosionBoy.client;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.geom.Rectangle;
+
+import explosionBoy.levelobjects.LevelObject;
 
 public class Bomb {
 	
@@ -13,8 +16,15 @@ public class Bomb {
 	protected Animation bombAnimation;
 	protected AnimationHandler animationHandler;
 	
+	protected LevelCreator level;
+	protected UnitCollission collision;
+	
 	protected boolean exploding;
-	protected boolean  exploded;
+	protected boolean exploded;
+	protected boolean explodeUp;
+	protected boolean explodeDown;
+	protected boolean explodeLeft;
+	protected boolean explodeRight;
 	
 	protected long currentTime;
 	protected long currentTime2;
@@ -27,7 +37,9 @@ public class Bomb {
 	protected int power;
 	protected int powerCounter;
 	
-	public Bomb(AnimationHandler animHandler, float x, float y, float explosionSpeed, float bombCountdown, int power){
+	public Bomb(UnitCollission collision, LevelCreator level, AnimationHandler animHandler, float x, float y, float explosionSpeed, float bombCountdown, int power){
+		this.collision = collision;
+		this.level = level;
 		explosionArray = new ArrayList<Explosion>();
 		explosionToRemove = new ArrayList<Explosion>();
 		animationHandler = animHandler;
@@ -39,6 +51,10 @@ public class Bomb {
 		powerCounter = 1;
 		exploding = false;
 		exploded = false;
+		explodeUp = true;
+		explodeDown = true;
+		explodeLeft = true;
+		explodeRight = true;
 		
 		this.x = x;
 		this.y = y;
@@ -46,25 +62,21 @@ public class Bomb {
 		this.power = power;
 	}
 	
-	public void update(int delta){
-		animateBomb();
+	public void update(int delta, LevelCreator levelCreator){
+		animateBomb(levelCreator);
 		cleanExplosion();
 	}
 	
-	public void animateBomb(){
+	public void animateBomb(LevelCreator levelCreator){
 		if (countDown() >= bombCountdown && !exploding) {
 			exploding = true;
 			explosionArray.add(new Explosion(animationHandler, 1, x, y));
 		}
 		
 		if (exploding) {
-			
 			if (countDown2() >= explosionSpeed && powerCounter <= power) {
 				currentTime2 = System.currentTimeMillis();
-				explosionArray.add(new Explosion(animationHandler, 1, x + powerCounter * 32, y));
-				explosionArray.add(new Explosion(animationHandler, 1, x - powerCounter * 32, y));
-				explosionArray.add(new Explosion(animationHandler, 1, x, y + powerCounter * 32));
-				explosionArray.add(new Explosion(animationHandler, 1, x, y - powerCounter * 32));
+				createExplosion(levelCreator);
 				powerCounter++;
 			}
 		}
@@ -77,6 +89,36 @@ public class Bomb {
 		}
 		if (exploding && explosionArray.size() == 0) {
 			exploded = true;
+		}
+	}
+	
+	public void createExplosion(LevelCreator levelCreator){
+		
+		Rectangle rectangle = new Rectangle(x, y, 32, 32);
+		if (explodeRight){
+			rectangle.setBounds(x + powerCounter, y, 32, 32);
+			for (LevelObject object : levelCreator.getLvlObjects()) {
+				if (object.isHaveRectangle()) {
+					if (UnitCollission.isColliding(rectangle, object.getRectangle())) {
+						System.out.println("Tile X: " + object.getRectangle().getX());
+						System.out.println("Tile Y: " + object.getRectangle().getY());
+						explodeRight = false;
+						break;
+					}
+				}
+			}
+			if (explodeRight) {
+				explosionArray.add(new Explosion(animationHandler, 1, x + powerCounter * 32, y));
+			}
+		}
+		if (explodeLeft){
+			explosionArray.add(new Explosion(animationHandler, 1, x - powerCounter * 32, y));
+		}
+		if (explodeDown){
+			explosionArray.add(new Explosion(animationHandler, 1, x, y + powerCounter * 32));
+		}
+		if (explodeUp){
+			explosionArray.add(new Explosion(animationHandler, 1, x, y - powerCounter * 32));
 		}
 	}
 	

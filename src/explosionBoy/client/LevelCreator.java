@@ -136,6 +136,10 @@ public class LevelCreator {
 		}
 	}
 	
+	public LevelObject[] getLevelArray(){
+		return lvlObjects;
+	}
+	
 	public void levelTest(){
 		
 		
