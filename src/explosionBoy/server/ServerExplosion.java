@@ -7,13 +7,13 @@ public class ServerExplosion {
 	private Rectangle rect;
 	private int x, y;
 	private boolean remove;
-	private float explosionTime;
+	private int explosionTime;
 	private long startTime, lastTime;
 	private String direction;
 	
 	public ServerExplosion(int x, int y, String direction) {
 		startTime = System.currentTimeMillis();
-		explosionTime = 400;
+		explosionTime = 600;
 		rect = new  Rectangle(x+1, y+1, 30, 30);
 		this.direction = direction;
 //		System.out.println("DIR: "+direction);
@@ -22,7 +22,7 @@ public class ServerExplosion {
 	}
 	
 	public void update(){
-		if (countDown()<explosionTime) {
+		if (System.currentTimeMillis()>(startTime+explosionTime)) {
 			remove = true;
 		}
 	}
@@ -51,10 +51,10 @@ public class ServerExplosion {
 	public void setRemove(boolean remove) {
 		this.remove = remove;
 	}
-	public float getExplosionTime() {
+	public int getExplosionTime() {
 		return explosionTime;
 	}
-	public void setExplosionTime(float explosionTime) {
+	public void setExplosionTime(int explosionTime) {
 		this.explosionTime = explosionTime;
 	}
 	public long getCurrentTime() {

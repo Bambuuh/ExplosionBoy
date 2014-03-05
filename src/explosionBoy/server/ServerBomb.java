@@ -8,7 +8,7 @@ public class ServerBomb {
 	private Rectangle rect;
 	private int x, y, playerID, countDown, explosionPower, powerCounter;
 	private long dropTime, explosionTime;
-	private boolean remove, isColliding, exploding, eLeft, eRight, eUp, eDown;
+	private boolean remove, isColliding, exploding, eLeft, eRight, eUp, eDown, emiddle;
 	private float explosionSpeed;
 	private ArrayList<ServerExplosion> explArray;
 	private ArrayList<ServerExplosion> removeExplosionArray;
@@ -22,6 +22,7 @@ public class ServerBomb {
 		this.eRight = true;
 		this.eUp = true;
 		this.eDown = true;
+		this.emiddle = true;
 		this.playerID = playerID;
 		this.countDown = countDown;
 		this.exploding = false;
@@ -59,15 +60,14 @@ public class ServerBomb {
 				removeExplosionArray.add(explosion);
 			}
 		}
-		for (ServerExplosion explosion : removeExplosionArray) {
-			explArray.remove(explosion);
-		}
-		removeExplosionArray.clear();
 		if (System.currentTimeMillis()>=dropTime+(countDown*1000) && !exploding) {
 			exploding = true;
-			explosionTime = System.currentTimeMillis()+150;
 		}
 		if (exploding && powerCounter <= explosionPower && System.currentTimeMillis()>=explosionTime){
+			if (emiddle) {
+				explArray.add(new ServerExplosion(x, y, ""));
+				emiddle = false;
+			}
 			if (eRight) {
 				//RIGHT
 				explArray.add(new ServerExplosion(x+(powerCounter*32), y, "RIGHT"));
@@ -85,14 +85,20 @@ public class ServerBomb {
 				explArray.add(new ServerExplosion(x,  y+(powerCounter*32),"DOWN"));
 			}
 			powerCounter++;
-			explosionTime =  (long) (System.currentTimeMillis()+150);
+			int speed = (int) (explosionSpeed*1000);
+			explosionTime =  (long) (System.currentTimeMillis()+speed);
 			System.out.println(explosionTime - System.currentTimeMillis());
-			System.out.println((explosionSpeed));
 
 		}
-		else if(exploding && explArray.isEmpty()){
+		else if (powerCounter >= explosionPower && explArray.isEmpty()) {
 			return true;
 		}
+		System.out.println(explArray.size());
+		for (ServerExplosion explosion : removeExplosionArray) {
+			explArray.remove(explosion);
+		}
+		removeExplosionArray.clear();
+		System.out.println("Hej!");
 		return false;
 	}
 
@@ -194,6 +200,14 @@ public class ServerBomb {
 
 	public void setExplArray(ArrayList<ServerExplosion> explArray) {
 		this.explArray = explArray;
+	}
+
+	public boolean isExploding() {
+		return exploding;
+	}
+
+	public void setExploding(boolean exploding) {
+		this.exploding = exploding;
 	}
 
 }
