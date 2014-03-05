@@ -7,7 +7,7 @@ public class ServerBomb {
 	private Rectangle rect;
 	private int x, y, playerID, countDown;
 	private long dropTime;
-	private boolean remove;
+	private boolean remove, isColliding;
 	
 	public ServerBomb(int playerX, int playerY, int playerID, int countDown) {
 		x = calcPosX(playerX);
@@ -15,6 +15,7 @@ public class ServerBomb {
 		this.playerID = playerID;
 		this.countDown = countDown;
 		this.setRemove(false);
+		this.isColliding = true;
 		rect = new Rectangle(x, y, 32, 32);
 		dropTime = System.currentTimeMillis();
 	}
@@ -93,6 +94,14 @@ public class ServerBomb {
 
 	public void setRemove(boolean remove) {
 		this.remove = remove;
+	}
+
+	public boolean isColliding() {
+		return isColliding;
+	}
+
+	public void setColliding(boolean isColliding) {
+		this.isColliding = isColliding;
 	}
 	
 }

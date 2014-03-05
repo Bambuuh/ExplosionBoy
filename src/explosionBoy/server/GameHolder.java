@@ -27,19 +27,20 @@ public class GameHolder {
 	public void checkCollissions(ConnectionReference ref){
 		int expIndex = serverBombArray.size()-1;
 		ConnectionReference p = ref;
-		boolean explisionCol = false;
+		ServerBomb bombToCheck = null;
+		boolean bombCol = false;
 		for (Rectangle lvl : lvlrectArray) {
 			if (expIndex>=0) {
+				bombToCheck = serverBombArray.get(expIndex);
 				if (serverBombArray.get(expIndex).checkIfRemove()) serverBombRemove.add(serverBombArray.get(expIndex));
-				explisionCol = explosionBoy.server.UnitCollission.isColliding(serverBombArray.get(expIndex).getRect(), p.getPlayerRect());
-				if (explisionCol) {
+				bombCol = explosionBoy.server.UnitCollission.isColliding(serverBombArray.get(expIndex).getRect(), p.getPlayerRect());
+				if (bombCol) {
 					System.out.println("BOOM!");
 				}
-				else if (!explisionCol && !ref.isAwayFromBomb()) ref.setAwayFromBomb(true);
-				expIndex--;
+				else if (!bombCol && serverBombArray.get(expIndex).isColliding()) serverBombArray.get(expIndex).setColliding(false);;
 			}
 			boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl);
-			if (collision || (explisionCol && ref.isAwayFromBomb())) {
+			if (collision || (bombCol && !bombToCheck.isColliding())) {
 				System.out.println("COLLISION!");
 				if (lvl.getMaxX()>p.getPlayerRect().getMinX()) {
 					p.setxPos(p.getOldX());
@@ -54,6 +55,7 @@ public class GameHolder {
 					p.setyPos(p.getOldY());
 				}
 			}
+			expIndex--;
 		}
 		for (ServerBomb bomRem : serverBombRemove) {
 			serverBombArray.remove(bomRem);
