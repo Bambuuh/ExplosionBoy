@@ -19,6 +19,8 @@ public class Bomb {
 	protected LevelCreator level;
 	protected UnitCollission collision;
 	
+	private Rectangle bombTangle;
+	
 	protected boolean exploding;
 	protected boolean exploded;
 	protected boolean explodeUp;
@@ -29,6 +31,7 @@ public class Bomb {
 	protected long currentTime;
 	protected long currentTime2;
 	
+	
 	protected float x;
 	protected float y;
 	private float explosionSpeed, bombCountdown;
@@ -36,6 +39,8 @@ public class Bomb {
 	protected int ID;
 	protected int power;
 	protected int powerCounter;
+	private int explosionSize = 30;
+	private int tileSize = 32;
 	
 	public Bomb(UnitCollission collision, LevelCreator level, AnimationHandler animHandler, float x, float y, float explosionSpeed, float bombCountdown, int power){
 		this.collision = collision;
@@ -59,6 +64,8 @@ public class Bomb {
 		this.x = x;
 		this.y = y;
 		
+		bombTangle = new Rectangle(x, y, 32, 32);
+		
 		this.power = power;
 	}
 	
@@ -68,17 +75,16 @@ public class Bomb {
 	}
 	
 	public void animateBomb(LevelCreator levelCreator){
+		Rectangle rectangle = new Rectangle(x, y, explosionSize, explosionSize);
 		if (countDown() >= bombCountdown && !exploding) {
 			exploding = true;
-			explosionArray.add(new Explosion(animationHandler, 1, x, y));
+			explosionArray.add(new Explosion(animationHandler, 1, x, y, rectangle));
 		}
 		
-		if (exploding) {
-			if (countDown2() >= explosionSpeed && powerCounter <= power) {
-				currentTime2 = System.currentTimeMillis();
-				createExplosion(levelCreator);
-				powerCounter++;
-			}
+		if (exploding && countDown2() >= explosionSpeed && powerCounter <= power) {
+			currentTime2 = System.currentTimeMillis();
+			createExplosion(levelCreator, rectangle);
+			powerCounter++;
 		}
 		
 		for (Explosion explosion : explosionArray) {
@@ -92,10 +98,8 @@ public class Bomb {
 		}
 	}
 	
-	public void createExplosion(LevelCreator levelCreator){
-		int explosionSize = 30;
-		int tileSize = 32;
-		Rectangle rectangle = new Rectangle(x, y, explosionSize, explosionSize);
+	public void createExplosion(LevelCreator levelCreator, Rectangle rectangle){
+
 		if (explodeRight){
 			rectangle.setBounds(x + (powerCounter * tileSize) + 1, y+1, explosionSize, explosionSize);
 			for (LevelObject object : levelCreator.getLvlObjects()) {
@@ -107,7 +111,7 @@ public class Bomb {
 				}
 			}
 			if (explodeRight) {
-				explosionArray.add(new Explosion(animationHandler, 1, x + powerCounter * tileSize, y));
+				explosionArray.add(new Explosion(animationHandler, 1, x + powerCounter * tileSize, y, rectangle));
 			}
 		}
 		
@@ -122,7 +126,7 @@ public class Bomb {
 				}
 			}
 			if (explodeLeft) {
-				explosionArray.add(new Explosion(animationHandler, 1, x - powerCounter * tileSize, y));
+				explosionArray.add(new Explosion(animationHandler, 1, x - powerCounter * tileSize, y, rectangle));
 			}
 		}
 		if (explodeDown){
@@ -136,7 +140,7 @@ public class Bomb {
 				}
 			}
 			if (explodeDown) {
-				explosionArray.add(new Explosion(animationHandler, 1, x, y + powerCounter * tileSize));
+				explosionArray.add(new Explosion(animationHandler, 1, x, y + powerCounter * tileSize, rectangle));
 			}
 		}
 		if (explodeUp){
@@ -150,7 +154,7 @@ public class Bomb {
 				}
 			}
 			if (explodeUp) {
-				explosionArray.add(new Explosion(animationHandler, 1, x, y - powerCounter * tileSize));
+				explosionArray.add(new Explosion(animationHandler, 1, x, y - powerCounter * tileSize, rectangle));
 			}
 		}
 	}
@@ -185,12 +189,28 @@ public class Bomb {
 		return elapsedSeconds;
 	}
 	
+	public float getBombCountDown(){
+		return bombCountdown;
+	}
+	
+	public void setBombCountDown(float newTime){
+		bombCountdown = newTime;
+	}
+	
+	public ArrayList<Explosion> getExplosionArray(){
+		return explosionArray;
+	}
+	
 	public float getX(){
 		return x;
 	}
 	
 	public float getY(){
 		return y;
+	}
+	
+	public Rectangle getRectangle(){
+		return bombTangle;
 	}
 	
 }

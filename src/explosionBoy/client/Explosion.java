@@ -19,10 +19,10 @@ public class Explosion {
 	
 	private boolean exploded = false;
 	
-	public Explosion(AnimationHandler handler, int direction, float x, float y){
+	public Explosion(AnimationHandler handler, int direction, float x, float y, Rectangle rectangle){
 		this.x = x-4;
 		this.y = y-4;
-		rectangle = new Rectangle(x, y, 30, 30);
+		this.rectangle = rectangle;
 		
 		randomAnim = rand.nextInt(4)+1;
 		animation1 = handler.getExplosionAnimation(randomAnim);
@@ -41,6 +41,10 @@ public class Explosion {
 		if (animation1.isStopped()){
 			exploded = true;
 		}
+	}
+	
+	public Rectangle getRectangle(){
+		return rectangle;
 	}
 	
 	public boolean getExploded(){

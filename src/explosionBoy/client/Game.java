@@ -149,6 +149,13 @@ public class Game {
 		for (Controller player : controllArray) {
 			player.setDelta(delta);
 			Player p = player.getPlayer();
+			for (Bomb bomb : bombArray) {
+				for (Explosion explosion : bomb.getExplosionArray()) {
+					if (UnitCollission.isColliding(explosion.getRectangle(), bomb.getRectangle())) {
+						bomb.setBombCountDown(0);
+					}
+				}
+			}
 		for (LevelObject lvl : level.getLvlObjects()) {
 			if (lvl.isHaveRectangle()) {
 				boolean collision = UnitCollission.isColliding(p.getRectangle(), lvl.getRectangle());
