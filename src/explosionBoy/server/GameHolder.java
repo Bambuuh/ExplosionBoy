@@ -39,13 +39,12 @@ public class GameHolder {
 				}
 				for (Rectangle lvl : lvlrectArray) {
 					if (UnitCollission.isColliding(ex.getRect(), lvl)){
-						System.out.println("Hej!");
 						bombToCheck.cancelDirection(ex.getDirection());
 					}
 				}
 				if (UnitCollission.isColliding(ex.getRect(), ref.getPlayerRect())){
-					ref.setxPos(750);
-					ref.setyPos(30);
+					ref.setxPos(730);
+					ref.setyPos(36);
 				}
 
 			}
@@ -55,10 +54,7 @@ public class GameHolder {
 				bombToCheck1 = serverBombArray.get(expIndex);
 				if (serverBombArray.get(expIndex).checkIfRemove()) serverBombRemove.add(serverBombArray.get(expIndex));
 				bombCol = explosionBoy.server.UnitCollission.isColliding(serverBombArray.get(expIndex).getRect(), p.getPlayerRect());
-				if (bombCol) {
-					System.out.println("BOOM!");
-				}
-				else if (!bombCol && bombToCheck1.isColliding() && bombToCheck1.getPlayerID()==ref.getpID()) serverBombArray.get(expIndex).setColliding(false);;
+				if (!bombCol && bombToCheck1.isColliding() && bombToCheck1.getPlayerID()==ref.getpID()) serverBombArray.get(expIndex).setColliding(false);;
 			}
 			boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl);
 			if (collision || (bombCol && !bombToCheck1.isColliding())) {

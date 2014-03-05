@@ -32,7 +32,7 @@ public class ConnectionReference {
 		this.playerRect = new Rectangle();
 		this.explosionSpeed = 0.15f;
 		this.bombCountdown = 3;
-		this.bombPower = 3;
+		this.bombPower = 12;
 		this.maxBombs = 3;
 		delta = new Delta();
 		delta.getDelta();
@@ -45,7 +45,7 @@ public class ConnectionReference {
 			this.yPos = 30;
 		}
 		this.pID = pID;
-		this.speed = 0.1f;
+		this.speed = 0.2f;
 		this.ip = null;
 	}
 	

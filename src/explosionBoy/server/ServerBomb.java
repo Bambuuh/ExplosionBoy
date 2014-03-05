@@ -7,7 +7,7 @@ public class ServerBomb {
 
 	private Rectangle rect;
 	private int x, y, playerID, countDown, explosionPower, powerCounter;
-	private long dropTime, currentExplosionTime;
+	private long dropTime, explosionTime;
 	private boolean remove, isColliding, exploding, eLeft, eRight, eUp, eDown;
 	private float explosionSpeed;
 	private ArrayList<ServerExplosion> explArray;
@@ -65,9 +65,9 @@ public class ServerBomb {
 		removeExplosionArray.clear();
 		if (System.currentTimeMillis()>=dropTime+(countDown*1000) && !exploding) {
 			exploding = true;
-			currentExplosionTime = System.currentTimeMillis();
+			explosionTime = System.currentTimeMillis()+150;
 		}
-		if (exploding && powerCounter <= explosionPower && System.currentTimeMillis()>=currentExplosionTime+(explosionSpeed*1000)){
+		if (exploding && powerCounter <= explosionPower && System.currentTimeMillis()>=explosionTime){
 			if (eRight) {
 				//RIGHT
 				explArray.add(new ServerExplosion(x+(powerCounter*32), y, "RIGHT"));
@@ -85,7 +85,9 @@ public class ServerBomb {
 				explArray.add(new ServerExplosion(x,  y+(powerCounter*32),"DOWN"));
 			}
 			powerCounter++;
-			currentExplosionTime = System.currentTimeMillis();
+			explosionTime =  (long) (System.currentTimeMillis()+150);
+			System.out.println(explosionTime - System.currentTimeMillis());
+			System.out.println((explosionSpeed));
 
 		}
 		else if(exploding && explArray.isEmpty()){
