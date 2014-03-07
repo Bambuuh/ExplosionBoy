@@ -30,7 +30,7 @@ public class ConnectionReference {
 	public ConnectionReference(int pID, GameHolder gameHolder) {
 		this.gameHolder = gameHolder;
 		this.playerRect = new Rectangle();
-		this.explosionSpeed = 0.15f;
+		this.explosionSpeed = 0.07f;
 		this.bombCountdown = 3;
 		this.bombPower = 12;
 		this.maxBombs = 3;

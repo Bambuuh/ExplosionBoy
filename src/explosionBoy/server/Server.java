@@ -19,8 +19,12 @@ public class Server implements Runnable {
 	private Gson gson;
 	private Json jsonRecive, jsonToSend;
 	private ArrayList<GameHolder> holder;
+	private long startTime, endTime, checkTime;
+	private ArrayList<Integer> timeArray;
+	private long checkInter = 10_000;
 
 	public Server() {
+		this.timeArray = new ArrayList<Integer>();
 		holder = new ArrayList<GameHolder>();
 		holder.add(new GameHolder());
 		gson = new Gson();
@@ -40,6 +44,7 @@ public class Server implements Runnable {
 		DatagramPacket recivePacket = new DatagramPacket(recData, recData.length);
 		try {
 			datagramSocket.receive(recivePacket);
+			this.startTime = System.nanoTime();
 		} catch (IOException e) {
 			System.err.println("Reciving packet failed: "+e.getMessage());
 			e.printStackTrace();
@@ -110,6 +115,29 @@ public class Server implements Runnable {
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
 		try {
 			datagramSocket.send(sendPacket);
+			this.endTime = System.nanoTime();
+			calculateTime(startTime, endTime);
+			if (System.currentTimeMillis()>checkTime+checkInter) {
+				double average=0;
+				double highest=0;
+				double lowest= Double.MAX_VALUE;
+				for (Integer time : timeArray) {
+					average+=time;
+					if (time>highest) {
+						highest = time;
+					}
+					else if (time<lowest){
+						lowest = time;
+					}
+				}
+				System.out.println(average);
+				average = ((average/timeArray.size())/1_000_000);
+				lowest = lowest/1_000_000;
+				highest = highest/1_000_000;
+				System.out.println("Average time from recive to send: "+average+"ms | lowest: "+lowest+"ms | highest: "+highest+"ms");
+				checkTime=System.currentTimeMillis();
+				timeArray.clear();
+			}
 		} catch (IOException e) {
 			System.err.println("Sending packet failed: "+e.getMessage());
 			e.printStackTrace();
@@ -122,5 +150,9 @@ public class Server implements Runnable {
 		while (true) {
 			recive();
 		}
+	}
+	private void calculateTime(long startTime, long endTime){
+		int time = (int) (endTime-startTime);
+		timeArray.add(time);
 	}
 }

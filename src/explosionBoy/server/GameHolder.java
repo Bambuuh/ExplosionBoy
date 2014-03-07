@@ -61,7 +61,6 @@ public class GameHolder {
 			}
 			boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl);
 			if (collision || (bombCol && !bombToCheck1.isColliding())) {
-				System.out.println("COLLISION!");
 				if (lvl.getMaxX()>p.getPlayerRect().getMinX()) {
 					p.setxPos(p.getOldX());
 				}
