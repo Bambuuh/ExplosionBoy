@@ -31,7 +31,7 @@ public class ServerBomb {
 		this.powerCounter = 1;
 		this.setExplosionSpeed(explosionSpeed);
 		this.explosionPower = explosionPower;
-		rect = new Rectangle(x, y, 32, 32);
+		rect = new Rectangle(x+1, y+1, 30, 30);
 		dropTime = System.currentTimeMillis();
 	}
 
