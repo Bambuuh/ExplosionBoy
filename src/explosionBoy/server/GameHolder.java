@@ -3,6 +3,8 @@ package explosionBoy.server;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import explosionBoy.client.Json;
+
 
 public class GameHolder {
 
@@ -12,8 +14,10 @@ public class GameHolder {
 	private ArrayList<Rectangle> bombExplArra;
 	private ArrayList<ServerBomb> serverBombArray;
 	private ArrayList<ServerBomb> serverBombRemove;
+	private Server server;
 
-	public GameHolder() {
+	public GameHolder(Server server) {
+		this.server = server;
 		this.serverBombArray = new ArrayList<ServerBomb>();
 		this.serverBombRemove = new ArrayList<ServerBomb>();
 		this.gameID = 1;
@@ -44,8 +48,18 @@ public class GameHolder {
 					}
 				}
 				if (UnitCollission.isColliding(ex.getRect(), ref.getPlayerRect())){
-					ref.setxPos(750);
-					ref.setyPos(30);
+					ref.resetPosition();
+					Json j = new Json();
+					j.setDirection("RESET");
+					j.setpID(ref.getpID());
+					j.setxPos(ref.getxPos());
+					j.setyPos(ref.getyPos());
+					for (ConnectionReference reference : references) {
+						if (reference.getIp() != null) {
+							server.send(j, reference.getIp(), reference.getPort());
+						}
+					}
+					System.out.println("SENDING!");
 				}
 
 			}
@@ -59,29 +73,37 @@ public class GameHolder {
 				}
 				if (!bombCol && bombToCheck1.isColliding() && bombToCheck1.getPlayerID()==ref.getpID()) serverBombArray.get(expIndex).setColliding(false);;
 			}
-			boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl);
-			if (collision || (bombCol && !bombToCheck1.isColliding())) {
-				if (lvl.getMaxX()>p.getPlayerRect().getMinX()) {
-					p.setxPos(p.getOldX());
-				}
-				else if (lvl.getMinX()<p.getPlayerRect().getMaxX()) {
-					p.setxPos(p.getOldX());
-				}
-				if (lvl.getMaxY()>p.getPlayerRect().getMinY()) {
-					p.setyPos(p.getOldY());
-				}
-				else if (lvl.getMinY()<p.getPlayerRect().getMaxY()) {
-					p.setyPos(p.getOldY());
+			if (checkRange(lvl, ref)) {
+				boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl);
+				if (collision || (bombCol && !bombToCheck1.isColliding())) {
+					if (lvl.getMaxX()>p.getPlayerRect().getMinX()) {
+						p.setxPos(p.getOldX());
+					}
+					else if (lvl.getMinX()<p.getPlayerRect().getMaxX()) {
+						p.setxPos(p.getOldX());
+					}
+					if (lvl.getMaxY()>p.getPlayerRect().getMinY()) {
+						p.setyPos(p.getOldY());
+					}
+					else if (lvl.getMinY()<p.getPlayerRect().getMaxY()) {
+						p.setyPos(p.getOldY());
+					}
 				}
 			}
 			expIndex--;
 		}
-		for (ServerBomb bomRem : serverBombRemove) {
-			serverBombArray.remove(bomRem);
-		}
+		serverBombArray.removeAll(serverBombRemove);
 		serverBombRemove.clear();
 	}
-
+	
+	private boolean checkRange(Rectangle lvl, ConnectionReference ref){
+		boolean inRange = true;
+		if (lvl.getX()>(ref.getxPos()+32)) inRange = false;
+		else if (lvl.getX()<(ref.getxPos()-32)) inRange = false;
+		else if (lvl.getY()>(ref.getyPos()+32)) inRange = false;
+		else if (lvl.getY()<(ref.getyPos()-32)) inRange = false;
+		return inRange;
+	}
 
 	public boolean addBomb(ConnectionReference cr){
 		int numberOfBombs=0;

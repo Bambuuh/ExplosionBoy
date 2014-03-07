@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -26,7 +27,6 @@ public class Server implements Runnable {
 	public Server() {
 		this.timeArray = new ArrayList<Integer>();
 		holder = new ArrayList<GameHolder>();
-		holder.add(new GameHolder());
 		gson = new Gson();
 		jsonRecive = new Json();
 		jsonToSend = new Json();
@@ -38,6 +38,7 @@ public class Server implements Runnable {
 		} catch (SocketException e) {
 			System.err.println("Creating socket failed: "+e.getMessage());
 		}
+		holder.add(new GameHolder(this));
 	}
 
 	private void recive() {
@@ -64,6 +65,12 @@ public class Server implements Runnable {
 						else if (cr.getpID()==jsonRecive.getpID()) {
 							cr.setIp(recivePacket.getAddress());
 							cr.setPort(recivePacket.getPort());
+							cr.resetPosition();
+							jsonToSend.setDirection("RESET");
+							jsonToSend.setpID(cr.getpID());
+							jsonToSend.setxPos(cr.getxPos());
+							jsonToSend.setyPos(cr.getyPos());
+							send(jsonToSend, cr.getIp(), cr.getPort());
 							System.out.println("Set new ip/port to: "+cr.getpID());
 							break CheckIp;
 						}
@@ -110,39 +117,47 @@ public class Server implements Runnable {
 	}
 
 	public void send(Json json, InetAddress ip, int port) {
+		if (json.getDirection().equals("RESET")) {
+			System.out.println("RESET SENDING!");
+		}
 		jsonToSend = json;
 		sendData = gson.toJson(jsonToSend, Json.class).getBytes();
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
 		try {
 			datagramSocket.send(sendPacket);
-			this.endTime = System.nanoTime();
-			calculateTime(startTime, endTime);
-			if (System.currentTimeMillis()>checkTime+checkInter) {
-				double average=0;
-				double highest=0;
-				double lowest= Double.MAX_VALUE;
-				for (Integer time : timeArray) {
-					average+=time;
-					if (time>highest) {
-						highest = time;
-					}
-					else if (time<lowest){
-						lowest = time;
-					}
-				}
-				System.out.println(average);
-				average = ((average/timeArray.size())/1_000_000);
-				lowest = lowest/1_000_000;
-				highest = highest/1_000_000;
-				System.out.println("Average time from recive to send: "+average+"ms | lowest: "+lowest+"ms | highest: "+highest+"ms");
-				checkTime=System.currentTimeMillis();
-				timeArray.clear();
-			}
+//			stopWatch();
 		} catch (IOException e) {
 			System.err.println("Sending packet failed: "+e.getMessage());
 			e.printStackTrace();
 		}
 		Arrays.fill(sendData,(byte) 0);
+	}
+
+	private void stopWatch() {
+		this.endTime = System.nanoTime();
+		calculateTime(startTime, endTime);
+		if (System.currentTimeMillis()>checkTime+checkInter) {
+			double average=0;
+			double highest=0;
+			double lowest= Double.MAX_VALUE;
+			for (Integer time : timeArray) {
+				average+=time;
+				if (time>highest) {
+					highest = time;
+				}
+				else if (time<lowest){
+					lowest = time;
+				}
+			}
+			System.out.println("Over the last "+(checkInter/1000)+"Sec the program has been working for: "+(average/1_000_000)+"ms");
+			average = ((average/timeArray.size())/1_000_000);
+			lowest = lowest/1_000_000;
+			highest = highest/1_000_000;
+			DecimalFormat dForm = new DecimalFormat("#.###");
+			System.out.println("Average time from recive to send: "+dForm.format(average)+"ms | lowest: "+lowest+"ms | highest: "+highest+"ms with "+timeArray.size()+" requests");
+			checkTime=System.currentTimeMillis();
+			timeArray.clear();
+		}
 	}
 
 	@Override

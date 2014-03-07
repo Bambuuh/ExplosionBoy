@@ -10,7 +10,7 @@ public class ConnectionReference {
 
 	private InetAddress ip = null;
 	private int conId, port, gID, pID, maxBombs, currentBombs, bombPower, bombCountdown;
-	private float xPos, yPos, speed, oldY, oldX, explosionSpeed;
+	private float xPos, yPos, speed, oldY, oldX, explosionSpeed, baseX, baseY;
 	private String dir;
 	private Delta delta;
 	private Rectangle playerRect;
@@ -44,6 +44,8 @@ public class ConnectionReference {
 			this.xPos = 40;
 			this.yPos = 30;
 		}
+		this.baseX = xPos;
+		this.baseY = yPos;
 		this.pID = pID;
 		this.speed = 0.2f;
 		this.ip = null;
@@ -213,6 +215,11 @@ public class ConnectionReference {
 
 	public void setAwayFromBomb(boolean isAwayFromBomb) {
 		this.isAwayFromBomb = isAwayFromBomb;
+	}
+	
+	public void resetPosition(){
+		this.xPos = baseX;
+		this.yPos = baseY;
 	}
 	
 }

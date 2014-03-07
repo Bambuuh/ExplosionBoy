@@ -30,29 +30,33 @@ public class Controller {
 			moveDirection = json.getDirection();
 			switch (json.getDirection()) {
 			case "UP":
-					player.setY(json.getyPos());
+				player.setY(json.getyPos());
 				break;
 
 			case "DOWN":
-					player.setY(json.getyPos());
+				player.setY(json.getyPos());
 				break;
 
 			case "RIGHT":
-					player.setX(json.getxPos());
+				player.setX(json.getxPos());
 				break;
-
 			case "LEFT":
-					player.setX(json.getxPos());
+				player.setX(json.getxPos());
 				break;
 			case "BOMB":
-					player.bombDropper(bombArray, addBombArray, json.getSpeed(), json.getbCountDown(), json.getPower());
-					break;
+				player.bombDropper(bombArray, addBombArray, json.getSpeed(), json.getbCountDown(), json.getPower());
+				break;
+			case "RESET":
+				player.setX(json.getxPos());
+				player.setY(json.getyPos());
+				break;
 			default:
 				break;
 			}
+//			lastDirection = json.getDirection();
 		}
 	}
-	
+
 	public void autoMove(){
 		if (moveDirection.equals("UP")) player.move(0,-1,speed,delta);
 		else if (moveDirection.equals("DOWN")) player.move(0,1,speed,delta);
