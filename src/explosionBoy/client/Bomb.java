@@ -28,6 +28,11 @@ public class Bomb {
 	protected boolean explodeLeft;
 	protected boolean explodeRight;
 	
+	protected boolean oneLastRight;
+	protected boolean oneLastLeft;
+	protected boolean oneLastUp;
+	protected boolean oneLastDown;
+	
 	protected long currentTime;
 	protected long currentTime2;
 	
@@ -54,12 +59,18 @@ public class Bomb {
 		currentTime = System.currentTimeMillis();
 		currentTime2 = System.currentTimeMillis();
 		powerCounter = 1;
+		
 		exploding = false;
 		exploded = false;
 		explodeUp = true;
 		explodeDown = true;
 		explodeLeft = true;
 		explodeRight = true;
+		
+		oneLastRight = false;
+		oneLastLeft = false;
+		oneLastUp = false;
+		oneLastDown = false;
 		
 		this.x = x;
 		this.y = y;
@@ -114,6 +125,7 @@ public class Bomb {
 						if (object.isBox()) {
 							object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
 							object.setHaveRectangle(false);
+							oneLastRight = true;
 						}
 						break;
 					}
@@ -121,7 +133,10 @@ public class Bomb {
 			}
 			if (explodeRight) {
 				explosionArray.add(new Explosion(animationHandler, x + powerCounter * tileSize, y));
-				
+			}
+			if (oneLastRight) {
+				explosionArray.add(new Explosion(animationHandler, x + powerCounter * tileSize, y));
+				oneLastRight = false;
 			}
 		}
 		//checks if the left explosion hits anything interesting.
@@ -135,6 +150,7 @@ public class Bomb {
 						if (object.isBox()) {
 							object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
 							object.setHaveRectangle(false);
+							oneLastLeft = true;
 						}
 						break;
 					}
@@ -142,6 +158,10 @@ public class Bomb {
 			}
 			if (explodeLeft) {
 				explosionArray.add(new Explosion(animationHandler, x - powerCounter * tileSize, y));
+			}
+			if (oneLastLeft) {
+				explosionArray.add(new Explosion(animationHandler, x - powerCounter * tileSize, y));
+				oneLastLeft = false;
 			}
 		}
 		//checks if the downwards explosion hits anything interesting.
@@ -155,6 +175,7 @@ public class Bomb {
 						if (object.isBox()) {
 							object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
 							object.setHaveRectangle(false);
+							oneLastDown = true;
 						}
 						break;
 					}
@@ -162,6 +183,10 @@ public class Bomb {
 			}
 			if (explodeDown) {
 				explosionArray.add(new Explosion(animationHandler, x, y + powerCounter * tileSize));
+			}
+			if (oneLastDown) {
+				explosionArray.add(new Explosion(animationHandler, x, y + powerCounter * tileSize));
+				oneLastDown = false;
 			}
 		}
 		//checks if the upwards explosion hits anything interesting.
@@ -175,6 +200,7 @@ public class Bomb {
 						if (object.isBox()) {
 							object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
 							object.setHaveRectangle(false);
+							oneLastUp = true;
 						}
 						break;
 					}
@@ -182,6 +208,10 @@ public class Bomb {
 			}
 			if (explodeUp) {
 				explosionArray.add(new Explosion(animationHandler, x, y - powerCounter * tileSize));
+			}
+			if (oneLastUp) {
+				explosionArray.add(new Explosion(animationHandler, x, y- powerCounter * tileSize));
+				oneLastUp = false;
 			}
 		}
 	}
