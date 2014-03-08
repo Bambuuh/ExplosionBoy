@@ -47,7 +47,7 @@ public class ConnectionReference {
 		this.baseX = xPos;
 		this.baseY = yPos;
 		this.pID = pID;
-		this.speed = 0.2f;
+		this.speed = 0.1f;
 		this.ip = null;
 	}
 	

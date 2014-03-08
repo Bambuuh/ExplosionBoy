@@ -10,6 +10,8 @@ import explosionBoy.levelobjects.LevelObject;
 
 public class LevelCreator {
 	
+	private AnimationHandler animHandler;
+	
 	private Random rand = new Random();
 	
 	private LevelObject[] lvlObjects;
@@ -23,17 +25,16 @@ public class LevelCreator {
 		this.lvlObjects = lvlObjects;
 	}
 
-	private Image tileSet;
+//	private Image tileSet;
 	private SpriteSheet tiles;
 	
-	public LevelCreator() {
+	public LevelCreator(AnimationHandler handler) {
+		this.animHandler = handler;
+		
 		lvlObjects = new LevelObject[475];
-		try {
-			tileSet = new Image("res/tileset/levelTileSet.png");
-			tiles = new SpriteSheet(tileSet, 32, 32);
-		} catch (SlickException e) {
-			System.err.println("Could not load level tileset. " + e.getMessage());
-		}
+		
+//		tileSet = animHandler.getTileSet();
+		tiles = animHandler.getTiles();
 		generateLevel();
 	}
 	
@@ -68,6 +69,8 @@ public class LevelCreator {
 				{2,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,3},
 		};
 		
+		
+		
 		int index = 0;
 		for (int row = 0; row < 25; row++) {
 			for (int col = 0; col < 19; col++) {
@@ -75,17 +78,25 @@ public class LevelCreator {
 				
 				
 				Image image = null;
+				
+				boolean box = false;
+				boolean unbreakable = false;
+				
+				//created the lvl and sets a boolean to determine if its unbreakable, ground or a box.
 				switch (level[row][col]) {
+				
 				case 0:
-//					int n = rand.nextInt(32);
+					//if it is a zero its a random chance it becomes a box or ground
+					int n = rand.nextInt(3);
 					
-//					if (n == 0) {
+					if (n == 0) {
 						image = tiles.getSubImage(96, 0, 32, 32);
 						haveRectangle = false;
-//					}
-//					else {
-//						image = tiles.getSubImage(128, 0, 32, 32);
-//					}
+					}
+					else {
+						image = tiles.getSubImage(128, 0, 32, 32);
+						box = true;
+					}
 					break;
 				case 1:
 					image = tiles.getSubImage(0, 0, 32, 32);
@@ -113,6 +124,7 @@ public class LevelCreator {
 					break;
 				case 9:
 					image = tiles.getSubImage(160, 0, 32, 32);
+					unbreakable = true;
 					break;
 				case 10:
 					image = tiles.getSubImage(96, 0, 32, 32);
@@ -124,7 +136,7 @@ public class LevelCreator {
 				}
 				int x = 32*row;
 				int y = 32*col;
-				lvlObjects[index] = new LevelObject(image, x, y, haveRectangle);
+				lvlObjects[index] = new LevelObject(image, x, y, haveRectangle, box, unbreakable);
 				index++;
 			}
 		}
@@ -141,20 +153,10 @@ public class LevelCreator {
 	}
 	
 	public void levelTest(){
-		
-		
-		
 		//corners
 		tiles.getSubImage(0, 0, 32, 32).draw(0,0);
 		tiles.getSubImage(0, 0, 32, 32).draw(0,0);
 		tiles.getSubImage(0, 0, 32, 32).draw(0,0);
 		tiles.getSubImage(0, 0, 32, 32).draw(0,0);
-		
-				
-				
-				
-		
-		
 	}
-
 }

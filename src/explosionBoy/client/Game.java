@@ -59,7 +59,7 @@ public class Game {
 		controllArray.add(new Controller(snakeBoy2, bombArray, addBombArray));
 		connection = new ServerConnection(controllArray);
 		input = new InputReader(connection);
-		level = new LevelCreator();
+		level = new LevelCreator(animation);
 		new Thread(connection).start();
 		start();
 	}

@@ -13,6 +13,9 @@ public class AnimationHandler {
 	private Image bearSheet;
 	private Image testExplosion;
 	
+	private Image tileSet;
+	private SpriteSheet tiles;
+	
 	public AnimationHandler() {
 			try {
 				bigSheetImage = new Image("res/snakeboy/SnakeBoySprite.png");
@@ -20,7 +23,8 @@ public class AnimationHandler {
 				explosionSheet2 = new Image("res/explosion/newExplosionSheet.png");
 				bearSheet = new Image("res/bearboy/BearBoySprite.png");
 				testExplosion = new Image("res/explosion/bigExplosion.png");
-				
+				tileSet = new Image("res/tileset/levelTileSet.png");
+				tiles = new SpriteSheet(tileSet, 32, 32);
 				
 			} catch (SlickException e) {
 				System.err.println("Could not load main sheet. " + e.getMessage());
@@ -116,6 +120,22 @@ public class AnimationHandler {
 		animation.setLooping(looping);
 		
 		return animation;
-		
 	}
+
+	public Image getTileSet() {
+		return tileSet;
+	}
+
+	public void setTileSet(Image tileSet) {
+		this.tileSet = tileSet;
+	}
+
+	public SpriteSheet getTiles() {
+		return tiles;
+	}
+
+	public void setTiles(SpriteSheet tiles) {
+		this.tiles = tiles;
+	}
+	
 }

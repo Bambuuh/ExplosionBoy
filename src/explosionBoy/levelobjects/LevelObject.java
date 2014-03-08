@@ -9,8 +9,12 @@ public class LevelObject {
 	private Rectangle rectangle;
 	private float x,y;
 	private boolean haveRectangle;
+	private boolean box;
+	private boolean unbreakable;
 	
-	public LevelObject(Image image, float xPos, float yPos, boolean haveRectangle) {
+	public LevelObject(Image image, float xPos, float yPos, boolean haveRectangle, boolean box, boolean unbreakable) {
+		this.box = box;
+		this.unbreakable = unbreakable;
 		this.setHaveRectangle(haveRectangle);
 		this.x = xPos;
 		this.y = yPos;
@@ -47,4 +51,21 @@ public class LevelObject {
 	public void setHaveRectangle(boolean haveRectangle) {
 		this.haveRectangle = haveRectangle;
 	}
+
+	public boolean isBox() {
+		return box;
+	}
+
+	public void setBox(boolean box) {
+		this.box = box;
+	}
+
+	public boolean isUnbreakable() {
+		return unbreakable;
+	}
+
+	public void setUnbreakable(boolean unbreakable) {
+		this.unbreakable = unbreakable;
+	}
+	
 }

@@ -76,17 +76,20 @@ public class Bomb {
 	
 	public void animateBomb(LevelCreator levelCreator){
 		Rectangle rectangle = new Rectangle(x, y, explosionSize, explosionSize);
+		//creates one explosions where the bomb was to start the animations
 		if (countDown() >= bombCountdown && !exploding) {
 			exploding = true;
 			explosionArray.add(new Explosion(animationHandler, x, y));
 		}
 		
+		//creates a new explosions in all allowed directions if enough time has passed
 		if (exploding && countDown2() >= explosionSpeed && powerCounter <= power) {
 			currentTime2 = System.currentTimeMillis();
 			createExplosion(levelCreator, rectangle);
 			powerCounter++;
 		}
 		
+		//paints all the explosions
 		for (Explosion explosion : explosionArray) {
 			explosion.draw();
 		}
@@ -99,13 +102,19 @@ public class Bomb {
 	}
 	
 	public void createExplosion(LevelCreator levelCreator, Rectangle rectangle){
-
+		
+		//checks if the right explosion hits anything interesting.
 		if (explodeRight){
 			rectangle.setBounds(x + (powerCounter * tileSize) + 1, y+1, explosionSize, explosionSize);
 			for (LevelObject object : levelCreator.getLvlObjects()) {
 				if (object.isHaveRectangle()) {
 					if (UnitCollission.isColliding(rectangle, object.getRectangle())) {
 						explodeRight = false;
+						//checks if its is a box, and if it is, changes to ground and remove rectangle
+						if (object.isBox()) {
+							object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
+							object.setHaveRectangle(false);
+						}
 						break;
 					}
 				}
@@ -115,13 +124,18 @@ public class Bomb {
 				
 			}
 		}
-		
+		//checks if the left explosion hits anything interesting.
 		if (explodeLeft){
 			rectangle.setBounds(x - (powerCounter * tileSize) + 1, y+1, explosionSize, explosionSize);
 			for (LevelObject object : levelCreator.getLvlObjects()) {
 				if (object.isHaveRectangle()) {
 					if (UnitCollission.isColliding(rectangle, object.getRectangle())) {
 						explodeLeft = false;
+						//checks if its is a box, and if it is, changes to ground and remove rectangle
+						if (object.isBox()) {
+							object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
+							object.setHaveRectangle(false);
+						}
 						break;
 					}
 				}
@@ -130,12 +144,18 @@ public class Bomb {
 				explosionArray.add(new Explosion(animationHandler, x - powerCounter * tileSize, y));
 			}
 		}
+		//checks if the downwards explosion hits anything interesting.
 		if (explodeDown){
 			rectangle.setBounds(x+ 1, y+(powerCounter * tileSize)+1, explosionSize, explosionSize);
 			for (LevelObject object : levelCreator.getLvlObjects()) {
 				if (object.isHaveRectangle()) {
 					if (UnitCollission.isColliding(rectangle, object.getRectangle())) {
 						explodeDown = false;
+						//checks if its is a box, and if it is, changes to ground and remove rectangle
+						if (object.isBox()) {
+							object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
+							object.setHaveRectangle(false);
+						}
 						break;
 					}
 				}
@@ -144,12 +164,18 @@ public class Bomb {
 				explosionArray.add(new Explosion(animationHandler, x, y + powerCounter * tileSize));
 			}
 		}
+		//checks if the upwards explosion hits anything interesting.
 		if (explodeUp){
 			rectangle.setBounds(x+ 1, y - (powerCounter * tileSize)+1, explosionSize, explosionSize);
 			for (LevelObject object : levelCreator.getLvlObjects()) {
 				if (object.isHaveRectangle()) {
 					if (UnitCollission.isColliding(rectangle, object.getRectangle())) {
 						explodeUp = false;
+						//checks if its is a box, and if it is, changes to ground and remove rectangle
+						if (object.isBox()) {
+							object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
+							object.setHaveRectangle(false);
+						}
 						break;
 					}
 				}
@@ -160,6 +186,7 @@ public class Bomb {
 		}
 	}
 	
+	//cleans up finshed explosions and removes them
 	public void cleanExplosion(){
 		for (Explosion explosion : explosionArray) {
 			if (explosion.getExploded()) {
@@ -176,6 +203,7 @@ public class Bomb {
 		return exploded;
 	}
 	
+	//countdown for the bomb
 	public double countDown(){
 		long tEnd = System.currentTimeMillis();
 		long tDelta = tEnd - currentTime;
@@ -183,6 +211,7 @@ public class Bomb {
 		return elapsedSeconds;
 	}
 	
+	//countdown for new explosions
 	public double countDown2(){
 		long tEnd = System.currentTimeMillis();
 		long tDelta = tEnd - currentTime2;
