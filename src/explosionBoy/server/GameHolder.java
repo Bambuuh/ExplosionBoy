@@ -4,7 +4,6 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.newdawn.slick.particles.effects.FireEmitter;
 
 import explosionBoy.client.Json;
 
@@ -55,6 +54,7 @@ public class GameHolder {
 					}
 				}
 				lvlrectArray.addAll(lvlAddArray);
+				lvlAddArray.clear();
 				if (UnitCollission.isColliding(ex.getRect(), ref.getPlayerRect())){
 					ref.resetPosition();
 					Json j = new Json();
@@ -87,6 +87,7 @@ public class GameHolder {
 				boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl.getRectangle());
 				if (lvl.isBuff()) {
 					if (lvl instanceof FlameBuff) {
+						System.out.println("FLAMEBUFF!");
 						ref.setBombPower(ref.getBombPower()+1);
 					}
 					else if (lvl instanceof BombPower) {

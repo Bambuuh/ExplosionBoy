@@ -34,8 +34,8 @@ public class ConnectionReference {
 		this.playerRect = new Rectangle();
 		this.explosionSpeed = 0.07f;
 		this.bombCountdown = 3;
-		this.bombPower = 12;
-		this.maxBombs = 5;
+		this.bombPower = 1;
+		this.maxBombs = 1;
 		delta = new Delta();
 		delta.getDelta();
 		if (pID == 2) {
