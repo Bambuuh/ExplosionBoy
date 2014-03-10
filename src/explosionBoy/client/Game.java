@@ -123,7 +123,7 @@ public class Game {
 			snakeBoy2.update(delta);
 			snakeBoy.update(delta);
 			checkCollisions(delta);
-			removeBombs();
+			cleanUp();
 			if (!(playerID==0)) {
 				input.readInput(playerID);
 			}
@@ -142,7 +142,7 @@ public class Game {
 		addBombArray.clear();
 	}
 
-	public void removeBombs(){
+	public void cleanUp(){
 		for (Bomb bomb : bombArray) {
 			if (bomb.getExploded()) {
 				removeBombArray.add(bomb);
@@ -152,6 +152,10 @@ public class Game {
 			bombArray.remove(bomb);
 		}
 		removeBombArray.clear();
+		for (LevelObject object : level.getRemoveList()) {
+			level.getLvlObjects().remove(object);
+		}
+		level.getRemoveList().clear();
 	}
 
 	public void checkCollisions(int delta){

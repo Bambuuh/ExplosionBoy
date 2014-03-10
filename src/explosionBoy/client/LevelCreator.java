@@ -7,6 +7,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
+
 import explosionBoy.levelobjects.LevelObject;
 
 public class LevelCreator {
@@ -17,6 +19,7 @@ public class LevelCreator {
 	
 	private ArrayList<LevelObject> lvlObjects;
 	private ArrayList<LevelObject> objectsToAdd;
+	private ArrayList<LevelObject> objectsToRemove;
 
 
 //	private Image tileSet;
@@ -25,7 +28,8 @@ public class LevelCreator {
 	public LevelCreator(AnimationHandler handler) {
 		this.animHandler = handler;
 		this.setObjectsToAdd(new ArrayList<LevelObject>());
-		lvlObjects = new ArrayList<>();
+		lvlObjects = new ArrayList<LevelObject>();
+		objectsToRemove = new ArrayList<LevelObject>();
 		
 //		tileSet = animHandler.getTileSet();
 		tiles = animHandler.getTiles();
@@ -173,5 +177,9 @@ public class LevelCreator {
 
 	public void setObjectsToAdd(ArrayList<LevelObject> objectsToAdd) {
 		this.objectsToAdd = objectsToAdd;
+	}
+	
+	public ArrayList<LevelObject> getRemoveList(){
+		return objectsToRemove;
 	}
 }
