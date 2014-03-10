@@ -31,7 +31,7 @@ public class ServerBomb {
 		this.powerCounter = 1;
 		this.setExplosionSpeed(explosionSpeed);
 		this.explosionPower = explosionPower;
-		rect = new Rectangle(x+1, y+1, 30, 30);
+		rect = new Rectangle(x, y, 32, 32);
 		dropTime = System.currentTimeMillis();
 	}
 
@@ -89,7 +89,7 @@ public class ServerBomb {
 			explosionTime =  (long) (System.currentTimeMillis()+speed);
 
 		}
-		else if (powerCounter >= explosionPower && explArray.isEmpty()) {
+		else if (exploding && explArray.isEmpty()) {
 			return true;
 		}
 		for (ServerExplosion explosion : removeExplosionArray) {

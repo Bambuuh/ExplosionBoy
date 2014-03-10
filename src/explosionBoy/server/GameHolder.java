@@ -29,7 +29,7 @@ public class GameHolder {
 	}
 
 	public void checkCollissions(ConnectionReference ref){
-		int expIndex = serverBombArray.size()-1;
+		int serverBombIndex = serverBombArray.size()-1;
 		ConnectionReference p = ref;
 		ServerBomb bombToCheck1 = null;
 		boolean bombCol = false;
@@ -59,19 +59,18 @@ public class GameHolder {
 							server.send(j, reference.getIp(), reference.getPort());
 						}
 					}
-					System.out.println("SENDING!");
 				}
 
 			}
 		}
 		for (Rectangle lvl : lvlrectArray) {
-			if (expIndex>=0) {
-				bombToCheck1 = serverBombArray.get(expIndex);
-				if (serverBombArray.get(expIndex).checkIfRemove()) serverBombRemove.add(serverBombArray.get(expIndex));
+			if (serverBombIndex>=0) {
+				bombToCheck1 = serverBombArray.get(serverBombIndex);
 				if (!bombToCheck1.isExploding()) {
 					bombCol = explosionBoy.server.UnitCollission.isColliding(bombToCheck1.getRect(), p.getPlayerRect());
 				}
-				if (!bombCol && bombToCheck1.isColliding() && bombToCheck1.getPlayerID()==ref.getpID()) serverBombArray.get(expIndex).setColliding(false);;
+				if (!bombCol && bombToCheck1.isColliding()) serverBombArray.get(serverBombIndex).setColliding(false);
+				if (serverBombArray.get(serverBombIndex).checkIfRemove()) serverBombRemove.add(serverBombArray.get(serverBombIndex));
 			}
 			if (checkRange(lvl, ref)) {
 				boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl);
@@ -90,12 +89,12 @@ public class GameHolder {
 					}
 				}
 			}
-			expIndex--;
+			serverBombIndex--;
 		}
 		serverBombArray.removeAll(serverBombRemove);
 		serverBombRemove.clear();
 	}
-	
+
 	private boolean checkRange(Rectangle lvl, ConnectionReference ref){
 		boolean inRange = true;
 		if (lvl.getX()>(ref.getxPos()+32)) inRange = false;

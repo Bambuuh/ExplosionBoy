@@ -117,9 +117,6 @@ public class Server implements Runnable {
 	}
 
 	public void send(Json json, InetAddress ip, int port) {
-		if (json.getDirection().equals("RESET")) {
-			System.out.println("RESET SENDING!");
-		}
 		jsonToSend = json;
 		sendData = gson.toJson(jsonToSend, Json.class).getBytes();
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);

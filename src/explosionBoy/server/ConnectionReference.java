@@ -33,7 +33,7 @@ public class ConnectionReference {
 		this.explosionSpeed = 0.07f;
 		this.bombCountdown = 3;
 		this.bombPower = 12;
-		this.maxBombs = 3;
+		this.maxBombs = 5;
 		delta = new Delta();
 		delta.getDelta();
 		if (pID == 2) {
