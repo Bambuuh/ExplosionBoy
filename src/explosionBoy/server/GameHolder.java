@@ -211,12 +211,12 @@ public class GameHolder {
 	public Json getBoxes(){
 		Json jSonToSend = new Json();
 		jSonToSend.setDirection("BOXARRAY");
-		Json jToAdd = new Json();
 		for (LevelObject lvl : lvlrectArray) {
 			if (lvl.isBox()) {
-				System.out.println("BOX X: "+lvl.x);
-				jToAdd.setxPos((float) lvl.getRectangle().getX());
-				jToAdd.setyPos((float) lvl.getRectangle().getY());
+				System.out.println("BOX X: "+lvl.getX());
+				Json jToAdd = new Json();
+				jToAdd.setxPos(lvl.getX());
+				jToAdd.setyPos(lvl.getY());
 				jSonToSend.getjArr().add(jToAdd);
 			}
 		}

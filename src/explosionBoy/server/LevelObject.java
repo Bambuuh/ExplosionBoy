@@ -4,14 +4,14 @@ import java.awt.Rectangle;
 
 public class LevelObject {
 
-	int x, y;
+	private int x, y;
 	private Rectangle rectangle;
 	private boolean box;
 	
 	
 	public LevelObject(int x, int y, boolean haveRectangle, boolean isBox) {
-		this.x = x;
-		this.y = y;
+		this.setX(x);
+		this.setY(y);
 		if (haveRectangle) {
 			rectangle = new Rectangle(x, y, 32, 32);
 			if (isBox) {
@@ -38,6 +38,26 @@ public class LevelObject {
 
 	public void setBox(boolean box) {
 		this.box = box;
+	}
+
+
+	public int getX() {
+		return x;
+	}
+
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+
+	public int getY() {
+		return y;
+	}
+
+
+	public void setY(int y) {
+		this.y = y;
 	}
 	
 }
