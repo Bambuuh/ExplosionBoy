@@ -65,7 +65,6 @@ public class LevelCreator {
 		
 		
 		
-		int index = 0;
 		for (int row = 0; row < 25; row++) {
 			for (int col = 0; col < 19; col++) {
 				boolean haveRectangle = true;
@@ -131,7 +130,6 @@ public class LevelCreator {
 				int x = 32*row;
 				int y = 32*col;
 				lvlObjects.add(new LevelObject(image, x, y, haveRectangle, box, unbreakable));
-				index++;
 			}
 		}
 	}

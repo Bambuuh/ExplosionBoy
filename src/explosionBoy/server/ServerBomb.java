@@ -12,8 +12,10 @@ public class ServerBomb {
 	private float explosionSpeed;
 	private ArrayList<ServerExplosion> explArray;
 	private ArrayList<ServerExplosion> removeExplosionArray;
+	private ArrayList<ConnectionReference> collidingPlayers;
 
 	public ServerBomb(int playerX, int playerY, int playerID, int countDown, float explosionSpeed, int explosionPower) {
+		this.collidingPlayers = new ArrayList<>();
 		this.explArray = new ArrayList<>();
 		removeExplosionArray = new ArrayList<ServerExplosion>();
 		x = calcPosX(playerX);
@@ -205,6 +207,14 @@ public class ServerBomb {
 
 	public void setExploding(boolean exploding) {
 		this.exploding = exploding;
+	}
+
+	public ArrayList<ConnectionReference> getCollidingPlayers() {
+		return collidingPlayers;
+	}
+
+	public void setCollidingPlayers(ArrayList<ConnectionReference> collidingPlayers) {
+		this.collidingPlayers = collidingPlayers;
 	}
 
 }

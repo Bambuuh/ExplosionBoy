@@ -70,13 +70,18 @@ public class GameHolder {
 				bombToCheck1 = serverBombArray.get(serverBombIndex);
 				if (!bombToCheck1.isExploding()) {
 					bombCol = explosionBoy.server.UnitCollission.isColliding(bombToCheck1.getRect(), p.getPlayerRect());
+					if (bombToCheck1.getCollidingPlayers().contains(ref)) {
+						bombCol = false;
+					}
 				}
-				if (!bombCol && bombToCheck1.isColliding()) serverBombArray.get(serverBombIndex).setColliding(false);
+				if (!bombCol && bombToCheck1.getCollidingPlayers().contains(ref)){ 
+					bombToCheck1.getCollidingPlayers().remove(ref);
+				}
 				if (serverBombArray.get(serverBombIndex).checkIfRemove()) serverBombRemove.add(serverBombArray.get(serverBombIndex));
 			}
 			if (checkRange(lvl.getRectangle(), ref)) {
 				boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl.getRectangle());
-				if (collision || (bombCol && !bombToCheck1.isColliding())) {
+				if (collision || bombCol) {
 					if (lvl.getRectangle().getMaxX()>p.getPlayerRect().getMinX()) {
 						p.setxPos(p.getOldX());
 					}
@@ -125,10 +130,11 @@ public class GameHolder {
 				}
 			}
 		}
-		for (ServerBomb bomRem : serverBombRemove) {
-			serverBombArray.remove(bomRem);
+		for (ConnectionReference ref : references) {
+			if (UnitCollission.isColliding(ref.getPlayerRect(), bombToAdd.getRect())) {
+				bombToAdd.getCollidingPlayers().add(ref);
+			}
 		}
-		serverBombRemove.clear();
 		serverBombArray.add(bombToAdd);
 		return true;
 	}
