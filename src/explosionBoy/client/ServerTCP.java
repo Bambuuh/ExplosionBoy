@@ -96,7 +96,7 @@ public class ServerTCP implements Runnable {
 				boxArray.add(new LevelObject(img, box.getxPos(), box.getyPos(), true, true, false));
 			}
 			System.out.println("ArraySize: "+boxArray.size());
-			game.getLevel().getLevelArray().addAll(boxArray);
+			game.getLevel().getObjectsToAdd().addAll(boxArray);
 		default:
 			break;
 		}

@@ -16,22 +16,15 @@ public class LevelCreator {
 	private Random rand = new Random();
 	
 	private ArrayList<LevelObject> lvlObjects;
-	
-	public ArrayList<LevelObject> getLvlObjects() {
-		return lvlObjects;
-	}
+	private ArrayList<LevelObject> objectsToAdd;
 
-
-	public void setLvlObjects(ArrayList<LevelObject> lvlObjects) {
-		this.lvlObjects = lvlObjects;
-	}
 
 //	private Image tileSet;
 	private SpriteSheet tiles;
 	
 	public LevelCreator(AnimationHandler handler) {
 		this.animHandler = handler;
-		
+		this.setObjectsToAdd(new ArrayList<LevelObject>());
 		lvlObjects = new ArrayList<>();
 		
 //		tileSet = animHandler.getTileSet();
@@ -147,6 +140,10 @@ public class LevelCreator {
 		for (LevelObject lvl : lvlObjects) {
 			lvl.draw();
 		}
+		if (!objectsToAdd.isEmpty()) {
+			lvlObjects.addAll(objectsToAdd);
+			objectsToAdd.clear();
+		}
 	}
 	
 	public ArrayList<LevelObject> getLevelArray(){
@@ -159,5 +156,24 @@ public class LevelCreator {
 		tiles.getSubImage(0, 0, 32, 32).draw(0,0);
 		tiles.getSubImage(0, 0, 32, 32).draw(0,0);
 		tiles.getSubImage(0, 0, 32, 32).draw(0,0);
+	}
+	
+	public ArrayList<LevelObject> getLvlObjects() {
+		return lvlObjects;
+	}
+
+
+	public void setLvlObjects(ArrayList<LevelObject> lvlObjects) {
+		this.lvlObjects = lvlObjects;
+	}
+
+
+	public ArrayList<LevelObject> getObjectsToAdd() {
+		return objectsToAdd;
+	}
+
+
+	public void setObjectsToAdd(ArrayList<LevelObject> objectsToAdd) {
+		this.objectsToAdd = objectsToAdd;
 	}
 }

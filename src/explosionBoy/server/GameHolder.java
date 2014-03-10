@@ -12,7 +12,7 @@ public class GameHolder {
 	private int gameID;
 	private ArrayList<ConnectionReference> references;
 	private ArrayList<LevelObject> lvlrectArray;
-	private ArrayList<LevelObject> bombExplArra;
+	private ArrayList<LevelObject> lvlRemoveArr;
 	private ArrayList<ServerBomb> serverBombArray;
 	private ArrayList<ServerBomb> serverBombRemove;
 	private Server server;
@@ -24,7 +24,7 @@ public class GameHolder {
 		this.gameID = gameID;
 		references = new ArrayList<>();
 		lvlrectArray = genereRectangles();
-		bombExplArra = new ArrayList<LevelObject>();
+		lvlRemoveArr = new ArrayList<LevelObject>();
 	}
 
 	public void checkCollissions(ConnectionReference ref){
@@ -44,6 +44,9 @@ public class GameHolder {
 				for (LevelObject lvl : lvlrectArray) {
 					if (UnitCollission.isColliding(ex.getRect(), lvl.getRectangle())){
 						bombToCheck.cancelDirection(ex.getDirection());
+						if (lvl.isBox()) {
+							lvlRemoveArr.add(lvl);
+						}
 					}
 				}
 				if (UnitCollission.isColliding(ex.getRect(), ref.getPlayerRect())){
@@ -91,6 +94,8 @@ public class GameHolder {
 			serverBombIndex--;
 		}
 		serverBombArray.removeAll(serverBombRemove);
+		lvlrectArray.removeAll(lvlRemoveArr);
+		lvlRemoveArr.clear();
 		serverBombRemove.clear();
 	}
 
