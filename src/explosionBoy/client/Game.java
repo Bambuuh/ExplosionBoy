@@ -23,6 +23,7 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 import explosionBoy.levelobjects.LevelObject;
+import explosionBoy.levelobjects.PowerUp;
 
 public class Game {
 
@@ -171,7 +172,13 @@ public class Game {
 			player.setDelta(delta);
 			Player p = player.getPlayer();
 			for (LevelObject lvl : level.getLvlObjects()) {
-				if (lvl.isHaveRectangle()) {
+				if (lvl instanceof PowerUp) {
+					boolean collision = UnitCollission.isColliding(p.getRectangle(), lvl.getRectangle());
+					if (collision) {
+						level.getRemoveList().add(lvl);
+					}
+				}
+				else if (lvl.isHaveRectangle()) {
 					boolean collision = UnitCollission.isColliding(p.getRectangle(), lvl.getRectangle());
 					if (collision) {
 						if (lvl.getRectangle().getMaxX()>p.getRectangle().getMinX()) {
