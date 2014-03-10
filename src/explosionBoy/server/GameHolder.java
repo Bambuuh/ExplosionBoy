@@ -2,6 +2,7 @@ package explosionBoy.server;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Random;
 
 import explosionBoy.client.Json;
 
@@ -10,8 +11,8 @@ public class GameHolder {
 
 	private int gameID;
 	private ArrayList<ConnectionReference> references;
-	private ArrayList<Rectangle> lvlrectArray;
-	private ArrayList<Rectangle> bombExplArra;
+	private ArrayList<LevelObject> lvlrectArray;
+	private ArrayList<LevelObject> bombExplArra;
 	private ArrayList<ServerBomb> serverBombArray;
 	private ArrayList<ServerBomb> serverBombRemove;
 	private Server server;
@@ -23,7 +24,7 @@ public class GameHolder {
 		this.gameID = gameID;
 		references = new ArrayList<>();
 		lvlrectArray = genereRectangles();
-		bombExplArra = new ArrayList<Rectangle>();
+		bombExplArra = new ArrayList<LevelObject>();
 	}
 
 	public void checkCollissions(ConnectionReference ref){
@@ -40,8 +41,8 @@ public class GameHolder {
 						}
 					}
 				}
-				for (Rectangle lvl : lvlrectArray) {
-					if (UnitCollission.isColliding(ex.getRect(), lvl)){
+				for (LevelObject lvl : lvlrectArray) {
+					if (UnitCollission.isColliding(ex.getRect(), lvl.getRectangle())){
 						bombToCheck.cancelDirection(ex.getDirection());
 					}
 				}
@@ -61,7 +62,7 @@ public class GameHolder {
 
 			}
 		}
-		for (Rectangle lvl : lvlrectArray) {
+		for (LevelObject lvl : lvlrectArray) {
 			if (serverBombIndex>=0) {
 				bombToCheck1 = serverBombArray.get(serverBombIndex);
 				if (!bombToCheck1.isExploding()) {
@@ -70,19 +71,19 @@ public class GameHolder {
 				if (!bombCol && bombToCheck1.isColliding()) serverBombArray.get(serverBombIndex).setColliding(false);
 				if (serverBombArray.get(serverBombIndex).checkIfRemove()) serverBombRemove.add(serverBombArray.get(serverBombIndex));
 			}
-			if (checkRange(lvl, ref)) {
-				boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl);
+			if (checkRange(lvl.getRectangle(), ref)) {
+				boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl.getRectangle());
 				if (collision || (bombCol && !bombToCheck1.isColliding())) {
-					if (lvl.getMaxX()>p.getPlayerRect().getMinX()) {
+					if (lvl.getRectangle().getMaxX()>p.getPlayerRect().getMinX()) {
 						p.setxPos(p.getOldX());
 					}
-					else if (lvl.getMinX()<p.getPlayerRect().getMaxX()) {
+					else if (lvl.getRectangle().getMinX()<p.getPlayerRect().getMaxX()) {
 						p.setxPos(p.getOldX());
 					}
-					if (lvl.getMaxY()>p.getPlayerRect().getMinY()) {
+					if (lvl.getRectangle().getMaxY()>p.getPlayerRect().getMinY()) {
 						p.setyPos(p.getOldY());
 					}
-					else if (lvl.getMinY()<p.getPlayerRect().getMaxY()) {
+					else if (lvl.getRectangle().getMinY()<p.getPlayerRect().getMaxY()) {
 						p.setyPos(p.getOldY());
 					}
 				}
@@ -143,9 +144,9 @@ public class GameHolder {
 		this.references = references;
 	}
 
-	public ArrayList<java.awt.Rectangle> genereRectangles(){
+	public ArrayList<LevelObject> genereRectangles(){
 
-		ArrayList<java.awt.Rectangle> rectArr = new ArrayList<java.awt.Rectangle>();
+		ArrayList<LevelObject> rectArr = new ArrayList<LevelObject>();
 
 		int[][] level = new int[][]{
 				{1,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4},
@@ -174,22 +175,21 @@ public class GameHolder {
 				{6,10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,8},
 				{2,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,3},
 		};
-
+		Random rand = new Random();
 		for (int row = 0; row < 25; row++) {
 			for (int col = 0; col < 19; col++) {
 				boolean haveRectangle = true;
-
+				boolean isBox = false;
 
 				switch (level[row][col]) {
 				case 0:
-					//					int n = rand.nextInt(32);
-
-					//					if (n == 0) {
-					haveRectangle = false;
-					//					}
-					//					else {
-					//						image = tiles.getSubImage(128, 0, 32, 32);
-					//					}
+					int n = rand.nextInt(2);
+					if (n == 0) {
+						haveRectangle = false;
+					}
+					else {
+						isBox = true;
+					}
 					break;
 				case 10:
 					haveRectangle = false;
@@ -200,7 +200,7 @@ public class GameHolder {
 				int x = 32*row;
 				int y = 32*col;
 				if (haveRectangle) {
-					rectArr.add(new java.awt.Rectangle(x, y, 32, 32));
+					rectArr.add(new LevelObject(x, y, haveRectangle, isBox));
 				}
 			}
 		}
@@ -208,7 +208,20 @@ public class GameHolder {
 		return rectArr;
 	}
 
-
+	public Json getBoxes(){
+		Json jSonToSend = new Json();
+		jSonToSend.setDirection("BOXARRAY");
+		Json jToAdd = new Json();
+		for (LevelObject lvl : lvlrectArray) {
+			if (lvl.isBox()) {
+				System.out.println("BOX X: "+lvl.x);
+				jToAdd.setxPos((float) lvl.getRectangle().getX());
+				jToAdd.setyPos((float) lvl.getRectangle().getY());
+				jSonToSend.getjArr().add(jToAdd);
+			}
+		}
+		return jSonToSend;
+	}
 
 
 }

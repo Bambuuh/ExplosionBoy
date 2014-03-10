@@ -211,4 +211,100 @@ public class Game {
 	public void setConnection(ServerConnection connection) {
 		this.connection = connection;
 	}
+
+	public ArrayList<Controller> getControllArray() {
+		return controllArray;
+	}
+
+	public void setControllArray(ArrayList<Controller> controllArray) {
+		this.controllArray = controllArray;
+	}
+
+	public ArrayList<Bomb> getBombArray() {
+		return bombArray;
+	}
+
+	public void setBombArray(ArrayList<Bomb> bombArray) {
+		this.bombArray = bombArray;
+	}
+
+	public ArrayList<Bomb> getAddBombArray() {
+		return addBombArray;
+	}
+
+	public void setAddBombArray(ArrayList<Bomb> addBombArray) {
+		this.addBombArray = addBombArray;
+	}
+
+	public ArrayList<Bomb> getRemoveBombArray() {
+		return removeBombArray;
+	}
+
+	public void setRemoveBombArray(ArrayList<Bomb> removeBombArray) {
+		this.removeBombArray = removeBombArray;
+	}
+
+	public SnakeBoy getSnakeBoy() {
+		return snakeBoy;
+	}
+
+	public void setSnakeBoy(SnakeBoy snakeBoy) {
+		this.snakeBoy = snakeBoy;
+	}
+
+	public SnakeBoy getSnakeBoy2() {
+		return snakeBoy2;
+	}
+
+	public void setSnakeBoy2(SnakeBoy snakeBoy2) {
+		this.snakeBoy2 = snakeBoy2;
+	}
+
+	public AnimationHandler getAnimation() {
+		return animation;
+	}
+
+	public void setAnimation(AnimationHandler animation) {
+		this.animation = animation;
+	}
+
+	public LevelCreator getLevel() {
+		return level;
+	}
+
+	public void setLevel(LevelCreator level) {
+		this.level = level;
+	}
+
+	public UnitCollission getCollision() {
+		return collision;
+	}
+
+	public void setCollision(UnitCollission collision) {
+		this.collision = collision;
+	}
+
+	public ServerTCP getServerTCP() {
+		return serverTCP;
+	}
+
+	public void setServerTCP(ServerTCP serverTCP) {
+		this.serverTCP = serverTCP;
+	}
+
+	public InputReader getInput() {
+		return input;
+	}
+
+	public void setInput(InputReader input) {
+		this.input = input;
+	}
+
+	public long getLastFrame() {
+		return lastFrame;
+	}
+
+	public void setLastFrame(long lastFrame) {
+		this.lastFrame = lastFrame;
+	}
 }

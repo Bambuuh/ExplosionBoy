@@ -5,8 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+
+import org.newdawn.slick.Image;
 
 import com.google.gson.Gson;
+
+import explosionBoy.levelobjects.LevelObject;
 
 public class ServerTCP implements Runnable {
 
@@ -82,7 +87,16 @@ public class ServerTCP implements Runnable {
 			System.out.println("PlayerID: "+game.getPlayerID());
 			System.out.println("GameID: "+game.getConnection().getGameID());
 			break;
-
+		case "BOXARRAY":
+			ArrayList<LevelObject> boxArray = new ArrayList<LevelObject>();
+			Image img = game.getAnimation().getTiles().getSubImage(128, 0, 32, 32);
+			for (Json box : json.getjArr()) {
+				System.out.println("BOX X: "+box.getxPos());
+				System.out.println("BOX Y: "+box.getyPos());
+				boxArray.add(new LevelObject(img, box.getxPos(), box.getyPos(), true, true, false));
+			}
+			System.out.println("ArraySize: "+boxArray.size());
+			game.getLevel().getLevelArray().addAll(boxArray);
 		default:
 			break;
 		}

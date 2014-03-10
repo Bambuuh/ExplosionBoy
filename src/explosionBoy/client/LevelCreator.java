@@ -1,5 +1,6 @@
 package explosionBoy.client;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.newdawn.slick.Image;
@@ -14,14 +15,14 @@ public class LevelCreator {
 	
 	private Random rand = new Random();
 	
-	private LevelObject[] lvlObjects;
+	private ArrayList<LevelObject> lvlObjects;
 	
-	public LevelObject[] getLvlObjects() {
+	public ArrayList<LevelObject> getLvlObjects() {
 		return lvlObjects;
 	}
 
 
-	public void setLvlObjects(LevelObject[] lvlObjects) {
+	public void setLvlObjects(ArrayList<LevelObject> lvlObjects) {
 		this.lvlObjects = lvlObjects;
 	}
 
@@ -31,7 +32,7 @@ public class LevelCreator {
 	public LevelCreator(AnimationHandler handler) {
 		this.animHandler = handler;
 		
-		lvlObjects = new LevelObject[475];
+		lvlObjects = new ArrayList<>();
 		
 //		tileSet = animHandler.getTileSet();
 		tiles = animHandler.getTiles();
@@ -87,16 +88,16 @@ public class LevelCreator {
 				
 				case 0:
 					//if it is a zero its a random chance it becomes a box or ground
-					int n = rand.nextInt(3);
+//					int n = rand.nextInt(3);
 					
-					if (n == 0) {
+//					if (n == 0) {
 						image = tiles.getSubImage(96, 0, 32, 32);
 						haveRectangle = false;
-					}
-					else {
-						image = tiles.getSubImage(128, 0, 32, 32);
-						box = true;
-					}
+//					}
+//					else {
+//						image = tiles.getSubImage(128, 0, 32, 32);
+//						box = true;
+//					}
 					break;
 				case 1:
 					image = tiles.getSubImage(0, 0, 32, 32);
@@ -136,7 +137,7 @@ public class LevelCreator {
 				}
 				int x = 32*row;
 				int y = 32*col;
-				lvlObjects[index] = new LevelObject(image, x, y, haveRectangle, box, unbreakable);
+				lvlObjects.add(new LevelObject(image, x, y, haveRectangle, box, unbreakable));
 				index++;
 			}
 		}
@@ -148,7 +149,7 @@ public class LevelCreator {
 		}
 	}
 	
-	public LevelObject[] getLevelArray(){
+	public ArrayList<LevelObject> getLevelArray(){
 		return lvlObjects;
 	}
 	

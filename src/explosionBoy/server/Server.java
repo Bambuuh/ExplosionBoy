@@ -189,11 +189,13 @@ public class Server implements Runnable {
 		boolean foundGame = false;
 		//Createing new player/reference
 		ConnectionReference cr=null;
+		GameHolder game = null;
 		Json json = new Json();
 		json.setDirection("PSETTINGS");
 		//Checking existing game if there are any space in them.
 		for (GameHolder gh : holder) {
 			if (gh.getReferences().size()<4) {
+				game = gh;
 				cr = new ConnectionReference(gh.getReferences().size()+1, gh);
 				gh.getReferences().add(cr);
 				cr.setpID(gh.getReferences().size());
@@ -209,6 +211,7 @@ public class Server implements Runnable {
 			gameID++;
 			holder.add(new GameHolder(this, gameID));
 			GameHolder gh = holder.get(holder.size()-1);
+			game = gh;
 			cr = new ConnectionReference(gh.getReferences().size()+1, gh);
 			gh.getReferences().add(cr);
 			json.setgID(holder.size());
@@ -222,6 +225,7 @@ public class Server implements Runnable {
 			t.start();
 			cr.setTcpConnection(tcp);
 			cr.getTcpConnection().send(gson.toJson(json, Json.class));
+			cr.getTcpConnection().send(gson.toJson(game.getBoxes(), Json.class));
 			System.out.println("Sending gamesettings to player");
 		}
 	}
