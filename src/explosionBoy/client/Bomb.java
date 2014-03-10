@@ -1,6 +1,7 @@
 package explosionBoy.client;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.geom.Rectangle;
@@ -124,10 +125,18 @@ public class Bomb {
 						explodeRight = false;
 						//checks if its is a box, and if it is, changes to ground and remove rectangle
 						if (object.isBox()) {
-							levelCreator.getLvlObjects().add(new FirePower(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
-							levelCreator.getRemoveList().add(object);
-//							object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
-//							object.setHaveRectangle(false);
+							String power = generatePowerup();
+							if (power == "FIRE") {
+								levelCreator.getLvlObjects().add(new FirePower(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+								levelCreator.getRemoveList().add(object);
+							}
+							else if (power == "BOMB") {
+								levelCreator.getLvlObjects().add(new FirePower(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+								levelCreator.getRemoveList().add(object);
+							}else{
+								object.setHaveRectangle(false);
+								object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
+							}
 							oneLastRight = true;
 						}
 						break;
@@ -151,8 +160,18 @@ public class Bomb {
 						explodeLeft = false;
 						//checks if its is a box, and if it is, changes to ground and remove rectangle
 						if (object.isBox()) {
-							object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
-							object.setHaveRectangle(false);
+							String power = generatePowerup();
+							if (power == "FIRE") {
+								levelCreator.getLvlObjects().add(new FirePower(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+								levelCreator.getRemoveList().add(object);
+							}
+							else if (power == "BOMB") {
+								levelCreator.getLvlObjects().add(new FirePower(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+								levelCreator.getRemoveList().add(object);
+							}else{
+								object.setHaveRectangle(false);
+								object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
+							}
 							oneLastLeft = true;
 						}
 						break;
@@ -176,8 +195,18 @@ public class Bomb {
 						explodeDown = false;
 						//checks if its is a box, and if it is, changes to ground and remove rectangle
 						if (object.isBox()) {
-							object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
-							object.setHaveRectangle(false);
+							String power = generatePowerup();
+							if (power == "FIRE") {
+								levelCreator.getLvlObjects().add(new FirePower(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+								levelCreator.getRemoveList().add(object);
+							}
+							else if (power == "BOMB") {
+								levelCreator.getLvlObjects().add(new FirePower(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+								levelCreator.getRemoveList().add(object);
+							}else{
+								object.setHaveRectangle(false);
+								object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
+							}
 							oneLastDown = true;
 						}
 						break;
@@ -201,8 +230,18 @@ public class Bomb {
 						explodeUp = false;
 						//checks if its is a box, and if it is, changes to ground and remove rectangle
 						if (object.isBox()) {
-							object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
-							object.setHaveRectangle(false);
+							String power = generatePowerup();
+							if (power == "FIRE") {
+								levelCreator.getLvlObjects().add(new FirePower(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+								levelCreator.getRemoveList().add(object);
+							}
+							else if (power == "BOMB") {
+								levelCreator.getLvlObjects().add(new FirePower(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+								levelCreator.getRemoveList().add(object);
+							}else{
+								object.setHaveRectangle(false);
+								object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
+							}
 							oneLastUp = true;
 						}
 						break;
@@ -230,6 +269,21 @@ public class Bomb {
 			explosionArray.remove(explosion);
 		}
 		explosionToRemove.clear();
+	}
+	
+	public String generatePowerup(){
+		Random rand = new Random();
+		int n = rand.nextInt(7);
+		String power= "";
+		
+		if (n >= 0 && n<=1) {
+			power = "BOMB";
+		}
+		if (n >= 2 && n<=3) {
+			power = "FIRE";
+		}
+		
+		return power;
 	}
 	
 	public boolean getExploded(){
