@@ -246,6 +246,7 @@ public class GameHolder {
 	private void randomPowerUp(LevelObject lvl){
 		if (rand.nextInt(2)<1) {
 			Json j = new Json();
+			j.setpID(99);
 			int random = rand.nextInt(1);
 			switch (random) {
 			case 0:

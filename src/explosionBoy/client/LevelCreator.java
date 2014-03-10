@@ -10,6 +10,7 @@ import org.newdawn.slick.SpriteSheet;
 import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
 
 import explosionBoy.levelobjects.LevelObject;
+import explosionBoy.levelobjects.PowerUp;
 
 public class LevelCreator {
 	
@@ -145,6 +146,22 @@ public class LevelCreator {
 		if (!objectsToAdd.isEmpty()) {
 			lvlObjects.addAll(objectsToAdd);
 			objectsToAdd.clear();
+		}
+	}
+	
+	public void createPowerUp(Json json){
+		Image img=null;
+		switch (json.getDirection()) {
+		case "BOMBPOWER":
+			img = animHandler.getPowerups().getSubImage(32, 0, 32, 32);
+			objectsToAdd.add(new PowerUp(img, json.getxPos(), json.getyPos(), true, false, false));
+			break;
+		case "FIREPOWER":
+			img = animHandler.getPowerups().getSubImage(0, 0, 32, 32);
+			objectsToAdd.add(new PowerUp(img, json.getxPos(), json.getyPos(), true, false, false));
+			break;
+		default:
+			break;
 		}
 	}
 	

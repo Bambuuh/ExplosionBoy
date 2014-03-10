@@ -22,8 +22,10 @@ public class ServerConnection implements Runnable {
 	private ArrayList<Controller> controllant;
 	private boolean isReciving;
 	private int gameID;
+	private LevelCreator lvlCreator;
 	
-	public ServerConnection(ArrayList<Controller> controller) {
+	public ServerConnection(ArrayList<Controller> controller, LevelCreator lvlCreator) {
+		this.lvlCreator = lvlCreator;
 		this.gameID = 0;
 		this.controllant = controller;
 		isReciving = true;
@@ -72,6 +74,9 @@ public class ServerConnection implements Runnable {
 		String incomming = new String(recivePacket.getData());
 		incomming = incomming.trim();
 		jsonRecive = gson.fromJson(incomming, Json.class);
+		if (jsonRecive.getpID()==99) {
+			lvlCreator.createPowerUp(jsonRecive);
+		}
 		for (Controller controller : controllant) {
 			if (controller.id == jsonRecive.getpID()) {
 				controller.controll(jsonRecive);
@@ -93,5 +98,13 @@ public class ServerConnection implements Runnable {
 
 	public void setGameID(int gameID) {
 		this.gameID = gameID;
+	}
+
+	public LevelCreator getLvlCreator() {
+		return lvlCreator;
+	}
+
+	public void setLvlCreator(LevelCreator lvlCreator) {
+		this.lvlCreator = lvlCreator;
 	}
 }
