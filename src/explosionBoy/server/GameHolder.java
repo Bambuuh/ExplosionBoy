@@ -248,10 +248,11 @@ public class GameHolder {
 	}
 
 	private void randomPowerUp(LevelObject lvl){
+		Random randomizer = new Random();
+		int random = randomizer.nextInt(2);
 		if (rand.nextInt(2)<1) {
 			Json j = new Json();
 			j.setpID(99);
-			int random = rand.nextInt(1);
 			switch (random) {
 			case 0:
 				j.setDirection("BOMBPOWER");
