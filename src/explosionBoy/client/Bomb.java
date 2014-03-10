@@ -48,9 +48,9 @@ public class Bomb {
 	private int explosionSize = 30;
 	private int tileSize = 32;
 	
-	public Bomb(UnitCollission collision, LevelCreator level, AnimationHandler animHandler, float x, float y, float explosionSpeed, float bombCountdown, int power){
-		this.collision = collision;
-		this.level = level;
+	public Bomb(AnimationHandler animHandler, float x, float y, float explosionSpeed, float bombCountdown, int power){
+//		this.collision = collision;
+//		this.level = level;
 		explosionArray = new ArrayList<Explosion>();
 		explosionToRemove = new ArrayList<Explosion>();
 		animationHandler = animHandler;

@@ -38,9 +38,9 @@ public abstract class Player {
 
 	protected Animation playerAnimation;
 
-	public Player(float x, float y, AnimationHandler animation, int ID, UnitCollission collision, LevelCreator level) {
-		this.collision = collision;
-		this.level = level;
+	public Player(float x, float y, AnimationHandler animation, int ID) {
+//		this.collision = collision;
+//		this.level = level;
 		this.ID = ID;
 		this.animationHandler = animation;
 		this.json = new Json();
@@ -144,7 +144,7 @@ public abstract class Player {
 			}
 		}
 		if (bombAvailable) {
-			addBombArray.add(new Bomb(collision, level, animationHandler, bombX, bombY, explosionSpeed, countdown, power));
+			addBombArray.add(new Bomb(animationHandler, bombX, bombY, explosionSpeed, countdown, power));
 			bombDown = true;
 		}
 		bombAvailable = true;

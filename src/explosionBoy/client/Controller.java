@@ -79,4 +79,8 @@ public class Controller {
 	public void setDelta(int delta) {
 		this.delta = delta;
 	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
 }

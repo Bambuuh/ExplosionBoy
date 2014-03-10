@@ -28,7 +28,6 @@ public class GameHolder {
 	}
 
 	public void checkCollissions(ConnectionReference ref){
-		int serverBombIndex = serverBombArray.size()-1;
 		ConnectionReference p = ref;
 		boolean bombCol = false;
 		for (ServerBomb bombToCheck : serverBombArray) {
@@ -128,7 +127,6 @@ public class GameHolder {
 		}
 		for (ConnectionReference ref : references) {
 			if (UnitCollission.isColliding(ref.getPlayerRect(), bombToAdd.getRect())) {
-				System.out.println("Player"+ref.getpID()+" is colliding with this bomb!");
 				bombToAdd.getCollidingPlayers().add(ref);
 			}
 		}
@@ -221,7 +219,6 @@ public class GameHolder {
 		jSonToSend.setDirection("BOXARRAY");
 		for (LevelObject lvl : lvlrectArray) {
 			if (lvl.isBox()) {
-				System.out.println("BOX X: "+lvl.getX());
 				Json jToAdd = new Json();
 				jToAdd.setxPos(lvl.getX());
 				jToAdd.setyPos(lvl.getY());

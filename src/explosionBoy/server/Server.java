@@ -228,6 +228,10 @@ public class Server implements Runnable {
 			cr.getTcpConnection().send(gson.toJson(game.getBoxes(), Json.class));
 			System.out.println(gson.toJson(game.getBoxes()));
 			System.out.println("Sending gamesettings to player");
+			json.setDirection("NEWPLAYER");
+			for (ConnectionReference conRef : game.getReferences()) {
+				conRef.getTcpConnection().send(gson.toJson(json, Json.class));
+			}
 		}
 	}
 

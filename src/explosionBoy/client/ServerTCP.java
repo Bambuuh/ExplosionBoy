@@ -22,7 +22,7 @@ public class ServerTCP implements Runnable {
 	private String conMsg;
 	private Game game;
 	private Gson gson;
-	
+
 	public ServerTCP(Game game) {
 		gson = new Gson();
 		this.game = game;
@@ -78,25 +78,35 @@ public class ServerTCP implements Runnable {
 		}
 		System.out.println("Thread Closed");
 	}
-	
+
 	public void handleJson(Json json){
 		switch (json.getDirection()) {
 		case "PSETTINGS":
 			game.setPlayerID(json.getpID());
 			game.getConnection().setGameID(json.getgID());
-			System.out.println("PlayerID: "+game.getPlayerID());
-			System.out.println("GameID: "+game.getConnection().getGameID());
 			break;
 		case "BOXARRAY":
 			ArrayList<LevelObject> boxArray = new ArrayList<LevelObject>();
 			Image img = game.getAnimation().getTiles().getSubImage(128, 0, 32, 32);
 			for (Json box : json.getjArr()) {
-				System.out.println("BOX X: "+box.getxPos());
-				System.out.println("BOX Y: "+box.getyPos());
 				boxArray.add(new LevelObject(img, box.getxPos(), box.getyPos(), true, true, false));
 			}
 			System.out.println("ArraySize: "+boxArray.size());
 			game.getLevel().getObjectsToAdd().addAll(boxArray);
+			break;
+		case "NEWPLAYER":
+			boolean isNewPlayer = true;
+			for (Controller controller : game.getControllArray()) {
+				if (controller.id==json.getpID()) {
+					isNewPlayer=false;
+					System.out.println("SETTING UP NEW PLAYER! :D");
+					break;
+				}
+			}
+			if (isNewPlayer) {
+				SnakeBoy snake = new SnakeBoy(40, 40, game.getAnimation(), json.getpID());
+				game.getControllArray().add(new Controller(snake, game.getBombArray(), game.getAddBombArray()));
+			}
 		default:
 			break;
 		}
@@ -110,6 +120,6 @@ public class ServerTCP implements Runnable {
 		} 
 		catch (Exception e) {
 			System.err.println("Could not close connection: "+e.getMessage());		
-			}
+		}
 	}
 }

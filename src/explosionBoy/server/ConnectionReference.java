@@ -42,9 +42,17 @@ public class ConnectionReference {
 			this.xPos = Game.WIDTH-60;
 			this.yPos = 35;
 		}
-		else {
+		else if (pID == 1) {
 			this.xPos = 40;
 			this.yPos = 30;
+		}
+		else if (pID == 3){
+			this.xPos = 40;
+			this.yPos = Game.HEIGHT-60;
+		}
+		else if (pID == 4){
+			this.xPos = Game.WIDTH-60;
+			this.yPos = Game.HEIGHT-60;
 		}
 		this.baseX = xPos;
 		this.baseY = yPos;

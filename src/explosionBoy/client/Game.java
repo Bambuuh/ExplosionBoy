@@ -57,10 +57,6 @@ public class Game {
 		bombArray = new ArrayList<>();
 		addBombArray = new ArrayList<Bomb>();
 		removeBombArray = new ArrayList<>();
-		snakeBoy = new SnakeBoy(40,30 , animation, 1, collision, level);
-		snakeBoy2 = new SnakeBoy(WIDTH-50, 30, animation, 2, collision, level);
-		controllArray.add(new Controller(snakeBoy, bombArray, addBombArray));
-		controllArray.add(new Controller(snakeBoy2, bombArray, addBombArray));
 		connection = new ServerConnection(controllArray);
 		input = new InputReader(connection);
 		level = new LevelCreator(animation);
@@ -111,8 +107,8 @@ public class Game {
 
 	public void start(){
 
-		snakeBoy.setPlayerAnimation(animation, 16, 0, 16, false, false);
-		snakeBoy2.setPlayerAnimation(animation, 16, 0, 16, false, false);
+//		snakeBoy.setPlayerAnimation(animation, 16, 0, 16, false, false);
+//		snakeBoy2.setPlayerAnimation(animation, 16, 0, 16, false, false);
 
 		while(!Display.isCloseRequested()){
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
@@ -120,8 +116,9 @@ public class Game {
 			update(delta);
 			level.printLevel();
 			updateBombs(delta);
-			snakeBoy2.update(delta);
-			snakeBoy.update(delta);
+			for (Controller player : controllArray) {
+				player.getPlayer().update(delta);
+			}
 			checkCollisions(delta);
 			cleanUp();
 			if (!(playerID==0)) {
