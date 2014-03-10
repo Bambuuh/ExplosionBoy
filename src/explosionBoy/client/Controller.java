@@ -53,7 +53,7 @@ public class Controller {
 			default:
 				break;
 			}
-//			lastDirection = json.getDirection();
+			lastDirection = json.getDirection();
 		}
 	}
 

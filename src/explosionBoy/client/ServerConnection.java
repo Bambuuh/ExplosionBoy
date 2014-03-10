@@ -35,7 +35,7 @@ public class ServerConnection implements Runnable {
 		sendData = new byte[512];
 		try {
 			ip = InetAddress.getByName("gurey.synology.me");
-			ip = InetAddress.getLocalHost();
+//			ip = InetAddress.getLocalHost();
 		} catch (UnknownHostException e1) {
 			System.err.println("Get localhost failed: "+e1.getMessage());
 			e1.printStackTrace();
