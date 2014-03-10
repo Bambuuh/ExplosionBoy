@@ -6,7 +6,7 @@ public class LevelObject {
 
 	private int x, y;
 	private Rectangle rectangle;
-	private boolean box;
+	private boolean box, buff;
 	
 	
 	public LevelObject(int x, int y, boolean haveRectangle, boolean isBox) {
@@ -59,6 +59,18 @@ public class LevelObject {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+
+
+	public boolean isBuff() {
+		return buff;
+	}
+
+
+
+	public void setBuff(boolean buff) {
+		this.buff = buff;
 	}
 	
 }

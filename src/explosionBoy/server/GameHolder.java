@@ -4,6 +4,8 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.newdawn.slick.particles.effects.FireEmitter;
+
 import explosionBoy.client.Json;
 
 
@@ -16,8 +18,10 @@ public class GameHolder {
 	private ArrayList<ServerBomb> serverBombArray;
 	private ArrayList<ServerBomb> serverBombRemove;
 	private Server server;
+	private Random rand;
 
 	public GameHolder(Server server, int gameID) {
+		this.rand = new Random();
 		this.server = server;
 		this.serverBombArray = new ArrayList<ServerBomb>();
 		this.serverBombRemove = new ArrayList<ServerBomb>();
@@ -43,6 +47,7 @@ public class GameHolder {
 					if (UnitCollission.isColliding(ex.getRect(), lvl.getRectangle())){
 						bombToCheck.cancelDirection(ex.getDirection());
 						if (lvl.isBox()) {
+							randomPowerUp(lvl);
 							lvlRemoveArr.add(lvl);
 						}
 					}
@@ -77,6 +82,16 @@ public class GameHolder {
 		for (LevelObject lvl : lvlrectArray) {
 			if (checkRange(lvl.getRectangle(), ref)) {
 				boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl.getRectangle());
+				if (lvl.isBuff()) {
+					if (lvl instanceof FlameBuff) {
+						ref.setBombPower(ref.getBombPower()+1);
+					}
+					else if (lvl instanceof BombPower) {
+						ref.setMaxBombs(ref.getMaxBombs()+1);
+					}
+					lvlRemoveArr.add(lvl);
+					continue;
+				}
 				if (collision || bombCol) {
 					if (lvl.getRectangle().getMaxX()>p.getPlayerRect().getMinX()) {
 						p.setxPos(p.getOldX());
@@ -228,5 +243,30 @@ public class GameHolder {
 		return jSonToSend;
 	}
 
+	private void randomPowerUp(LevelObject lvl){
+		if (rand.nextInt(2)<1) {
+			Json j = new Json();
+			int random = rand.nextInt(1);
+			switch (random) {
+			case 0:
+				j.setDirection("BOMBPOWER");
+				lvlrectArray.add(new BombPower(lvl.getX(), lvl.getY(), true, false));
+				break;
+			case 1:
+				j.setDirection("FIREPOWER");
+				lvlrectArray.add(new FlameBuff(lvl.getX(), lvl.getY(), true, false));
+				break;
+			default:
+				break;
+			}
+			j.setxPos(lvl.getX());
+			j.setyPos(lvl.getY());
+			for (ConnectionReference reference : references) {
+				if (reference.getIp() != null) {
+					server.send(j, reference.getIp(), reference.getPort());
+				}
+			}
+		}
+	}
 
 }
