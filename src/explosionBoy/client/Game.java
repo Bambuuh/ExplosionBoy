@@ -58,9 +58,9 @@ public class Game {
 		bombArray = new ArrayList<>();
 		addBombArray = new ArrayList<Bomb>();
 		removeBombArray = new ArrayList<>();
-		input = new InputReader(connection);
 		level = new LevelCreator(animation);
 		connection = new ServerConnection(controllArray, level);
+		input = new InputReader(connection);
 		serverTCP = new ServerTCP(this);
 		new Thread(serverTCP).start();
 		new Thread(connection).start();

@@ -15,6 +15,7 @@ public class GameHolder {
 	private ArrayList<ConnectionReference> references;
 	private ArrayList<LevelObject> lvlrectArray;
 	private ArrayList<LevelObject> lvlRemoveArr;
+	private ArrayList<LevelObject> lvlAddArray;
 	private ArrayList<ServerBomb> serverBombArray;
 	private ArrayList<ServerBomb> serverBombRemove;
 	private Server server;
@@ -25,6 +26,7 @@ public class GameHolder {
 		this.server = server;
 		this.serverBombArray = new ArrayList<ServerBomb>();
 		this.serverBombRemove = new ArrayList<ServerBomb>();
+		this.lvlAddArray = new ArrayList<>();
 		this.gameID = gameID;
 		references = new ArrayList<>();
 		lvlrectArray = genereRectangles();
@@ -52,6 +54,7 @@ public class GameHolder {
 						}
 					}
 				}
+				lvlrectArray.addAll(lvlAddArray);
 				if (UnitCollission.isColliding(ex.getRect(), ref.getPlayerRect())){
 					ref.resetPosition();
 					Json j = new Json();
@@ -251,11 +254,11 @@ public class GameHolder {
 			switch (random) {
 			case 0:
 				j.setDirection("BOMBPOWER");
-				lvlrectArray.add(new BombPower(lvl.getX(), lvl.getY(), true, false));
+				lvlAddArray.add(new BombPower(lvl.getX(), lvl.getY(), true, false));
 				break;
 			case 1:
 				j.setDirection("FIREPOWER");
-				lvlrectArray.add(new FlameBuff(lvl.getX(), lvl.getY(), true, false));
+				lvlAddArray.add(new FlameBuff(lvl.getX(), lvl.getY(), true, false));
 				break;
 			default:
 				break;
