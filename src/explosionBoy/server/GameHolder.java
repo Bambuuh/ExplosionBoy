@@ -70,13 +70,12 @@ public class GameHolder {
 				bombToCheck1 = serverBombArray.get(serverBombIndex);
 				if (!bombToCheck1.isExploding()) {
 					bombCol = explosionBoy.server.UnitCollission.isColliding(bombToCheck1.getRect(), p.getPlayerRect());
-					if (bombCol && bombToCheck1.getCollidingPlayers().contains(ref)) {
-						System.out.println("BOMBCOL FALSE!");
-						bombCol = false;
-					}
 				}
-				else if (!bombCol && bombToCheck1.getCollidingPlayers().contains(ref)){ 
+				if (!bombCol && bombToCheck1.getCollidingPlayers().contains(ref)){ 
 					bombToCheck1.getCollidingPlayers().remove(ref);
+				}
+				if (bombCol && bombToCheck1.getCollidingPlayers().contains(ref)) {
+					bombCol = false;
 				}
 				if (serverBombArray.get(serverBombIndex).checkIfRemove()) serverBombRemove.add(serverBombArray.get(serverBombIndex));
 			}
