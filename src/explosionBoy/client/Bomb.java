@@ -127,11 +127,11 @@ public class Bomb {
 						if (object.isBox()) {
 							String power = generatePowerup();
 							if (power == "FIRE") {
-								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}
 							else if (power == "BOMB") {
-								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}else{
 								object.setHaveRectangle(false);
@@ -162,11 +162,11 @@ public class Bomb {
 						if (object.isBox()) {
 							String power = generatePowerup();
 							if (power == "FIRE") {
-								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}
 							else if (power == "BOMB") {
-								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}else{
 								object.setHaveRectangle(false);
@@ -197,11 +197,11 @@ public class Bomb {
 						if (object.isBox()) {
 							String power = generatePowerup();
 							if (power == "FIRE") {
-								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}
 							else if (power == "BOMB") {
-								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}else{
 								object.setHaveRectangle(false);
@@ -232,11 +232,11 @@ public class Bomb {
 						if (object.isBox()) {
 							String power = generatePowerup();
 							if (power == "FIRE") {
-								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}
 							else if (power == "BOMB") {
-								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
+//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}else{
 								object.setHaveRectangle(false);
