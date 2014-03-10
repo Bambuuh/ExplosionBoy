@@ -123,7 +123,7 @@ public class Bomb {
 						explodeRight = false;
 						//checks if its is a box, and if it is, changes to ground and remove rectangle
 						if (object.isBox()) {
-							object.setImage(animationHandler.getTiles().getSubImage(96, 0, 32, 32));
+							object.setImage(animationHandler.getPowerups().getSubImage(0, 0, 32, 32));
 							object.setHaveRectangle(false);
 							oneLastRight = true;
 						}

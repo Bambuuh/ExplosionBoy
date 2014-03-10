@@ -12,9 +12,11 @@ public class AnimationHandler {
 	private Image explosionSheet2;
 	private Image bearSheet;
 	private Image testExplosion;
-	
+	private Image powerupTileSet;
 	private Image tileSet;
+	
 	private SpriteSheet tiles;
+	private SpriteSheet powerups;
 	
 	public AnimationHandler() {
 			try {
@@ -23,6 +25,10 @@ public class AnimationHandler {
 				explosionSheet2 = new Image("res/explosion/newExplosionSheet.png");
 				bearSheet = new Image("res/bearboy/BearBoySprite.png");
 				testExplosion = new Image("res/explosion/bigExplosion.png");
+				
+				powerupTileSet = new Image("res/tileset/retardPowerTiles.png");
+				powerups = new SpriteSheet(powerupTileSet, 32, 32);
+				
 				tileSet = new Image("res/tileset/levelTileSet.png");
 				tiles = new SpriteSheet(tileSet, 32, 32);
 				
@@ -136,6 +142,10 @@ public class AnimationHandler {
 
 	public void setTiles(SpriteSheet tiles) {
 		this.tiles = tiles;
+	}
+	
+	public SpriteSheet getPowerups(){
+		return powerups;
 	}
 	
 }
