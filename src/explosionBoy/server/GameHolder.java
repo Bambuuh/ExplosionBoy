@@ -30,7 +30,6 @@ public class GameHolder {
 	public void checkCollissions(ConnectionReference ref){
 		int serverBombIndex = serverBombArray.size()-1;
 		ConnectionReference p = ref;
-		ServerBomb bombToCheck1 = null;
 		boolean bombCol = false;
 		for (ServerBomb bombToCheck : serverBombArray) {
 			for (ServerExplosion ex : bombToCheck.getExplArray()) {
@@ -65,20 +64,18 @@ public class GameHolder {
 
 			}
 		}
-		for (LevelObject lvl : lvlrectArray) {
-			if (serverBombIndex>=0) {
-				bombToCheck1 = serverBombArray.get(serverBombIndex);
-				if (!bombToCheck1.isExploding()) {
-					bombCol = explosionBoy.server.UnitCollission.isColliding(bombToCheck1.getRect(), p.getPlayerRect());
-				}
-				if (!bombCol && bombToCheck1.getCollidingPlayers().contains(ref)){ 
-					bombToCheck1.getCollidingPlayers().remove(ref);
-				}
-				if (bombCol && bombToCheck1.getCollidingPlayers().contains(ref)) {
-					bombCol = false;
-				}
-				if (serverBombArray.get(serverBombIndex).checkIfRemove()) serverBombRemove.add(serverBombArray.get(serverBombIndex));
+		for (ServerBomb bomb : serverBombArray) {
+			bombCol = explosionBoy.server.UnitCollission.isColliding(bomb.getRect(), p.getPlayerRect());
+			if (bombCol && bomb.getCollidingPlayers().contains(ref)) {
+				bombCol = false;
+				continue;
 			}
+			if (!bombCol && bomb.getCollidingPlayers().contains(ref)){ 
+				bomb.getCollidingPlayers().remove(ref);
+			}
+			if (bomb.checkIfRemove()) serverBombRemove.add(bomb);
+		}
+		for (LevelObject lvl : lvlrectArray) {
 			if (checkRange(lvl.getRectangle(), ref)) {
 				boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl.getRectangle());
 				if (collision || bombCol) {
@@ -96,7 +93,6 @@ public class GameHolder {
 					}
 				}
 			}
-			serverBombIndex--;
 		}
 		serverBombArray.removeAll(serverBombRemove);
 		lvlrectArray.removeAll(lvlRemoveArr);
