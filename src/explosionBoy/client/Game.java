@@ -30,7 +30,7 @@ public class Game {
 	private ArrayList<Bomb> bombArray;
 	private ArrayList<Bomb> addBombArray;
 	private ArrayList<Bomb> removeBombArray;
-	
+
 	private SnakeBoy snakeBoy;
 	private SnakeBoy snakeBoy2;
 
@@ -41,12 +41,16 @@ public class Game {
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 608;
 	private ServerConnection connection;
+	private ServerTCP serverTCP;
 	private InputReader input;
 
 	private long lastFrame;
 
+	private int playerID;
+
 	public Game(){
 		initGL();
+		playerID = 0;
 		collision = new UnitCollission();
 		animation = new AnimationHandler();
 		controllArray = new ArrayList<Controller>();
@@ -60,6 +64,8 @@ public class Game {
 		connection = new ServerConnection(controllArray);
 		input = new InputReader(connection);
 		level = new LevelCreator(animation);
+		serverTCP = new ServerTCP(this);
+		new Thread(serverTCP).start();
 		new Thread(connection).start();
 		start();
 	}
@@ -118,21 +124,24 @@ public class Game {
 			snakeBoy.update(delta);
 			checkCollisions(delta);
 			removeBombs();
-			input.readInput();
+			if (!(playerID==0)) {
+				input.readInput(playerID);
+			}
 			Display.update();
 			Display.sync(60);
 		}
 		connection.close();
+		serverTCP.closeAllConnections();
 	}
-	
-	public synchronized void updateBombs(int delta){
+
+	public void updateBombs(int delta){
 		for (Bomb bomb : bombArray) {
 			bomb.update(delta, level);
 		}
 		bombArray.addAll(addBombArray);
 		addBombArray.clear();
 	}
-	
+
 	public void removeBombs(){
 		for (Bomb bomb : bombArray) {
 			if (bomb.getExploded()) {
@@ -144,7 +153,7 @@ public class Game {
 		}
 		removeBombArray.clear();
 	}
-	
+
 	public void checkCollisions(int delta){
 		for (Bomb bombToCheck : bombArray) {
 			for (Explosion explosion : bombToCheck.getExplosionArray()) {
@@ -160,30 +169,46 @@ public class Game {
 		for (Controller player : controllArray) {
 			player.setDelta(delta);
 			Player p = player.getPlayer();
-		for (LevelObject lvl : level.getLvlObjects()) {
-			if (lvl.isHaveRectangle()) {
-				boolean collision = UnitCollission.isColliding(p.getRectangle(), lvl.getRectangle());
-				if (collision) {
-					if (lvl.getRectangle().getMaxX()>p.getRectangle().getMinX()) {
-						p.setX(p.oldx);
-					}
-					else if (lvl.getRectangle().getMinX()<p.getRectangle().getMaxX()) {
-						p.setX(p.oldx);
-					}
-					if (lvl.getRectangle().getMaxY()>p.getRectangle().getMinY()) {
-						p.setY(p.oldy);
-					}
-					else if (lvl.getRectangle().getMinY()<p.getRectangle().getMaxY()) {
-						p.setY(p.oldy);
+			for (LevelObject lvl : level.getLvlObjects()) {
+				if (lvl.isHaveRectangle()) {
+					boolean collision = UnitCollission.isColliding(p.getRectangle(), lvl.getRectangle());
+					if (collision) {
+						if (lvl.getRectangle().getMaxX()>p.getRectangle().getMinX()) {
+							p.setX(p.oldx);
+						}
+						else if (lvl.getRectangle().getMinX()<p.getRectangle().getMaxX()) {
+							p.setX(p.oldx);
+						}
+						if (lvl.getRectangle().getMaxY()>p.getRectangle().getMinY()) {
+							p.setY(p.oldy);
+						}
+						else if (lvl.getRectangle().getMinY()<p.getRectangle().getMaxY()) {
+							p.setY(p.oldy);
+						}
 					}
 				}
 			}
-		}
-		player.autoMove();
+			player.autoMove();
 		}
 	}
 
 	public void update(int delta) {
 
+	}
+
+	public int getPlayerID() {
+		return playerID;
+	}
+
+	public void setPlayerID(int playerID) {
+		this.playerID = playerID;
+	}
+
+	public ServerConnection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(ServerConnection connection) {
+		this.connection = connection;
 	}
 }

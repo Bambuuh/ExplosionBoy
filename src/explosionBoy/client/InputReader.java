@@ -17,7 +17,7 @@ public class InputReader {
 		
 	}
 	
-	public void readInput(){
+	public void readInput(int playerID){
 //		if (Keyboard.isKeyDown(Keyboard.KEY_UP) && (Keyboard.isKeyDown(Keyboard.KEY_LEFT))) json.setDirection("UPLEFT");
 //		else if (Keyboard.isKeyDown(Keyboard.KEY_UP) && (Keyboard.isKeyDown(Keyboard.KEY_RIGHT))) json.setDirection("UPRIGHT");
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) json.setDirection("UP");
@@ -28,7 +28,7 @@ public class InputReader {
 		else if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)) json.setDirection("LEFT");
 		else if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) json.setDirection("RIGHT");
 		else json.setDirection("STILL");
-		json.setpID(2);
+		json.setpID(playerID);
 		Gson g = new Gson();
 		g.toJson(json, Json.class);
 		connection.send(json);

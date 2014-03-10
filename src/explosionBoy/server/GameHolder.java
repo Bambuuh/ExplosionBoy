@@ -16,14 +16,12 @@ public class GameHolder {
 	private ArrayList<ServerBomb> serverBombRemove;
 	private Server server;
 
-	public GameHolder(Server server) {
+	public GameHolder(Server server, int gameID) {
 		this.server = server;
 		this.serverBombArray = new ArrayList<ServerBomb>();
 		this.serverBombRemove = new ArrayList<ServerBomb>();
-		this.gameID = 1;
+		this.gameID = gameID;
 		references = new ArrayList<>();
-		references.add(new ConnectionReference(1,this));
-		references.add(new ConnectionReference(2,this));
 		lvlrectArray = genereRectangles();
 		bombExplArra = new ArrayList<Rectangle>();
 	}

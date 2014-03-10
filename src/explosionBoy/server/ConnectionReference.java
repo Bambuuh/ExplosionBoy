@@ -2,6 +2,7 @@ package explosionBoy.server;
 
 import java.awt.Rectangle;
 import java.net.InetAddress;
+import java.net.Socket;
 
 import explosionBoy.client.Delta;
 import explosionBoy.client.Game;
@@ -16,6 +17,7 @@ public class ConnectionReference {
 	private Rectangle playerRect;
 	private GameHolder gameHolder;
 	private boolean isAwayFromBomb;
+	private TCPConnection tcpConnection;
 	
 	public ConnectionReference() {
 		this.playerRect = new Rectangle();
@@ -220,6 +222,14 @@ public class ConnectionReference {
 	public void resetPosition(){
 		this.xPos = baseX;
 		this.yPos = baseY;
+	}
+
+	public TCPConnection getTcpConnection() {
+		return tcpConnection;
+	}
+
+	public void setTcpConnection(TCPConnection tcpConnection) {
+		this.tcpConnection = tcpConnection;
 	}
 	
 }

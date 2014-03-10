@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -23,8 +25,21 @@ public class Server implements Runnable {
 	private long startTime, endTime, checkTime;
 	private ArrayList<Integer> timeArray;
 	private long checkInter = 10_000;
+	private ServerSocket tcpServerSocket;
+	private int gameID;
 
 	public Server() {
+		setGameID(0);
+		try {
+			this.tcpServerSocket = new ServerSocket(9877);
+		} catch (IOException e1) {
+			System.err.println("Failed to setup server socket: "+e1.getMessage());
+			try {
+				tcpServerSocket.close();
+			} catch (IOException e) {
+				System.err.println("Failed to close server socket: "+e.getMessage());
+			}
+		}
 		this.timeArray = new ArrayList<Integer>();
 		holder = new ArrayList<GameHolder>();
 		gson = new Gson();
@@ -38,7 +53,6 @@ public class Server implements Runnable {
 		} catch (SocketException e) {
 			System.err.println("Creating socket failed: "+e.getMessage());
 		}
-		holder.add(new GameHolder(this));
 	}
 
 	private void recive() {
@@ -122,7 +136,7 @@ public class Server implements Runnable {
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
 		try {
 			datagramSocket.send(sendPacket);
-//			stopWatch();
+			stopWatch();
 		} catch (IOException e) {
 			System.err.println("Sending packet failed: "+e.getMessage());
 			e.printStackTrace();
@@ -166,5 +180,57 @@ public class Server implements Runnable {
 	private void calculateTime(long startTime, long endTime){
 		int time = (int) (endTime-startTime);
 		timeArray.add(time);
+	}
+	public ServerSocket getTCPSocket(){
+		return tcpServerSocket;
+		
+	}
+	public void pairConnectionWithGame(Socket socket){
+		boolean foundGame = false;
+		//Createing new player/reference
+		ConnectionReference cr=null;
+		Json json = new Json();
+		json.setDirection("PSETTINGS");
+		//Checking existing game if there are any space in them.
+		for (GameHolder gh : holder) {
+			if (gh.getReferences().size()<4) {
+				cr = new ConnectionReference(gh.getReferences().size()+1, gh);
+				gh.getReferences().add(cr);
+				cr.setpID(gh.getReferences().size());
+				foundGame = true;
+				json.setgID(gh.getGameID());
+				json.setpID(cr.getpID());
+				System.out.println("Found a game!");
+				break;
+			}
+		}
+		//if all games are full or if there are no games, a new game is created.
+		if (!foundGame) {
+			gameID++;
+			holder.add(new GameHolder(this, gameID));
+			GameHolder gh = holder.get(holder.size()-1);
+			cr = new ConnectionReference(gh.getReferences().size()+1, gh);
+			gh.getReferences().add(cr);
+			json.setgID(holder.size());
+			json.setpID(cr.getpID());
+			foundGame = true;
+			System.out.println("Creating new game!");
+		}
+		if (foundGame) {
+			TCPConnection tcp = new TCPConnection(socket);
+			Thread t = new Thread(tcp);
+			t.start();
+			cr.setTcpConnection(tcp);
+			cr.getTcpConnection().send(gson.toJson(json, Json.class));
+			System.out.println("Sending gamesettings to player");
+		}
+	}
+
+	public int getGameID() {
+		return gameID;
+	}
+
+	public void setGameID(int gameID) {
+		this.gameID = gameID;
 	}
 }

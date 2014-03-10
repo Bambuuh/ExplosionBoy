@@ -13,10 +13,10 @@ import explosionBoy.client.Json;
 
 public class TCPConnection implements Runnable {
 
-	Socket socket;
-	PrintWriter out;
-	BufferedReader in;
-	Gson gson;
+	private Socket socket;
+	private PrintWriter out;
+	private BufferedReader in;
+	private Gson gson;
 	
 	public TCPConnection(Socket socket) {
 		gson = new Gson();
@@ -55,6 +55,38 @@ public class TCPConnection implements Runnable {
 		while (!socket.isClosed()) {
 			recive();
 		}
+	}
+
+	public Socket getSocket() {
+		return socket;
+	}
+
+	public void setSocket(Socket socket) {
+		this.socket = socket;
+	}
+
+	public PrintWriter getOut() {
+		return out;
+	}
+
+	public void setOut(PrintWriter out) {
+		this.out = out;
+	}
+
+	public BufferedReader getIn() {
+		return in;
+	}
+
+	public void setIn(BufferedReader in) {
+		this.in = in;
+	}
+
+	public Gson getGson() {
+		return gson;
+	}
+
+	public void setGson(Gson gson) {
+		this.gson = gson;
 	}
 
 }

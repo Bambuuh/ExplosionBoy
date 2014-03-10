@@ -21,8 +21,10 @@ public class ServerConnection implements Runnable {
 	private InetAddress ip;
 	private ArrayList<Controller> controllant;
 	private boolean isReciving;
+	private int gameID;
 	
 	public ServerConnection(ArrayList<Controller> controller) {
+		this.gameID = 0;
 		this.controllant = controller;
 		isReciving = true;
 		gson = new Gson();
@@ -44,7 +46,7 @@ public class ServerConnection implements Runnable {
 	}
 	
 	public void send(Json json){
-		json.setgID(1);
+		json.setgID(gameID);
 		sendData = gson.toJson(json, Json.class).getBytes();
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, 9876);
 		try {
@@ -83,5 +85,13 @@ public class ServerConnection implements Runnable {
 	public void close(){
 		datagramSocket.close();
 		isReciving = false;
+	}
+
+	public int getGameID() {
+		return gameID;
+	}
+
+	public void setGameID(int gameID) {
+		this.gameID = gameID;
 	}
 }

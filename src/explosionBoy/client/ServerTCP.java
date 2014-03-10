@@ -50,6 +50,7 @@ public class ServerTCP implements Runnable {
 			msgIn = in.readLine();
 			if (msgIn != null) {
 				Json json = gson.fromJson(msgIn, Json.class);
+				handleJson(json);
 			}
 		} catch (IOException e) {
 			System.err.println("ERROR reciving message: "+e.getMessage());
@@ -71,5 +72,30 @@ public class ServerTCP implements Runnable {
 			System.err.println("Error closing instream"+e.getMessage());
 		}
 		System.out.println("Thread Closed");
+	}
+	
+	public void handleJson(Json json){
+		switch (json.getDirection()) {
+		case "PSETTINGS":
+			game.setPlayerID(json.getpID());
+			game.getConnection().setGameID(json.getgID());
+			System.out.println("PlayerID: "+game.getPlayerID());
+			System.out.println("GameID: "+game.getConnection().getGameID());
+			break;
+
+		default:
+			break;
+		}
+	}
+	public void closeAllConnections(){
+		try {
+			serverCon.close();
+			out.close();
+			in.close();
+			System.out.println("Connections closed!");
+		} 
+		catch (Exception e) {
+			System.err.println("Could not close connection: "+e.getMessage());		
+			}
 	}
 }
