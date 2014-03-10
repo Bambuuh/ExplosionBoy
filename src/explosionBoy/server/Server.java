@@ -165,7 +165,7 @@ public class Server implements Runnable {
 			lowest = lowest/1_000_000;
 			highest = highest/1_000_000;
 			DecimalFormat dForm = new DecimalFormat("#.###");
-			System.out.println("Average time from recive to send: "+dForm.format(average)+"ms | lowest: "+lowest+"ms | highest: "+highest+"ms with "+timeArray.size()+" requests");
+			System.out.println("Average time from recive to send: "+dForm.format(average)+"ms | lowest: "+lowest+"ms | highest: "+highest+"ms | "+timeArray.size()+" requests");
 			checkTime=System.currentTimeMillis();
 			timeArray.clear();
 		}
@@ -230,7 +230,12 @@ public class Server implements Runnable {
 			System.out.println("Sending gamesettings to player");
 			json.setDirection("NEWPLAYER");
 			for (ConnectionReference conRef : game.getReferences()) {
-				conRef.getTcpConnection().send(gson.toJson(json, Json.class));
+				for (ConnectionReference conRef2 : game.getReferences()) {
+					json.setpID(conRef2.getpID());
+					json.setxPos(conRef2.getxPos());
+					json.setyPos(conRef2.getyPos());
+					conRef.getTcpConnection().send(gson.toJson(json, Json.class));
+				}
 			}
 		}
 	}

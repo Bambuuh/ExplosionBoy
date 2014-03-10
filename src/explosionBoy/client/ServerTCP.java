@@ -99,12 +99,11 @@ public class ServerTCP implements Runnable {
 			for (Controller controller : game.getControllArray()) {
 				if (controller.id==json.getpID()) {
 					isNewPlayer=false;
-					System.out.println("SETTING UP NEW PLAYER! :D");
 					break;
 				}
 			}
 			if (isNewPlayer) {
-				SnakeBoy snake = new SnakeBoy(40, 40, game.getAnimation(), json.getpID());
+				SnakeBoy snake = new SnakeBoy((int)json.getxPos(),(int) json.getyPos(), game.getAnimation(), json.getpID());
 				game.getControllArray().add(new Controller(snake, game.getBombArray(), game.getAddBombArray()));
 			}
 		default:

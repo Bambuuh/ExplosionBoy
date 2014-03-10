@@ -19,6 +19,7 @@ public class LevelObject {
 			}
 		}
 	}
+	
 
 
 	public Rectangle getRectangle() {
