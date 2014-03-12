@@ -26,8 +26,8 @@ public class ServerTCP implements Runnable {
 		gson = new Gson();
 		this.game = game;
 		try {
-//			serverCon = new Socket("gurey.synology.me", 9877);
-			serverCon = new Socket("localhost", 9877);
+			serverCon = new Socket("gurey.synology.me", 9877);
+//			serverCon = new Socket("localhost", 9877);
 			out = new PrintWriter(serverCon.getOutputStream());
 			in = new BufferedReader(new InputStreamReader(serverCon.getInputStream()));
 		} catch (IOException e) {

@@ -49,11 +49,13 @@ public class Controller {
 			case "RESET":
 				player.setX(json.getxPos());
 				player.setY(json.getyPos());
+				player.setOldx(json.getxPos());
+				player.setOldy(json.getyPos());
 				break;
 			default:
 				break;
 			}
-//			lastDirection = json.getDirection();
+			lastDirection = json.getDirection();
 		}
 	}
 

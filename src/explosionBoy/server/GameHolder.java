@@ -57,16 +57,7 @@ public class GameHolder {
 				lvlAddArray.clear();
 				if (UnitCollission.isColliding(ex.getRect(), ref.getPlayerRect())){
 					ref.resetPosition();
-					Json j = new Json();
-					j.setDirection("RESET");
-					j.setpID(ref.getpID());
-					j.setxPos(ref.getxPos());
-					j.setyPos(ref.getyPos());
-					for (ConnectionReference reference : references) {
-						if (reference.getIp() != null) {
-							server.send(j, reference.getIp(), reference.getPort());
-						}
-					}
+					updatePosToClient(ref);
 				}
 
 			}
@@ -113,6 +104,7 @@ public class GameHolder {
 					else if (lvl.getRectangle().getMinY()<p.getPlayerRect().getMaxY()) {
 						p.setyPos(p.getOldY());
 					}
+					updatePosToClient(ref);
 				}
 			}
 		}
@@ -120,6 +112,19 @@ public class GameHolder {
 		lvlrectArray.removeAll(lvlRemoveArr);
 		lvlRemoveArr.clear();
 		serverBombRemove.clear();
+	}
+
+	private void updatePosToClient(ConnectionReference ref) {
+		Json j = new Json();
+		j.setDirection("RESET");
+		j.setpID(ref.getpID());
+		j.setxPos(ref.getxPos());
+		j.setyPos(ref.getyPos());
+		for (ConnectionReference reference : references) {
+			if (reference.getIp() != null) {
+				server.send(j, reference.getIp(), reference.getPort());
+			}
+		}
 	}
 
 	private boolean checkRange(Rectangle lvl, ConnectionReference ref){
