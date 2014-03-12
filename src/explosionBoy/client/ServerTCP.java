@@ -18,7 +18,6 @@ public class ServerTCP implements Runnable {
 	private Socket serverCon;
 	private PrintWriter out;
 	private BufferedReader in;
-	private boolean connected;
 	private String conMsg;
 	private Game game;
 	private Gson gson;
@@ -27,11 +26,10 @@ public class ServerTCP implements Runnable {
 		gson = new Gson();
 		this.game = game;
 		try {
-			serverCon = new Socket("gurey.synology.me", 9877);
-//			serverCon = new Socket("localhost", 9877);
+//			serverCon = new Socket("gurey.synology.me", 9877);
+			serverCon = new Socket("localhost", 9877);
 			out = new PrintWriter(serverCon.getOutputStream());
 			in = new BufferedReader(new InputStreamReader(serverCon.getInputStream()));
-			connected = true;
 		} catch (IOException e) {
 			System.err.println("Could not create connection: "+e.getMessage());
 			try {

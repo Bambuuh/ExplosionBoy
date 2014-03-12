@@ -108,28 +108,45 @@ public class Game {
 
 	public void start(){
 
-//		snakeBoy.setPlayerAnimation(animation, 16, 0, 16, false, false);
-//		snakeBoy2.setPlayerAnimation(animation, 16, 0, 16, false, false);
-
 		while(!Display.isCloseRequested()){
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			int delta = getDelta();
+			
+			input();
 			update(delta);
-			level.printLevel();
-			updateBombs(delta);
-			for (Controller player : controllArray) {
-				player.getPlayer().update(delta);
-			}
-			checkCollisions(delta);
-			cleanUp();
-			if (!(playerID==0)) {
-				input.readInput(playerID);
-			}
+			render(delta);
+			
 			Display.update();
 			Display.sync(60);
 		}
 		connection.close();
 		serverTCP.closeAllConnections();
+	}
+	
+	public void input(){
+		if (!(playerID==0)) {
+			input.readInput(playerID);
+		}
+	}
+	
+	public void update(int delta) {
+		updatePlayers(delta);
+		updateBombs(delta);
+		checkCollisions(delta);
+		cleanUp();
+	}
+	
+	public void render(int delta){
+		level.printLevel();
+		renderBombs();
+		renderPlayers(delta);
+		renderExplosions();
+	}
+	
+	public void updatePlayers(int delta){
+		for (Controller player : controllArray) {
+			player.getPlayer().update(delta);
+		}
 	}
 
 	public void updateBombs(int delta){
@@ -138,6 +155,24 @@ public class Game {
 		}
 		bombArray.addAll(addBombArray);
 		addBombArray.clear();
+	}
+	
+	public void renderPlayers(int delta){
+		for (Controller player : controllArray) {
+			player.getPlayer().render(delta);
+		}
+	}
+	
+	public void renderBombs(){
+		for (Bomb bomb : bombArray) {
+			bomb.render(level);
+		}
+	}
+	
+	public void renderExplosions(){
+		for (Bomb bomb : bombArray) {
+			bomb.renderExplosions();
+		}
 	}
 
 	public void cleanUp(){
@@ -198,10 +233,6 @@ public class Game {
 			}
 			player.autoMove();
 		}
-	}
-
-	public void update(int delta) {
-
 	}
 
 	public int getPlayerID() {

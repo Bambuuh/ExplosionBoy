@@ -1,13 +1,9 @@
 package explosionBoy.client;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-
-import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
 
 import explosionBoy.levelobjects.LevelObject;
 import explosionBoy.levelobjects.PowerUp;
@@ -15,8 +11,6 @@ import explosionBoy.levelobjects.PowerUp;
 public class LevelCreator {
 	
 	private AnimationHandler animHandler;
-	
-	private Random rand = new Random();
 	
 	private ArrayList<LevelObject> lvlObjects;
 	private ArrayList<LevelObject> objectsToAdd;
@@ -84,17 +78,8 @@ public class LevelCreator {
 				switch (level[row][col]) {
 				
 				case 0:
-					//if it is a zero its a random chance it becomes a box or ground
-//					int n = rand.nextInt(3);
-					
-//					if (n == 0) {
 						image = tiles.getSubImage(96, 0, 32, 32);
 						haveRectangle = false;
-//					}
-//					else {
-//						image = tiles.getSubImage(128, 0, 32, 32);
-//						box = true;
-//					}
 					break;
 				case 1:
 					image = tiles.getSubImage(0, 0, 32, 32);

@@ -7,7 +7,6 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.geom.Rectangle;
 
 import explosionBoy.levelobjects.LevelObject;
-import explosionBoy.levelobjects.PowerUp;
 
 public class Bomb {
 	
@@ -82,30 +81,37 @@ public class Bomb {
 		this.power = power;
 	}
 	
-	public void update(int delta, LevelCreator levelCreator){
-		animateBomb(levelCreator);
+	public void update(int delta, LevelCreator level){
+		//creates a new explosions in all allowed directions if enough time has passed
+		Rectangle rectangle = new Rectangle(x, y, explosionSize, explosionSize);
+		if (exploding && countDown2() >= explosionSpeed && powerCounter <= power) {
+		currentTime2 = System.currentTimeMillis();
+		createExplosion(level, rectangle);
+		powerCounter++;
+	}
 		cleanExplosion();
+		
+	}
+	
+	public void render( LevelCreator levelCreator){
+		animateBomb(levelCreator);
+	}
+	
+	public void renderExplosions(){
+		for (Explosion explosion : explosionArray) {
+			explosion.draw();
+		}
 	}
 	
 	public void animateBomb(LevelCreator levelCreator){
-		Rectangle rectangle = new Rectangle(x, y, explosionSize, explosionSize);
+		
 		//creates one explosions where the bomb was to start the animations
 		if (countDown() >= bombCountdown && !exploding) {
 			exploding = true;
 			explosionArray.add(new Explosion(animationHandler, x, y));
 		}
-		
-		//creates a new explosions in all allowed directions if enough time has passed
-		if (exploding && countDown2() >= explosionSpeed && powerCounter <= power) {
-			currentTime2 = System.currentTimeMillis();
-			createExplosion(levelCreator, rectangle);
-			powerCounter++;
-		}
-		
 		//paints all the explosions
-		for (Explosion explosion : explosionArray) {
-			explosion.draw();
-		}
+
 		if (!exploding) {
 			bombAnimation.draw(x, y);
 		}
@@ -127,11 +133,9 @@ public class Bomb {
 						if (object.isBox()) {
 							String power = generatePowerup();
 							if (power == "FIRE") {
-//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}
 							else if (power == "BOMB") {
-//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}else{
 								object.setHaveRectangle(false);
@@ -162,11 +166,9 @@ public class Bomb {
 						if (object.isBox()) {
 							String power = generatePowerup();
 							if (power == "FIRE") {
-//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}
 							else if (power == "BOMB") {
-//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}else{
 								object.setHaveRectangle(false);
@@ -197,11 +199,9 @@ public class Bomb {
 						if (object.isBox()) {
 							String power = generatePowerup();
 							if (power == "FIRE") {
-//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}
 							else if (power == "BOMB") {
-//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}else{
 								object.setHaveRectangle(false);
@@ -232,11 +232,9 @@ public class Bomb {
 						if (object.isBox()) {
 							String power = generatePowerup();
 							if (power == "FIRE") {
-//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(0, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}
 							else if (power == "BOMB") {
-//								levelCreator.getLvlObjects().add(new PowerUp(animationHandler.getPowerups().getSubImage(32, 0, 32, 32), object.getX(), object.getY(), true, false, false));
 								levelCreator.getRemoveList().add(object);
 							}else{
 								object.setHaveRectangle(false);
@@ -329,5 +327,32 @@ public class Bomb {
 	public Rectangle getRectangle(){
 		return this.bombTangle;
 	}
+
+	public int getPowerCounter() {
+		return powerCounter;
+	}
+
+	public void increasePowerCounter() {
+		this.powerCounter ++;
+	}
 	
+	public long getCurrentTime2(){
+		return currentTime2;
+	}
+	
+	public void resetCurrentTime2(){
+		this.currentTime2 = System.currentTimeMillis();
+	}
+	
+	public boolean getExploding(){
+		return exploding;
+	}
+	
+	public float getExplosionSpeed(){
+		return explosionSpeed;
+	}
+	
+	public int getPower(){
+		return power;
+	}
 }
