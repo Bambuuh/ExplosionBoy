@@ -13,7 +13,7 @@ public class ServerExplosion {
 	
 	public ServerExplosion(int x, int y, String direction) {
 		startTime = System.currentTimeMillis();
-		explosionTime = 600;
+		explosionTime = 400;
 		rect = new  Rectangle(x+1, y+1, 30, 30);
 		this.direction = direction;
 //		System.out.println("DIR: "+direction);

@@ -136,7 +136,7 @@ public class Server implements Runnable {
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
 		try {
 			datagramSocket.send(sendPacket);
-			stopWatch();
+//			stopWatch();
 		} catch (IOException e) {
 			System.err.println("Sending packet failed: "+e.getMessage());
 			e.printStackTrace();
