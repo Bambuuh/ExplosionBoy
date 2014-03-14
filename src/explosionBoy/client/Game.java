@@ -33,6 +33,7 @@ public class Game {
 	private ArrayList<Bomb> removeBombArray;
 
 	private SnakeBoy snakeBoy;
+	private VortexBoy vortexBoy;
 	private SnakeBoy snakeBoy2;
 
 	private AnimationHandler animation;

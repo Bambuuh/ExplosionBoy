@@ -20,6 +20,12 @@ public abstract class Player {
 	protected int maxBomb;
 	protected int currBomb;
 	
+	protected int rightX;
+	protected int leftX;
+	protected int upX;
+	protected int downX;
+	protected int walkingY;
+	
 	protected boolean UP = false;
 	protected boolean DOWN = false;
 	protected boolean LEFT = false;
@@ -27,8 +33,8 @@ public abstract class Player {
 	protected boolean bombAvailable = true;
 	
 	protected Json json;
-	private AnimationHandler animationHandler;
-	private Rectangle rectangle;
+	protected AnimationHandler animationHandler;
+	protected Rectangle rectangle;
 
 	protected Animation playerAnimation;
 
@@ -38,45 +44,47 @@ public abstract class Player {
 		this.json = new Json();
 		this.x = x;
 		this.y = y;
-		setPlayerAnimation(animation, 0, 0, 48, false, false);
+		setPlayerWalkingAnimation(animation, 0, 0, 48, false, false);
 		this.rectangle = new Rectangle(x, y, playerAnimation.getCurrentFrame().getTextureWidth(), playerAnimation.getCurrentFrame().getTextureHeight());
 	}
 
-	public void setPlayerAnimation(AnimationHandler animation, int startPosX, int startPosY, int tileWidth, boolean horizontal, boolean vertical){
-		this.playerAnimation = animation.getSnakeAnimation(startPosX, startPosY, tileWidth, horizontal, vertical);
+	public void setPlayerWalkingAnimation(AnimationHandler animation, int startPosX, int startPosY, int tileWidth, boolean horizontal, boolean vertical){
+		this.playerAnimation = animation.getWalkingAnimation(startPosX, startPosY, tileWidth, horizontal, vertical);
 	}
 
+	//moves the character client-side
 	public void move(float x, float y, float speed, int delta){
 		this.oldx = this.x;
 		this.oldy = this.y;
 		this.y += (y*speed*delta);
 		this.x += (x*speed*delta);
 	}
-
+	// sets the facing depending on direction sent from Json
+	//the x variable is set in the child class
 	public void setFacing(Json json){
 		if (json.getDirection().equals("UP") && !UP) {
-			setPlayerAnimation(animationHandler, 48, 0, 48, false, false);
+			setPlayerWalkingAnimation(animationHandler, upX, walkingY, 48, false, false);
 			UP = true;
 			DOWN = false;
 			LEFT = false;
 			RIGHT = false;
 		}
 		else if (json.getDirection().equals("DOWN") && !DOWN) {
-			setPlayerAnimation(animationHandler, 0, 0, 48, false, false);
+			setPlayerWalkingAnimation(animationHandler, downX, walkingY, 48, false, false);
 			DOWN = true;
 			LEFT = false;
 			RIGHT = false;
 			UP = false;
 		}
 		else if (json.getDirection().equals("RIGHT") && !RIGHT) {
-			setPlayerAnimation(animationHandler, 96, 0, 48, false, false);
+			setPlayerWalkingAnimation(animationHandler, rightX, walkingY, 48, false, false);
 			RIGHT = true;
 			DOWN = false;
 			LEFT = false;
 			UP = false;
 		}
 		else if (json.getDirection().equals("LEFT") && !LEFT) {
-			setPlayerAnimation(animationHandler, 96, 0, 48, true, false);
+			setPlayerWalkingAnimation(animationHandler, leftX, walkingY, 48, true, false);
 			LEFT = true;
 			DOWN = false;
 			RIGHT = false;
@@ -96,16 +104,16 @@ public abstract class Player {
 
 	public void currentAnimation(){
 		if (UP) {
-			setPlayerAnimation(animationHandler, 48, 0, 48, false, false);
+			setPlayerWalkingAnimation(animationHandler, upX, walkingY, 48, false, false);
 		}
 		if (DOWN) {
-			setPlayerAnimation(animationHandler, 0, 0, 48, false, false);
+			setPlayerWalkingAnimation(animationHandler, downX, walkingY, 48, false, false);
 		}
 		if (RIGHT) {
-			setPlayerAnimation(animationHandler, 96, 0, 48, false, false);
+			setPlayerWalkingAnimation(animationHandler, rightX, walkingY, 48, false, false);
 		}
 		if (LEFT) {
-			setPlayerAnimation(animationHandler, 96, 0, 48, true, false);
+			setPlayerWalkingAnimation(animationHandler, leftX, walkingY, 48, true, false);
 		}
 	}
 

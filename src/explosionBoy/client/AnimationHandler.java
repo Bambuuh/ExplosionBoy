@@ -11,6 +11,7 @@ public class AnimationHandler {
 	private Image explosionSheet;
 	private Image testExplosion;
 	private Image powerupTileSet;
+	private Image bombSheet;
 	private Image tileSet;
 	
 	private SpriteSheet tiles;
@@ -18,9 +19,10 @@ public class AnimationHandler {
 	
 	public AnimationHandler() {
 			try {
-				bigSheetImage = new Image("res/snakeboy/SnakeBoySprite.png");
+				bigSheetImage = new Image("res/classBoy/BigSheetBoy.png");
 				explosionSheet = new Image("res/explosion/explosionSheet.png");
 				testExplosion = new Image("res/explosion/bigExplosion.png");
+				bombSheet = new Image("res/explosion/bombSheet.png");
 				
 				powerupTileSet = new Image("res/tileset/retardPowerTiles.png");
 				powerups = new SpriteSheet(powerupTileSet, 32, 32);
@@ -33,7 +35,7 @@ public class AnimationHandler {
 			}
 	}
 	
-	public Animation getSnakeAnimation(int startPosX, int startPosY,int pictureW, boolean horizontal, boolean vertical){
+	public Animation getWalkingAnimation(int startPosX, int startPosY,int pictureW, boolean horizontal, boolean vertical){
 		
 		SpriteSheet superSheet;
 		Animation superAnimation;
@@ -51,7 +53,7 @@ public class AnimationHandler {
 		SpriteSheet explosionSprite;
 		Animation bombAnimation;
 		
-		explosionSprite = new SpriteSheet(explosionSheet.getSubImage(startPosX, startPosY, pictureW, 32).getFlippedCopy(horizontal, vertical), 32, 32);
+		explosionSprite = new SpriteSheet(bombSheet.getSubImage(startPosX, startPosY, pictureW, 32).getFlippedCopy(horizontal, vertical), 32, 32);
 		bombAnimation = new Animation(explosionSprite, 250);
 		
 		bombAnimation.setPingPong(PingPong);

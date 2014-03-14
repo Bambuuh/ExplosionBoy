@@ -20,7 +20,7 @@ public class Bomb {
 	protected LevelCreator level;
 	protected UnitCollission collision;
 	
-	private Rectangle bombTangle;
+	protected Rectangle bombTangle;
 	
 	protected boolean exploding;
 	protected boolean exploded;
@@ -44,9 +44,9 @@ public class Bomb {
 	
 	protected int ID;
 	protected int power;
-	protected int powerCounter;
-	private int explosionSize = 30;
-	private int tileSize = 32;
+	protected int powerCounter=0;
+	protected int explosionSize = 30;
+	protected int tileSize = 32;
 	
 	public Bomb(AnimationHandler animHandler, float x, float y, float explosionSpeed, float bombCountdown, int power){
 //		this.collision = collision;
@@ -56,7 +56,7 @@ public class Bomb {
 		animationHandler = animHandler;
 		this.explosionSpeed = explosionSpeed;
 		this.bombCountdown = bombCountdown;
-		bombAnimation = animationHandler.getBombAnimation(0, 160, 96, false, false, true, true);
+		bombAnimation = animationHandler.getBombAnimation(0, 0, 96, false, false, true, true);
 		currentTime = System.currentTimeMillis();
 		currentTime2 = System.currentTimeMillis();
 		powerCounter = 1;

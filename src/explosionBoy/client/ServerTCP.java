@@ -26,8 +26,8 @@ public class ServerTCP implements Runnable {
 		gson = new Gson();
 		this.game = game;
 		try {
-			serverCon = new Socket("gurey.synology.me", 9877);
-//			serverCon = new Socket("localhost", 9877);
+//			serverCon = new Socket("gurey.synology.me", 9877);
+			serverCon = new Socket("localhost", 9877);
 			out = new PrintWriter(serverCon.getOutputStream());
 			in = new BufferedReader(new InputStreamReader(serverCon.getInputStream()));
 		} catch (IOException e) {
@@ -102,7 +102,7 @@ public class ServerTCP implements Runnable {
 				}
 			}
 			if (isNewPlayer) {
-				SnakeBoy snake = new SnakeBoy((int)json.getxPos(),(int) json.getyPos(), game.getAnimation(), json.getpID());
+				VortexBoy snake = new VortexBoy((int)json.getxPos(),(int) json.getyPos(), game.getAnimation(), json.getpID());
 				game.getControllArray().add(new Controller(snake, game.getBombArray(), game.getAddBombArray()));
 			}
 		default:
