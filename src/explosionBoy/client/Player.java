@@ -118,8 +118,8 @@ public abstract class Player {
 	}
 
 	public void update(int delta){
-		setRectangle();
 		setFacing(json);
+		setRectangle();
 	}
 	
 	public void render(int delta){
@@ -154,7 +154,7 @@ public abstract class Player {
 	}
 
 	public void setRectangle(){
-		this.rectangle.setBounds(x+1, y+playerAnimation.getHeight()-10, playerAnimation.getWidth()-2, 9);
+		this.rectangle.setBounds(x+1, y+playerAnimation.getHeight()-10, playerAnimation.getWidth()-4, 8);
 	}
 
 

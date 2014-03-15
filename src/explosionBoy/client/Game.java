@@ -146,6 +146,7 @@ public class Game {
 	
 	public void updatePlayers(int delta){
 		for (Controller player : controllArray) {
+			player.autoMove();
 			player.getPlayer().update(delta);
 		}
 	}
@@ -232,7 +233,6 @@ public class Game {
 					}
 				}
 			}
-			player.autoMove();
 		}
 	}
 
