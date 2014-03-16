@@ -39,6 +39,7 @@ public class Game {
 	private AnimationHandler animation;
 	private LevelCreator level;
 	private UnitCollission collision;
+	private SFX sfx;
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 608;
@@ -53,6 +54,7 @@ public class Game {
 	public Game(){
 		initGL();
 		playerID = 0;
+		sfx = new SFX();
 		collision = new UnitCollission();
 		animation = new AnimationHandler();
 		controllArray = new ArrayList<Controller>();
@@ -167,7 +169,7 @@ public class Game {
 	
 	public void renderBombs(){
 		for (Bomb bomb : bombArray) {
-			bomb.render(level);
+			bomb.render(level, sfx);
 		}
 	}
 	
