@@ -35,10 +35,11 @@ public abstract class Player {
 	protected Json json;
 	protected AnimationHandler animationHandler;
 	protected Rectangle rectangle;
+	private SFX sfx;
 
 	protected Animation playerAnimation;
 
-	public Player(float x, float y, AnimationHandler animation, int ID) {
+	public Player(float x, float y, AnimationHandler animation, int ID, SFX sfx) {
 		this.ID = ID;
 		this.animationHandler = animation;
 		this.json = new Json();
@@ -46,6 +47,7 @@ public abstract class Player {
 		this.y = y;
 		setPlayerWalkingAnimation(animation, 0, 0, 48, false, false);
 		this.rectangle = new Rectangle(x, y, playerAnimation.getCurrentFrame().getTextureWidth(), playerAnimation.getCurrentFrame().getTextureHeight());
+		this.sfx = sfx;
 	}
 
 	public void setPlayerWalkingAnimation(AnimationHandler animation, int startPosX, int startPosY, int tileWidth, boolean horizontal, boolean vertical){
@@ -149,6 +151,7 @@ public abstract class Player {
 		}
 		if (bombAvailable) {
 			addBombArray.add(new Bomb(animationHandler, bombX, bombY, explosionSpeed, countdown, power));
+			sfx.getDropBomb().playAsSoundEffect(1f, 1f, false);
 		}
 		bombAvailable = true;
 	}

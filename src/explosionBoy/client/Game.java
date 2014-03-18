@@ -161,6 +161,10 @@ public class Game {
 		addBombArray.clear();
 	}
 	
+	public SFX getSfx() {
+		return sfx;
+	}
+
 	public void renderPlayers(int delta){
 		for (Controller player : controllArray) {
 			player.getPlayer().render(delta);
@@ -215,6 +219,7 @@ public class Game {
 					boolean collision = UnitCollission.isColliding(p.getRectangle(), lvl.getRectangle());
 					if (collision) {
 						level.getRemoveList().add(lvl);
+						sfx.getPowerUp().playAsSoundEffect(1f, 1f, false);
 					}
 				}
 				else if (lvl.isHaveRectangle()) {

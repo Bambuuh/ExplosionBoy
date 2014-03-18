@@ -7,10 +7,12 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class SFX {
 
-	private Audio explosion;
+	private Audio explosion, dropBomb, powerUp;
 
 	public SFX() {
-		this.explosion = loadSound("explosion.aif", "AIF");
+		this.explosion = loadSound("Explosion.aif", "AIF");
+		this.dropBomb = loadSound("DropBomb.aif", "AIF");
+		this.powerUp = loadSound("PowerUp.aif", "AIF");
 	}
 
 	private Audio loadSound(String filename, String filetype){
@@ -27,4 +29,13 @@ public class SFX {
 	public Audio getExplosion() {
 		return explosion;
 	}
+
+	public Audio getDropBomb() {
+		return dropBomb;
+	}
+
+	public Audio getPowerUp() {
+		return powerUp;
+	}
+
 }

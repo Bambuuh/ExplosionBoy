@@ -102,7 +102,7 @@ public class ServerTCP implements Runnable {
 				}
 			}
 			if (isNewPlayer) {
-				VortexBoy snake = new VortexBoy((int)json.getxPos(),(int) json.getyPos(), game.getAnimation(), json.getpID());
+				VortexBoy snake = new VortexBoy((int)json.getxPos(),(int) json.getyPos(), game.getAnimation(), json.getpID(), game.getSfx());
 				game.getControllArray().add(new Controller(snake, game.getBombArray(), game.getAddBombArray()));
 			}
 		default:

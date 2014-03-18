@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class VortexBoy extends Player {
 	
 
-	public VortexBoy(float x, float y, AnimationHandler animation, int ID) {
-		super(x, y, animation, ID);
+	public VortexBoy(float x, float y, AnimationHandler animation, int ID, SFX sfx) {
+		super(x, y, animation, ID, sfx);
 		
 		rightX = 96;
 		leftX = 96;

@@ -110,7 +110,7 @@ public class Bomb {
 		if (countDown() >= bombCountdown && !exploding) {
 			exploding = true;
 			explosionArray.add(new Explosion(animationHandler, x, y));
-			float pitch = (float) (0.2+Math.random()*0.1);
+			float pitch = (float) (0.8+Math.random()*0.2);
 			sfx.getExplosion().playAsSoundEffect(pitch, 1f, false);
 		}
 		//paints all the explosions
