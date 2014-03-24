@@ -133,9 +133,7 @@ public class Game {
 	}
 	
 	public void input(){
-		if (!(playerID==0)) {
 			input.readInput(playerID);
-		}
 	}
 	
 	public void update(int delta) {

@@ -10,6 +10,7 @@ public class InputReader {
 	private Json json;
 	private ServerConnection connection;
 	private boolean bombDown;
+	private int id;
 	
 	public InputReader(ServerConnection connection) {
 		this.connection = connection;
@@ -41,5 +42,13 @@ public class InputReader {
 		else if (!Keyboard.isKeyDown(Keyboard.KEY_SPACE) && bombDown) {
 			bombDown = false;
 		}
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

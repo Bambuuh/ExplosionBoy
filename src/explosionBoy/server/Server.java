@@ -65,7 +65,6 @@ public class Server implements Runnable {
 			System.err.println("Reciving packet failed: "+e.getMessage());
 			e.printStackTrace();
 		}
-
 		String incomming = new String(recivePacket.getData());
 		incomming = incomming.trim();
 
@@ -129,6 +128,7 @@ public class Server implements Runnable {
 				}
 			}
 		Arrays.fill(recData,(byte) 0);
+		stopWatch();
 	}
 
 	public void send(Json json, InetAddress ip, int port) {
@@ -137,7 +137,7 @@ public class Server implements Runnable {
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
 		try {
 			datagramSocket.send(sendPacket);
-			stopWatch();
+//			stopWatch();
 		} catch (IOException e) {
 			System.err.println("Sending packet failed: "+e.getMessage());
 			e.printStackTrace();
