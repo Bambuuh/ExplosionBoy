@@ -34,6 +34,13 @@ public class GameHolder {
 
 	public void checkCollissions(ConnectionReference ref){
 		boolean bombCol = false;
+		explosionsCollisions(ref);
+		bombCol = playerVsBombCol(ref, bombCol);
+		checkCollisionAndReset(ref, bombCol);
+		clean();
+	}
+
+	private void explosionsCollisions(ConnectionReference ref) {
 		for (ServerBomb bombToCheck : serverBombArray) {
 			for (ServerExplosion ex : bombToCheck.getExplArray()) {
 				for (ServerBomb bomb : serverBombArray) {
@@ -53,7 +60,6 @@ public class GameHolder {
 					}
 				}
 				lvlrectArray.addAll(lvlAddArray);
-				lvlAddArray.clear();
 				if (UnitCollission.isColliding(ex.getRect(), ref.getPlayerRect())){
 					ref.resetPosition();
 					updatePosToClient(ref);
@@ -61,6 +67,9 @@ public class GameHolder {
 
 			}
 		}
+	}
+
+	private boolean playerVsBombCol(ConnectionReference ref, boolean bombCol) {
 		for (ServerBomb bomb : serverBombArray) {
 			bombCol = explosionBoy.server.UnitCollission.isColliding(bomb.getRect(), ref.getPlayerRect());
 			if (bombCol && bomb.getCollidingPlayers().contains(ref)) {
@@ -76,6 +85,10 @@ public class GameHolder {
 				serverBombRemove.add(bomb);
 			}
 		}
+		return bombCol;
+	}
+
+	private void checkCollisionAndReset(ConnectionReference ref, boolean bombCol) {
 		for (LevelObject lvl : lvlrectArray) {
 			if (checkRange(lvl.getRectangle(), ref)) {
 				boolean collision = explosionBoy.server.UnitCollission.isColliding(ref.getPlayerRect(), lvl.getRectangle());
@@ -106,7 +119,6 @@ public class GameHolder {
 				}
 			}
 		}
-		clean();
 	}
 
 	private void clean() {
@@ -114,6 +126,7 @@ public class GameHolder {
 		lvlrectArray.removeAll(lvlRemoveArr);
 		lvlRemoveArr.clear();
 		serverBombRemove.clear();
+		lvlAddArray.clear();
 	}
 
 	private void updatePosToClient(ConnectionReference ref) {
@@ -123,7 +136,7 @@ public class GameHolder {
 		j.setxPos(ref.getxPos());
 		j.setyPos(ref.getyPos());
 		for (ConnectionReference reference : references) {
-			if (reference.getIp() != null) {
+			if (reference.getIp() != null && !reference.getTcpConnection().isCloseThisConnection()) {
 				server.send(j, reference.getIp(), reference.getPort());
 			}
 		}
@@ -132,9 +145,9 @@ public class GameHolder {
 	private boolean checkRange(Rectangle lvl, ConnectionReference ref){
 		boolean inRange = true;
 		if (lvl.getX()>(ref.getxPos()+32)) inRange = false;
-		else if (lvl.getX()<(ref.getxPos()-32)) inRange = false;
-		else if (lvl.getY()>(ref.getyPos()+32)) inRange = false;
-		else if (lvl.getY()<(ref.getyPos()-32)) inRange = false;
+		if (lvl.getX()<(ref.getxPos()-32)) inRange = false;
+		if (lvl.getY()>(ref.getyPos()+32)) inRange = false;
+		if (lvl.getY()<(ref.getyPos()-32)) inRange = false;
 		return inRange;
 	}
 
@@ -280,7 +293,7 @@ public class GameHolder {
 			j.setxPos(lvl.getX());
 			j.setyPos(lvl.getY());
 			for (ConnectionReference reference : references) {
-				if (reference.getIp() != null) {
+				if (reference.getIp() != null && !reference.getTcpConnection().isCloseThisConnection()) {
 					server.send(j, reference.getIp(), reference.getPort());
 				}
 			}

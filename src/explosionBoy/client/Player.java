@@ -131,7 +131,6 @@ public abstract class Player {
 
 	public void bombDropper(ArrayList<Bomb> bombArray, ArrayList<Bomb> addBombArray, float explosionSpeed, float countdown, int power){
 
-		sfx.getDropBomb().playAsSoundEffect(1f, 1f, false);
 		for (int i = (int)x+5; i > 0; i--) {
 			if (i%32 == 1) {
 				bombX = i-1;
@@ -151,6 +150,7 @@ public abstract class Player {
 			}
 		}
 		if (bombAvailable) {
+			sfx.getDropBomb().playAsSoundEffect(1f, 0.2f, false);
 			addBombArray.add(new Bomb(animationHandler, bombX, bombY, explosionSpeed, countdown, power));
 		}
 		bombAvailable = true;

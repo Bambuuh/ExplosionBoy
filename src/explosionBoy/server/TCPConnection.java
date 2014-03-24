@@ -17,8 +17,14 @@ public class TCPConnection implements Runnable {
 	private PrintWriter out;
 	private BufferedReader in;
 	private Gson gson;
+	private long time;
+	private Json json;
+	private boolean closeThisConnection;
 	
 	public TCPConnection(Socket socket) {
+		this.json = new Json();
+		this.closeThisConnection = false;
+		time = System.currentTimeMillis();
 		gson = new Gson();
 		this.socket = socket;
 		try {
@@ -38,7 +44,7 @@ public class TCPConnection implements Runnable {
 		try {
 			msgIn = in.readLine();
 			if (msgIn != null) {
-				Json json = gson.fromJson(msgIn, Json.class);
+				json = gson.fromJson(msgIn, Json.class);
 			}
 		} catch (IOException e) {
 			System.err.println("ERROR reciving message: "+e.getMessage());
@@ -52,8 +58,26 @@ public class TCPConnection implements Runnable {
 	
 	@Override
 	public void run() {
-		while (!socket.isClosed()) {
+		while (!out.checkError()) {
 			recive();
+			if (System.currentTimeMillis()>time+1000) {
+				json.setDirection("PING");
+				send(gson.toJson(json, Json.class));
+				time = System.currentTimeMillis();
+			}
+		}
+		closeThisConnection = true;
+		closeConnections();
+	}
+	
+	public void closeConnections(){
+		out.close();
+		try {
+			in.close();
+			socket.close();
+			System.out.println("Connection to "+socket.getInetAddress()+" is closed!");
+		} catch (IOException e) {
+			System.err.println("Could not close connection: "+e.getMessage());
 		}
 	}
 
@@ -87,6 +111,14 @@ public class TCPConnection implements Runnable {
 
 	public void setGson(Gson gson) {
 		this.gson = gson;
+	}
+
+	public boolean isCloseThisConnection() {
+		return closeThisConnection;
+	}
+
+	public void setCloseThisConnection(boolean closeThisConnection) {
+		this.closeThisConnection = closeThisConnection;
 	}
 
 }

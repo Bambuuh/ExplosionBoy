@@ -111,7 +111,7 @@ public class Bomb {
 			exploding = true;
 			explosionArray.add(new Explosion(animationHandler, x, y));
 			float pitch = (float) (0.8+Math.random()*0.2);
-			sfx.getExplosion().playAsSoundEffect(pitch, 1f, false);
+			sfx.getExplosion().playAsSoundEffect(pitch, 0.2f, false);
 		}
 		//paints all the explosions
 

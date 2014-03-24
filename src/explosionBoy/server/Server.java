@@ -21,7 +21,7 @@ public class Server implements Runnable {
 	private byte[] recData, sendData;
 	private Gson gson;
 	private Json jsonRecive, jsonToSend;
-	private ArrayList<GameHolder> holder;
+	private ArrayList<GameHolder> holder, removeHolder;
 	private long startTime, endTime, checkTime;
 	private ArrayList<Integer> timeArray;
 	private long checkInter = 10_000;
@@ -42,6 +42,7 @@ public class Server implements Runnable {
 		}
 		this.timeArray = new ArrayList<Integer>();
 		holder = new ArrayList<GameHolder>();
+		removeHolder = new ArrayList<>();
 		gson = new Gson();
 		jsonRecive = new Json();
 		jsonToSend = new Json();
@@ -136,7 +137,7 @@ public class Server implements Runnable {
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
 		try {
 			datagramSocket.send(sendPacket);
-//			stopWatch();
+			stopWatch();
 		} catch (IOException e) {
 			System.err.println("Sending packet failed: "+e.getMessage());
 			e.printStackTrace();
@@ -192,6 +193,23 @@ public class Server implements Runnable {
 		GameHolder game = null;
 		Json json = new Json();
 		json.setDirection("PSETTINGS");
+		//Checking for empty games and removes them
+		for (GameHolder gameToCheck : holder) {
+			boolean removeGame = false;
+			for (ConnectionReference conReference : gameToCheck.getReferences()) {
+				if (!conReference.getTcpConnection().isCloseThisConnection()) {
+					removeGame = false;
+					break;
+				}
+				else removeGame = true;
+			}
+			if (removeGame) {
+				removeHolder.add(gameToCheck);
+				System.out.println("Removing game #"+gameToCheck.getGameID());
+			}
+		}
+		holder.removeAll(removeHolder);
+		removeHolder.clear();
 		//Checking existing game if there are any space in them.
 		for (GameHolder gh : holder) {
 			if (gh.getReferences().size()<4) {

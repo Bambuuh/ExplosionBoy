@@ -219,7 +219,7 @@ public class Game {
 					boolean collision = UnitCollission.isColliding(p.getRectangle(), lvl.getRectangle());
 					if (collision) {
 						level.getRemoveList().add(lvl);
-						sfx.getPowerUp().playAsSoundEffect(1f, 1f, false);
+						sfx.getPowerUp().playAsSoundEffect(1f, 0.2f, false);
 					}
 				}
 				else if (lvl.isHaveRectangle()) {
