@@ -209,7 +209,6 @@ public class Server implements Runnable {
 			}
 		}
 		holder.removeAll(removeHolder);
-		removeHolder.clear();
 		//Checking existing game if there are any space in them.
 		for (GameHolder gh : holder) {
 			if (gh.getReferences().size()<4) {
@@ -256,6 +255,7 @@ public class Server implements Runnable {
 				}
 			}
 		}
+		removeHolder.clear();
 	}
 
 	public int getGameID() {
