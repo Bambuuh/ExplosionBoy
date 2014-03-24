@@ -24,6 +24,7 @@ import org.lwjgl.opengl.GL11;
 
 import explosionBoy.levelobjects.LevelObject;
 import explosionBoy.levelobjects.PowerUp;
+import explosionBoy.textHandler.TextHandler;
 
 public class Game {
 
@@ -35,14 +36,19 @@ public class Game {
 	private SnakeBoy snakeBoy;
 	private VortexBoy vortexBoy;
 	private SnakeBoy snakeBoy2;
-
-	private AnimationHandler animation;
 	private LevelCreator level;
+	private AnimationHandler animation;
 	private UnitCollission collision;
-	private SFX sfx;
+	private BorderDisplay border;
+	private TextHandler textHandler;
+	
 
+	private SFX sfx;
+	
+	public static final int BORDERHEIGHT = 64;
+	public static final int BOARDHEIGHT = 600;
 	public static final int WIDTH = 800;
-	public static final int HEIGHT = 608;
+	public static final int HEIGHT = BOARDHEIGHT + BORDERHEIGHT;
 	private ServerConnection connection;
 	private ServerTCP serverTCP;
 	private InputReader input;
@@ -65,6 +71,8 @@ public class Game {
 		connection = new ServerConnection(controllArray, level);
 		input = new InputReader(connection);
 		serverTCP = new ServerTCP(this);
+		border = new BorderDisplay(controllArray);
+		textHandler = new TextHandler(animation);
 		new Thread(serverTCP).start();
 		new Thread(connection).start();
 		start();
@@ -144,6 +152,8 @@ public class Game {
 		renderBombs();
 		renderPlayers(delta);
 		renderExplosions();
+		border.render();
+		textHandler.drawText("tjeeena", 300, 300);
 	}
 	
 	public void updatePlayers(int delta){

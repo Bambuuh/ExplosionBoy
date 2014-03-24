@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 public class VortexBoy extends Player {
 	
-
 	public VortexBoy(float x, float y, AnimationHandler animation, int ID, SFX sfx) {
 		super(x, y, animation, ID, sfx);
+		
+		face = animation.getFaces();
 		
 		rightX = 96;
 		leftX = 96;
@@ -42,7 +43,6 @@ public class VortexBoy extends Player {
 		}
 		bombAvailable = true;
 	}
-	
 	
 	
 }

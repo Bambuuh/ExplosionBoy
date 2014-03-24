@@ -13,6 +13,8 @@ public class AnimationHandler {
 	private Image powerupTileSet;
 	private Image bombSheet;
 	private Image tileSet;
+	private Image faces;
+	private Image alphabet;
 	
 	private SpriteSheet tiles;
 	private SpriteSheet powerups;
@@ -23,6 +25,8 @@ public class AnimationHandler {
 				explosionSheet = new Image("res/explosion/explosionSheet.png");
 				testExplosion = new Image("res/explosion/bigExplosion.png");
 				bombSheet = new Image("res/explosion/bombSheet.png");
+				faces = new Image("res/faces/vortexFace.png");
+				alphabet = new Image("res/alphabet/redAlphabet.png");
 				
 				powerupTileSet = new Image("res/tileset/retardPowerTiles.png");
 				powerups = new SpriteSheet(powerupTileSet, 32, 32);
@@ -146,4 +150,11 @@ public class AnimationHandler {
 		return powerups;
 	}
 	
+	public Image getFaces(){
+		return faces;
+	}
+	
+	public Image getAlphabet(){
+		return alphabet;
+	}
 }

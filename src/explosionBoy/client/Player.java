@@ -5,6 +5,7 @@ package explosionBoy.client;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
 public abstract class Player {
@@ -14,6 +15,8 @@ public abstract class Player {
 
 	protected float x, oldx;
 	protected float y, oldy;
+	
+	protected Image face;
 	
 	protected int ID;
 	protected int speed;
@@ -203,5 +206,9 @@ public abstract class Player {
 
 	public int getID(){
 		return ID;
+	}
+	
+	public Image getFace(){
+		return face;
 	}
 }
