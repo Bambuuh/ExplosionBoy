@@ -14,6 +14,7 @@ public class TextHandler {
 	private Image alphabet;
 
 	private AnimationHandler animation;
+	
 
 	public TextHandler(AnimationHandler animation) {
 		this.animation = animation;
@@ -29,15 +30,18 @@ public class TextHandler {
 
 	public void drawText(String text, int x, int y){
 
-		int counter = 1;
+		int counter = 0;
+		int savedOffset = 0;
 
 		char[] phrase = text.toLowerCase().toCharArray();
 
 		for (char c : phrase) {
-			findTile(c).draw(x+counter, y);
-			counter += 20;
+			savedOffset = findLetter(c).getImage().getWidth() - findLetter(c).getOffset();
+			counter += savedOffset; 
+			findLetter(c).getImage().draw(x+counter-savedOffset,y);
 		}
-
+		
+//		savedOffset = 0;
 
 	}
 
@@ -45,7 +49,7 @@ public class TextHandler {
 		int counter = 0;
 		for (Character c : identifier) {
 			int offset = getOffsett(c);
-			letterArray.add(new Letter(alphabet.getSubImage(counter*24, 0, 24, 24), c ));
+			letterArray.add(new Letter(alphabet.getSubImage(counter*24, 0, 24, 24), c , offset));
 			counter++;
 		}
 
@@ -57,33 +61,68 @@ public class TextHandler {
 		case 'm':
 			offset=1;
 			break;
+		case 'w':
+		case '/':
+			offset=2;
+			break;
 		case 'o':
+		case '8':
 			offset=5;
+			break;
+		case '&':
+			offset=4;
 			break;
 		case 'a':
 		case 'n':
+		case 'q':
+		case 'x':
+		case 'z':
+		case '2':
+		case '0':
 			offset = 6;
 			break;
 		case 'd':
 		case 'g':
 		case 'h':
 		case 'k':
+		case 'p':
+		case 'r':
+		case 'u':
+		case '9':
 			offset = 7;
 			break;
 		case 'b':
 		case 'c':
+		case 's':
+		case 'v':
+		case 'y':
+		case '3':
+		case '4':
+		case '6':
+		case '?':
+		case '!':
+		case '-':
 			offset=8;
 			break;
 		case 'e':
 		case 'f':
 		case 'j':
+		case 't':
+		case '5':
 			offset=9;
 			break;
+		case '7':
+			offset=10;
 		case 'l':
 			offset=11;
+		case '1':
+			offset=12;
 			break;
 		case 'i':
 			offset=13;
+			break;
+		case '.':
+			offset=15;
 			break;
 
 		default:
@@ -92,11 +131,11 @@ public class TextHandler {
 		return offset;
 	}
 
-	private Image findTile(char c){
+	private Letter findLetter(char c){
 
 		for (Letter letter : letterArray) {
 			if (c == letter.getIdentifier()) {
-				return letter.getImage();
+				return letter;
 			}
 		}
 		return null;

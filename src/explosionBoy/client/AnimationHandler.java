@@ -26,7 +26,7 @@ public class AnimationHandler {
 				testExplosion = new Image("res/explosion/bigExplosion.png");
 				bombSheet = new Image("res/explosion/bombSheet.png");
 				faces = new Image("res/faces/vortexFace.png");
-				alphabet = new Image("res/alphabet/redAlphabet.png");
+				alphabet = new Image("res/alphabet/redAlphabetOffset.png");
 				
 				powerupTileSet = new Image("res/tileset/retardPowerTiles.png");
 				powerups = new SpriteSheet(powerupTileSet, 32, 32);

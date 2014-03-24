@@ -255,7 +255,7 @@ public class Game {
 	public void showPLayers(){
 		if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
 			for (Controller controller : controllArray) {
-				text.drawText("p"+controller.getPlayer().getID(), (int)controller.getPlayer().getX()-13, (int)controller.getPlayer().getY()-25);
+				text.drawText("p"+controller.getPlayer().getID(), (int)controller.getPlayer().getX()-7, (int)controller.getPlayer().getY()-25);
 			}
 		}
 	}

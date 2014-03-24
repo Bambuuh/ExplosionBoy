@@ -7,7 +7,7 @@ import explosionBoy.textHandler.TextHandler;
 public class BorderDisplay {
 	
 	private int playerSpace = 210;
-	private int lifeSpace = 50;
+	private int lifeSpace = 40;
 	
 	
 	private int p1Start = 30;
