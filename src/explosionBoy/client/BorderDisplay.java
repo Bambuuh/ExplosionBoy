@@ -6,7 +6,7 @@ import explosionBoy.textHandler.TextHandler;
 
 public class BorderDisplay {
 	
-	private int playerSpace = 120;
+	private int playerSpace = 210;
 	private int lifeSpace = 50;
 	
 	
@@ -43,21 +43,21 @@ public class BorderDisplay {
 				}
 			}
 			if (player.getPlayer().getID() == 2) {
-				text.drawText("p2", p1Start, Game.BOARDHEIGHT+27);
+				text.drawText("p2", p2Start, Game.BOARDHEIGHT+27);
 				
 				for (int i = 0; i < player.getPlayer().getHealth(); i++) {
 					player.getPlayer().getFace().draw((p2Start+lifeSpace)+i*(player.getPlayer().getFace().getWidth()+5), Game.BOARDHEIGHT+32);
 				}
 			}
 			if (player.getPlayer().getID() == 3) {
-				text.drawText("p3", p1Start, Game.BOARDHEIGHT+27);
+				text.drawText("p3", p3Start, Game.BOARDHEIGHT+27);
 				
 				for (int i = 0; i < player.getPlayer().getHealth(); i++) {
 					player.getPlayer().getFace().draw((p3Start+lifeSpace)+i*(player.getPlayer().getFace().getWidth()+5), Game.BOARDHEIGHT+32);
 				}
 			}
 			if (player.getPlayer().getID() == 4) {
-				text.drawText("p4", p1Start, Game.BOARDHEIGHT+27);
+				text.drawText("p4", p4Start, Game.BOARDHEIGHT+27);
 				
 				for (int i = 0; i < player.getPlayer().getHealth(); i++) {
 					player.getPlayer().getFace().draw((p4Start+lifeSpace)+i*(player.getPlayer().getFace().getWidth()+5), Game.BOARDHEIGHT+32);
