@@ -40,7 +40,6 @@ public class Game {
 	private AnimationHandler animation;
 	private UnitCollission collision;
 	private BorderDisplay border;
-	private TextHandler textHandler;
 	
 
 	private SFX sfx;
@@ -71,8 +70,7 @@ public class Game {
 		connection = new ServerConnection(controllArray, level);
 		input = new InputReader(connection);
 		serverTCP = new ServerTCP(this);
-		border = new BorderDisplay(controllArray);
-		textHandler = new TextHandler(animation);
+		border = new BorderDisplay(controllArray, animation);
 		new Thread(serverTCP).start();
 		new Thread(connection).start();
 		start();
@@ -153,7 +151,6 @@ public class Game {
 		renderPlayers(delta);
 		renderExplosions();
 		border.render();
-		textHandler.drawText("tjeeena", 300, 300);
 	}
 	
 	public void updatePlayers(int delta){

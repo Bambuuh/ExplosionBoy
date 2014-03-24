@@ -22,6 +22,7 @@ public abstract class Player {
 	protected int speed;
 	protected int maxBomb;
 	protected int currBomb;
+	protected int health = 3;
 	
 	protected int rightX;
 	protected int leftX;
@@ -210,5 +211,9 @@ public abstract class Player {
 	
 	public Image getFace(){
 		return face;
+	}
+	
+	public int getHealth(){
+		return health;
 	}
 }

@@ -29,13 +29,13 @@ public class TextHandler {
 	
 	public void drawText(String text, int x, int y){
 		
-		int counter = 0;
+		int counter = 1;
 		
 		char[] phrase = text.toLowerCase().toCharArray();
 		
 		for (char c : phrase) {
-			findTile(c).draw(x*counter, y);
-			counter += 24;
+			findTile(c).draw(x+counter, y);
+			counter += 20;
 		}
 		
 		
@@ -54,6 +54,7 @@ public class TextHandler {
 		
 		for (Letter letter : letterArray) {
 			if (c == letter.getIdentifier()) {
+				System.out.println(letter.getIdentifier());
 				return letter.getImage();
 			}
 		}
