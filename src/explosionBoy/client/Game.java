@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -40,6 +41,7 @@ public class Game {
 	private AnimationHandler animation;
 	private UnitCollission collision;
 	private BorderDisplay border;
+	private TextHandler text;
 	
 
 	private SFX sfx;
@@ -70,7 +72,8 @@ public class Game {
 		connection = new ServerConnection(controllArray, level);
 		input = new InputReader(connection);
 		serverTCP = new ServerTCP(this);
-		border = new BorderDisplay(controllArray, animation);
+		text = new TextHandler(animation);
+		border = new BorderDisplay(controllArray, animation, text);
 		new Thread(serverTCP).start();
 		new Thread(connection).start();
 		start();
@@ -149,6 +152,7 @@ public class Game {
 		renderPlayers(delta);
 		renderExplosions();
 		border.render();
+		showPLayers();
 	}
 	
 	public void updatePlayers(int delta){
@@ -244,6 +248,14 @@ public class Game {
 						}
 					}
 				}
+			}
+		}
+	}
+	
+	public void showPLayers(){
+		if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
+			for (Controller controller : controllArray) {
+				text.drawText("p"+controller.getPlayer().getID(), (int)controller.getPlayer().getX()-13, (int)controller.getPlayer().getY()-25);
 			}
 		}
 	}

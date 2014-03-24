@@ -18,9 +18,9 @@ public class BorderDisplay {
 	private ArrayList<Controller> playerArray;
 	private TextHandler text;
 	
-	public BorderDisplay(ArrayList<Controller> controllerArray, AnimationHandler animation) {
+	public BorderDisplay(ArrayList<Controller> controllerArray, AnimationHandler animation, TextHandler text) {
 		playerArray = controllerArray;
-		text = new TextHandler(animation);
+		this.text = text;
 		
 	}
 	
