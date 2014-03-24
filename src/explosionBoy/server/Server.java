@@ -235,7 +235,7 @@ public class Server implements Runnable {
 			json.setgID(holder.size());
 			json.setpID(cr.getpID());
 			foundGame = true;
-			System.out.println("Creating new game!");
+			System.out.println("Creating new game #"+game.getGameID());
 		}
 		if (foundGame) {
 			TCPConnection tcp = new TCPConnection(socket);

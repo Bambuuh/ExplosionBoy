@@ -54,7 +54,6 @@ public class TextHandler {
 		
 		for (Letter letter : letterArray) {
 			if (c == letter.getIdentifier()) {
-				System.out.println(letter.getIdentifier());
 				return letter.getImage();
 			}
 		}
