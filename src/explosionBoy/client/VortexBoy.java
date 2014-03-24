@@ -38,6 +38,7 @@ public class VortexBoy extends Player {
 		}
 		if (bombAvailable) {
 			addBombArray.add(new SwirlingBomb(animationHandler, bombX, bombY, explosionSpeed, countdown, power));
+			sfx.getDropBomb().playAsSoundEffect(1f, 1f, false);
 		}
 		bombAvailable = true;
 	}

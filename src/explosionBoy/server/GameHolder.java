@@ -33,7 +33,6 @@ public class GameHolder {
 	}
 
 	public void checkCollissions(ConnectionReference ref){
-		ConnectionReference p = ref;
 		boolean bombCol = false;
 		for (ServerBomb bombToCheck : serverBombArray) {
 			for (ServerExplosion ex : bombToCheck.getExplArray()) {
@@ -63,7 +62,7 @@ public class GameHolder {
 			}
 		}
 		for (ServerBomb bomb : serverBombArray) {
-			bombCol = explosionBoy.server.UnitCollission.isColliding(bomb.getRect(), p.getPlayerRect());
+			bombCol = explosionBoy.server.UnitCollission.isColliding(bomb.getRect(), ref.getPlayerRect());
 			if (bombCol && bomb.getCollidingPlayers().contains(ref)) {
 				bombCol = false;
 			}
@@ -79,10 +78,9 @@ public class GameHolder {
 		}
 		for (LevelObject lvl : lvlrectArray) {
 			if (checkRange(lvl.getRectangle(), ref)) {
-				boolean collision = explosionBoy.server.UnitCollission.isColliding(p.getPlayerRect(), lvl.getRectangle());
+				boolean collision = explosionBoy.server.UnitCollission.isColliding(ref.getPlayerRect(), lvl.getRectangle());
 				if (lvl.isBuff()) {
 					if (lvl instanceof FlameBuff) {
-						System.out.println("FLAMEBUFF!");
 						ref.setBombPower(ref.getBombPower()+1);
 					}
 					else if (lvl instanceof BombPower) {
@@ -92,22 +90,26 @@ public class GameHolder {
 					continue;
 				}
 				if (collision || bombCol) {
-					if (lvl.getRectangle().getMaxX()>p.getPlayerRect().getMinX()) {
-						p.setxPos(p.getOldX());
+					if (lvl.getRectangle().getMaxX()>ref.getPlayerRect().getMinX()) {
+						ref.setxPos(ref.getOldX());
 					}
-					else if (lvl.getRectangle().getMinX()<p.getPlayerRect().getMaxX()) {
-						p.setxPos(p.getOldX());
+					else if (lvl.getRectangle().getMinX()<ref.getPlayerRect().getMaxX()) {
+						ref.setxPos(ref.getOldX());
 					}
-					if (lvl.getRectangle().getMaxY()>p.getPlayerRect().getMinY()) {
-						p.setyPos(p.getOldY());
+					if (lvl.getRectangle().getMaxY()>ref.getPlayerRect().getMinY()) {
+						ref.setyPos(ref.getOldY());
 					}
-					else if (lvl.getRectangle().getMinY()<p.getPlayerRect().getMaxY()) {
-						p.setyPos(p.getOldY());
+					else if (lvl.getRectangle().getMinY()<ref.getPlayerRect().getMaxY()) {
+						ref.setyPos(ref.getOldY());
 					}
 					updatePosToClient(ref);
 				}
 			}
 		}
+		clean();
+	}
+
+	private void clean() {
 		serverBombArray.removeAll(serverBombRemove);
 		lvlrectArray.removeAll(lvlRemoveArr);
 		lvlRemoveArr.clear();

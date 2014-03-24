@@ -19,6 +19,7 @@ public class SFX {
 		Audio sound = null;
 		try {
 			sound = AudioLoader.getAudio(filetype, ResourceLoader.getResourceAsStream("res/sound/"+filename));
+			System.out.println("Loaded sound: "+filename);
 		} catch (IOException e) {
 			System.err.println("Failed to load sound: "+e.getMessage());
 			e.printStackTrace();
