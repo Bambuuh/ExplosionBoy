@@ -19,8 +19,10 @@ public class GameHolder {
 	private ArrayList<ServerBomb> serverBombRemove;
 	private Server server;
 	private Random rand;
+	private boolean available;
 
 	public GameHolder(Server server, int gameID) {
+		this.setAvailable(true);
 		this.rand = new Random();
 		this.server = server;
 		this.serverBombArray = new ArrayList<ServerBomb>();
@@ -298,6 +300,14 @@ public class GameHolder {
 				}
 			}
 		}
+	}
+
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 
 }

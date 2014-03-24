@@ -205,13 +205,13 @@ public class Server implements Runnable {
 			}
 			if (removeGame) {
 				removeHolder.add(gameToCheck);
+				gameToCheck.setAvailable(false);
 				System.out.println("Removing game #"+gameToCheck.getGameID());
 			}
 		}
-		holder.removeAll(removeHolder);
 		//Checking existing game if there are any space in them.
 		for (GameHolder gh : holder) {
-			if (gh.getReferences().size()<4) {
+			if (gh.getReferences().size()<4 && gh.isAvailable() == true) {
 				game = gh;
 				cr = new ConnectionReference(gh.getReferences().size()+1, gh);
 				gh.getReferences().add(cr);
@@ -255,6 +255,7 @@ public class Server implements Runnable {
 				}
 			}
 		}
+		holder.removeAll(removeHolder);
 		removeHolder.clear();
 	}
 
