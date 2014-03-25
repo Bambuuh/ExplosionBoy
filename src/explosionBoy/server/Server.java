@@ -50,7 +50,7 @@ public class Server implements Runnable {
 		sendData = new byte[512];
 		try {
 			datagramSocket = new DatagramSocket(9876);
-			System.out.println("Server running!");
+			System.out.println("Server running! v0.1");
 		} catch (SocketException e) {
 			System.err.println("Creating socket failed: "+e.getMessage());
 		}

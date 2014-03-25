@@ -173,7 +173,6 @@ public class GameHolder {
 		for (ConnectionReference ref : references) {
 			if (UnitCollission.isColliding(ref.getPlayerRect(), bombToAdd.getRect())) {
 				bombToAdd.getCollidingPlayers().add(ref);
-				System.out.println("Bomb colliding with player "+ref.getpID());
 			}
 		}
 		serverBombArray.add(bombToAdd);
